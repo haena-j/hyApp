@@ -1,0 +1,28 @@
+<ion-view view-title="화장대 엿보기">
+  <ion-content class="padding">
+나와 유사한 화장대
+    <div class="row header">
+          <div class="col" ng-repeat="result in RelationList">
+            <img src={{host}}{{result.image}}><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
+            회원 ID : {{result.id}}<br>
+            이름 : {{result.name}}<br>
+            생년월일 : {{result.birth}}<br>
+            겹치는 화장품 개수 : {{result.count}}<br>
+            <button type="button" ng-click="giveStar(result)">추천</button>
+            <button type="button" ng-click="goToDetail(result)">상세보기</button>
+          </div>
+      </div>
+    인기 화장대
+    <div class="row header" >
+      <div class="col" ng-repeat="result in highRankList">
+        <img src={{host}}{{result.image}}><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
+        회원 ID : {{result.id}}<br>
+        이름 : {{result.name}}<br>
+        생년월일 : {{result.birth}}<br>
+        추천수 : {{result.count}}<br>
+        <button type="button" ng-click="giveStar(result)">추천</button>
+        <button type="button" ng-click="goToDetail(result)">상세보기</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
