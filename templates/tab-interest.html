@@ -1,0 +1,25 @@
+<ion-view view-title="Interest">
+  <ion-content class="padding">
+    <h3>관심리스트 목록</h3>
+    <table class="table table-striped .table-bordered .table-condensed">
+      <thead>
+      <tr>
+        <td>화장품 이름</td>
+        <td>화장품 브랜드</td>
+        <td>화장품 가격</td>
+        <td>이미지</td>
+      </tr>
+      </thead>
+      <tbody>
+      <div ng-repeat="cosmetics in cosmeticsList">
+
+        {{ cosmetics.cos_name}}<br>
+        {{ cosmetics.cos_brand}}<br>
+        {{ cosmetics.cos_price}}<br>
+        <img src={{cosmetics.cos_pic}}>
+        <button class="button button-positive" type="button" ng-click="delete(cosmetics)">관심리스트 삭제</button>
+      </div>
+      </tbody>
+    </table>
+  </ion-content>
+</ion-view>
