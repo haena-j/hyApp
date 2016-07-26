@@ -7,9 +7,9 @@
       <div ng-repeat="result in cosmeticsInfoList">
         <img src={{result.image_url}}><br>
         화장품이름 : {{ result.cos_name}}<br>
-        후기 : {{result.m_review}}
-        사진 : {{result.m_cosimage}}
-        <button type="button" ng-click="showSelected(result)">저장</button>
+        후기 : {{result.m_review}}<br>
+        사진 : <img src={{host}}{{result.m_cosimage}}><br>
+        원래 화장품 사진 : <img src={{result.cos_pic}}><br>
       </div>
       </tbody>
     </table>

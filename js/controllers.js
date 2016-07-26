@@ -47,7 +47,7 @@ angular.module('starter.controllers', [])
   })
 
   //회원가입관련 Ctrl (join.html)
-  .controller('JoinCtrl', function($scope, JoinSvc, $ionicPopup, $log,HOST, Upload, $timeout, $location){
+  .controller('JoinCtrl', function($scope, $ionicPopup, HOST, Upload, $timeout, $location){
     $scope.submit = function(join) {
       //사진 파일 업로드를위해 Upload 이용. 값들을 data에 담아 전송
       var file = Upload.upload({
@@ -68,7 +68,10 @@ angular.module('starter.controllers', [])
         // Math.min is to fix IE which reports 200% sometimes
         join.picFile.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
       });
-      alert("가입이 완료되었습니다. 로그인 해주세요");
+      $ionicPopup.alert({
+        title: '회원가입 완료',
+        template: '로그인 해주세요.'
+      });
       $location.path('/login');    //가입완료시 login.html 로 이동
     };
 
@@ -90,7 +93,7 @@ angular.module('starter.controllers', [])
 
     //클릭한 회원의 화장대 상세페이지로 이동
     $scope.goToDetail = function (result) {
-      $location.path('/userSharedPage-detail').search({param: result.index});
+      $location.path('/userSharedPage-detail').search({param: result.member_index});
       //파라미터로 클릭한회원의 index값을 같이 보내주면서 페이지 이동
 
     };
@@ -114,7 +117,8 @@ angular.module('starter.controllers', [])
     })
 
   //화장대엿보기 상세페이지 (userSharedPage-detail.html)
-  .controller('SharedPageDetailCtrl', function ($scope, $location, HttpSvc) {
+  .controller('SharedPageDetailCtrl', function ($scope, $location, HttpSvc, HOST) {
+    $scope.host = HOST;
     var member_index = $location.search().param;
     HttpSvc.getMyCosmeticsByMemberIndex(member_index)
       .success(function (values) {
@@ -200,4 +204,70 @@ angular.module('starter.controllers', [])
         })    .error(function(values, status){alert(status);});
     };
   })
+/************************************관리자 끝*****************************************/
+/************************************예은 코드*****************************************/
+
+  .controller('CosmeticsCtrl', function($scope, HttpSvc2) { //화장품리스트 전체 목록 불러오기
+    $scope.getCosmeticsList = function() {
+      HttpSvc2.getCosmeticsList()
+        .success(function (values, status, headers) {
+          $scope.cosmeticsList = values;
+        })
+        .error(function(values, status) {
+
+        });
+    };
+    $scope.getCosmeticsList();
+  })
+
+  .controller('InterestCtrl', function($scope, HttpSvc2, AuthService) { // 관심리스트 목록 불러오기
+    $scope.getInterestList = function() {
+      HttpSvc2.getInterestList(AuthService.index())
+        .success(function (values, status, headers) {
+          $scope.cosmeticsList = values;
+        })
+        .error(function(values, status) {
+          alert('실패');
+
+        });
+    };
+
+    $scope.getInterestList();
+
+  })
+
+  .controller('SearchCtrl', function ($scope, HttpSvc2, $rootScope, AuthService, $location) {
+
+    $scope.submit = function (cos_brand) {  //화장품 검색
+      HttpSvc2.getSearch(cos_brand)
+        .success(function (values) {
+          $scope.list = values;
+        }).error(function (values, status) {
+        alert('Wrong stuff');
+      });
+    };
+
+    $scope.viewInterest = function() {  //관심리스트 보기
+      $location.path('/tab/interest');
+    };
+
+    $scope.save = function (interest) {  //관심리스트 저장
+      var interestVO = {
+        member_index: AuthService.index(),
+        cos_index: interest.cos_index
+      };
+      HttpSvc2.addInterest(interestVO)
+        .success(function (values) {
+          if(values == 1)
+            alert('저장하였습니다.');
+          else
+            alert('이미 저장되었습니다.');
+        }).error(function (status) {
+        alert('저장 실패');
+        alert(status);
+      });
+    };
+
+  })
+/************************************예은 코드끝*****************************************/
 ;

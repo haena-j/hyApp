@@ -97,17 +97,46 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       controller:'searchApiCtrl'
     })
     .state('userSharedPage-detail', {
-      url: '/userSharedPage:detail',
-      templateUrl: 'templages/userSharedPage-detail.html',
+      url: '/userSharedPage-detail',
+      templateUrl: 'templates/userSharedPage-detail.html',
       controller:'SharedPageDetailCtrl'
-    });
+    })
+  //**************************************** 예은 추가분****************************************
+    .state('tab.cosmetics', { //화장품전체목록
+      url: '/cosmetics',
+      views: {
+        'tab-cosmetics': {
+          templateUrl: 'templates/tab-cosmetics.html',
+          controller: 'CosmeticsCtrl'
+        }
+      }
+    })
+
+    .state('tab.search', { //화장품검색
+      url: '/search',
+      views: {
+        'tab-search': {
+          templateUrl: 'templates/tab-search.html',
+          controller: 'SearchCtrl'
+        }
+      }
+    })
+
+    .state('tab.interest', { //관심리스트목록
+      url: '/interest',
+      views: {
+        'tab-interest': {
+          templateUrl: 'templates/tab-interest.html',
+          controller: 'InterestCtrl'
+        }
+      }
+    })
+  //****************************************예은추가분 끝****************************************
+  ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider
     .otherwise('/login');
 })
-  // .run(function($httpBackend){
-  //   $httpBackend.whenGET(/templates\/\w+.*/).passThrough();
-  // })
 
   .run(function ($rootScope, $state, AuthService, AUTH_EVENTS) {
     $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {

@@ -1,17 +1,5 @@
 angular.module('starter.services', [])
 
-  .service('JoinSvc', function ($http, HOST) {
-    //새로운 회원 등록 (member table에 새로운 member 추가)
-    this.addMember = function (query) {
-      return  $http({
-        url: HOST + '/api/member',
-        method: 'POST',
-        data: query,
-        headers: {'Content-Type': 'application/json'}
-      });
-    };
-  })
-
   .service('HttpSvc', function($http, HOST) {
     //Member table에 등록된 모든 정보 가져옴
     this.getMemberList = function () {
@@ -69,7 +57,7 @@ angular.module('starter.services', [])
     // MemberIndex 가 가지고있는 화장품들 데이터 가져오기
     this.getMyCosmeticsByMemberIndex= function (member_index) {
       return $http({
-        url: HOST + '/api/CosInfoListByMemberIndex',
+        url: HOST + '/api/mycostableList',
         method: 'POST',
         data: member_index,
         headers: {'Content-Type': 'application/json'}
@@ -192,5 +180,44 @@ angular.module('starter.services', [])
   .config(function ($httpProvider) {
     $httpProvider.interceptors.push('AuthInterceptor');
   })
+
+/************************************예은 코드*****************************************/
+  .service('HttpSvc2', function ($http, HOST) {
+    this.getCosmeticsList = function () {
+      return $http({
+        url: HOST + '/api/cosmeticsList',
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.getSearch = function (query) { //화장품 검색하기,
+      return $http({
+        url: HOST + '/api/search',
+        method: 'POST',
+        data: query,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.addInterest = function (interest) { //관심리스트등록
+      return $http({
+        url: HOST + '/api/interest',
+        method: 'POST',
+        data: interest,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.getInterestList = function (query) {  //관심리스트 불러오기
+      return $http({
+        url: HOST + '/api/interestList',
+        method: 'POST',
+        data: query,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+  })
+/************************************예은 코드끝*****************************************/
 ;
 
