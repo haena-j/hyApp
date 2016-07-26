@@ -5,6 +5,22 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
+  <!-- User Tab -->
+  <ion-tab title="Member" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/member">
+    <ion-nav-view name="tab-member"></ion-nav-view></ion-tab>
+
+  <!-- Api Tab-->
+  <ion-tab title="Api" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/api">
+    <ion-nav-view name="tab-api"></ion-nav-view>
+  </ion-tab>
+
+  <!-- userSharedPage Tab-->
+  <ion-tab title="화장대엿보기" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/userSharedPage">
+    <ion-nav-view name="tab-userSharedPage"></ion-nav-view>
+  </ion-tab>
+
+
+  <!--예은 추가분-->
   <!-- Cosmetics Tab -->
   <ion-tab title="Cosmetics" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/cosmetics">
     <ion-nav-view name="tab-cosmetics"></ion-nav-view>
@@ -19,10 +35,5 @@ navigation history that also transitions its views in and out.
   <ion-tab title="Interest" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/interest">
     <ion-nav-view name="tab-interest"></ion-nav-view>
   </ion-tab>
-
-  <!-- login Tab -->
-  <ion-tab title="Login" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/login">
-    <ion-nav-view name="tab-login"></ion-nav-view>
-  </ion-tab>
-
+  <!--예은추가분 끝-->
 </ion-tabs>

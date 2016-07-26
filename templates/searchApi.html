@@ -1,0 +1,26 @@
+<link href="css/style.css" rel="stylesheet">
+<ion-view view-title="검색결과" ng-controller="searchApiCtrl">
+  <ion-content class="padding">
+    <table class="table table-striped .table-bordered .table-condensed">
+      <thead>
+      </thead>
+      <tbody>
+      <div ng-repeat="result in searchList">
+
+          <img src={{result.image_url}}><br>
+          제목 : {{ result.title}}<br>
+          publish_date : {{ result.publish_date}}<br>
+          최저가 : {{ result.price_min}}<br>
+          최고가 : {{ result.price_max}}<br>
+          브랜드 : {{ result.brand}}<br>
+          쇼핑몰 : {{ result.shoppingmall}}<br>
+          카테고리 : {{result.type}}<br>
+          부가설명 : {{ result.description}}<br>
+          <button type="button" ng-click="showSelected(result)">저장</button>
+
+      </div>
+      </tbody>
+    </table>
+    <button class="button button-positive" type="button" ng-click="getNextResult()">다음페이지</button>
+  </ion-content>
+</ion-view>
