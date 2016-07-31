@@ -1,0 +1,41 @@
+<ion-view view-title="Join">
+  <ion-content class="padding">
+
+    <form method="post" name="myForm">
+      <div class="list" ng-class="{ 'has-error' : myForm.name.$invalid && !myForm.name.$pristine }">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label" >이름</span>
+           <input type="text" placeholder="홍길동" name="name" ng-model="join.name" required>
+          <span ng-show="myForm.name.$error.required">* 이름을 입력해주세요</span>
+          </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label" >아이디</span>
+       <input type="text" placeholder="User ID" name="id" ng-model="join.id" required>
+          <!-- show an error if this isn't filled in -->
+          <span ng-show="myForm.id.$error.required">* ID를 입력해주세요</span>
+          </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label" >비밀번호</span>
+          <input type="password" placeholder="User Password" name="password" ng-model="join.password" required>
+          <span ng-show="myForm.password.$error.required">* 비밀번호를 입력해주세요</span>
+          </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label" >생년월일</span>
+          <input type="text" placeholder="901010" name="birth" ng-model="join.birth">
+        </label>
+        <p>
+          <input type="file" ngf-select ng-model="join.picFile" name="file" accept="image/*" ngf-max-size="2MB" required  ngf-model-invalid="errorFile">
+          <i ng-show="myForm.file.$error.required">*required</i><br>
+          <i ng-show="myForm.file.$error.maxSize">File too large
+            {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+          <img ng-show="myForm.file.$valid" ngf-thumbnail="join.picFile" class="thumb">
+          <button ng-click="join.picFile = null" ng-show="join.picFile">Remove</button>
+        </p>
+        <div align="center">
+        <button class="button button-positive" type="button" ng-click="submit(join)">회원가입</button>
+        <button class="button button-positive" type="reset">취소</button>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
