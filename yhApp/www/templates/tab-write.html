@@ -1,0 +1,61 @@
+<!--정민/ 내화장품등록페이지
+20160727 최종수정 -->
+<ion-view view-title="Write">
+  <ion-content class="padding">
+
+    <form action="/write" method="post" name="myCosmeticsForm">
+      <div class="list" ng-class="{ 'has-error' : myCosmeticsForm.name.$invalid && !myCosmeticsForm.name.$pristine }" ng-controller="WriteCtrl">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label" >화장품 찾기</span>
+          <input type="text" name="cos_index" ng-model="write.cos_index" required>
+          <span ng-show="myCosmeticsForm.cos_index.$error.required">* 화장품을 선택해 주세요 </span>
+        </label>
+
+        <button class="button button-positive" type="button" ng-click="searchCosByBrand()">화장품 검색</button>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <p>
+            <input type="file" ngf-select ng-model="write.picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+            <i ng-show="myCosmeticsForm.file.$error.required">* 화장품 사진을 등록해 주세요</i><br>
+            <i ng-show="myCosmeticsForm.file.$error.maxSize">File too large
+              {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+            <img ng-show="myCosmeticsForm.file.$valid" ngf-thumbnail="write.picFile" class="thumb">
+            <button ng-click="write.picFile = null" ng-show="write.picFile">Remove</button>
+          </p>
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label" >개봉날짜</span>
+          <input type="text" placeholder="0000-00-00" name="m_open_date" ng-model="write.m_open_date" required>
+          <span ng-show="myCosmeticsForm.m_open_date.$error.required">* 개봉 날짜를 입력해 주세요</span>
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label" >만료날짜</span>
+          <input type="text" placeholder="0000-00-00" name="m_expire_date" ng-model="write.m_expire_date" required>
+          <!-- show an error if this isn't filled in -->
+          <span ng-show="myCosmeticsForm.m_expire_date.$error.required">* 만료 날짜를 입력해 주세요</span>
+        </label>
+
+        <!--회원 아이디의 멤버인덱스로 저장시키는 것으로 변경 -->
+        <!--<label class="item item-input item-stacked-label">-->
+          <!--<span class="input-label" >회원 번호</span>-->
+          <!--<input type="text" placeholder="1" name="member_index" ng-model="write.member_index" required>-->
+          <!--<span ng-show="myCosmeticsForm.member_index.$error.required">* 회원 번호를 입력해 주세요</span>-->
+        <!--</label>-->
+
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label" >리뷰</span>
+        <input type="text" placeholder="OO에 대한 리뷰 작성" name="m_review" ng-model="write.m_review" required>
+        <span ng-show="myCosmeticsForm.m_review.$error.required">* 리뷰를 작성해 주세요.</span>
+        </label>
+
+        <div align="center">
+          <button class="button button-positive" type="button" ng-click="submit(write)">내 화장품 등록</button>
+          <button class="button button-positive" type="reset">취소</button>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

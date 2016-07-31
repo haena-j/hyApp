@@ -1,0 +1,31 @@
+<!--정민/ 내화장품목록페이지
+20160727 최종수정 -->
+<ion-view view-title="Mycoslist">
+  <ion-content class="padding">
+    <h3>내 화장품 목록</h3>
+    <div  ng-controller="MycoslistCtrl">
+      <!--<a ui-sref="mycossearchApi">gogo</a>-->
+      <!--<button class="button button-block button-positive" type="button" ng-click="gotomycosSearchApi()">검색</button>-->
+      <table class="table table-striped .table-bordered .table-condensed">
+        <thead>
+        <tr>
+          <td>&nbsp;개봉날짜</td>
+          <td>&nbsp;만료날짜</td>
+          <td>&nbsp;화장품품번</td>
+          <td>&nbsp;회원번호</td>
+          <td>&nbsp;리뷰</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="mycoslist in mycosmeticsList">
+          <td>&nbsp;&nbsp;{{mycoslist.m_open_date }}</td>
+          <td>&nbsp;&nbsp;{{mycoslist.m_expire_date }}</td>
+          <td>&nbsp;&nbsp;{{mycoslist.cos_index }}</td>
+          <td>&nbsp;&nbsp;{{mycoslist.member_index }}</td>
+          <td>&nbsp;&nbsp;{{mycoslist.m_review }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </ion-content>
+</ion-view>
