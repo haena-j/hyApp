@@ -149,9 +149,11 @@ memo : service는 HttpSvc 로 통일
   .service('AuthService', function($q, $http, USER_ROLES, HOST) {
     var LOCAL_TOKEN_KEY = 'yourTokenKey';
     var id = '';
+    var name = '';
     var index = '';
     var password = '';
     var image = '';
+    var birth ='';
     var isAuthenticated = false;
     var role = '';
     var authToken;
@@ -170,9 +172,11 @@ memo : service는 HttpSvc 로 통일
 
     function useCredentials(token) {
       index = token.split(',')[0];
-      id = token.split(',')[1];
-      password = token.split(',')[2];
-      image = token.split(',')[3];
+      name = token.split(',')[1];
+      id = token.split(',')[2];
+      password = token.split(',')[3];
+      image = token.split(',')[4];
+      birth = token.split(',')[5];
       isAuthenticated = true;
       authToken = token;
       if (id == 'admin') {
@@ -190,8 +194,10 @@ memo : service는 HttpSvc 로 통일
       authToken = undefined;
       index='';
       id = '';
+      name = '';
       password='';
       image='';
+      birth='';
       isAuthenticated = false;
       $http.defaults.headers.common['X-Auth-Token'] = undefined;
       window.localStorage.removeItem(LOCAL_TOKEN_KEY);
@@ -208,7 +214,7 @@ memo : service는 HttpSvc 로 통일
         });
         request.success(function (values) {
           if (values != null && values != "") {
-            storeUserCredentials(values.member_index + ',' + id + ',' + pw + ',' + values.image + ',yourServerToken');
+            storeUserCredentials(values.member_index + ',' + values.name + ',' + id + ',' + pw + ',' + values.image + ',' + values.birth + ',yourServerToken');
             resolve('Login success.');
           } else {
             reject('Login Failed.');
@@ -237,9 +243,13 @@ memo : service는 HttpSvc 로 통일
       logout: logout,
       isAuthorized: isAuthorized,
       isAuthenticated: function() {return isAuthenticated;},
+      destroyUserCredentials: destroyUserCredentials,
+
       id: function() {return id;},
+      name: function () {return name;},
       role: function() {return role;},
       index: function () {return index;},
+      birth: function() {return birth},
       image: function () {return image;}
     };
   })

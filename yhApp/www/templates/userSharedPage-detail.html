@@ -1,3 +1,10 @@
+<ion-header-bar class="bar-positive">
+  <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
+  <div class="buttons">
+    <button class="button button-icon ion-android-search"
+            ng-click="searchCosmetics(cos_name)"></button>
+  </div>
+</ion-header-bar>
 <ion-view view-title="화장대상세페이지">
   <ion-content class="padding">
     <table class="table table-striped .table-bordered .table-condensed">

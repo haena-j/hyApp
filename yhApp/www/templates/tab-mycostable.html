@@ -1,5 +1,12 @@
 <!--정민/ 내화장품목록페이지
 20160727 최종수정 -->
+<ion-header-bar class="bar-positive">
+  <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
+  <div class="buttons">
+    <button class="button button-icon ion-android-search"
+            ng-click="searchCosmetics(cos_name)"></button>
+  </div>
+</ion-header-bar>
 <ion-view view-title="Mycostable">
   <ion-content class="padding">
     <div class="list">

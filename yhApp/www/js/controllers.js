@@ -36,7 +36,7 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
   })
 
   //로그인 관련 Ctrl (login.html)
-  .controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService) {
+  .controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService, $location) {
     $scope.data = {};
     if(AuthService.isAuthenticated() == true){
       $state.go('tab.main');
@@ -44,6 +44,7 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
     $scope.login = function(data) {
       AuthService.login(data.id, data.password).then(function(authenticated) {
         $state.go('tab.main', {}, {reload: true});
+
         $scope.setCurrentUserId(data.id);
       }, function(err) {
         $ionicPopup.alert({
@@ -141,10 +142,33 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
 
 
   //설정 (settings.html)
-  .controller('SettingCtrl', function ($scope, AuthService, $location) {
+  .controller('SettingCtrl', function ($scope, AuthService, $location,HOST, Upload, $timeout, $ionicPopup) {
+    $scope.pic = HOST.toString() + AuthService.image();
     $scope.logout = function () {     //로그아웃기능
       AuthService.logout();
       $location.path('/login');
+    };
+    $scope.changePhoto = function (param) {
+      var file = Upload.upload({
+        url: HOST + "/api/updateMemberImage",
+        method: "POST",
+        data: {
+          id: AuthService.id(),
+          files: param
+        }
+      }).then(function (response) {
+        $timeout(function () {
+          $ionicPopup.alert({
+            title: '프로필 사진 변경',
+            template: '변경 되었습니다'
+          });
+        });
+        location.reload();
+      }, function (evt) {
+        alert("error");
+        // Math.min is to fix IE which reports 200% sometimes
+        param.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+      });
     };
   })
 
@@ -307,7 +331,6 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
       HttpSvc.getSearch($location.search().param)   //혜윤추가.. 수정이필요
         .success(function (values) {
           $scope.cosmeticsList = values;
-
         }).error(function (values, status) {
       });
 
