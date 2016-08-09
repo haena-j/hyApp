@@ -1,4 +1,5 @@
 package com.yhproject.controller;
+
 import com.yhproject.Constant;
 import com.yhproject.domian.*;
 import com.yhproject.persistence.*;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- 최종변경일 : 20160829 15:50
- 변경자 : 정혜윤
- memo :
+ * 최종변경일 : 20160829 15:50
+ * 변경자 : 정혜윤
+ * memo :
  **/
 @RestController
 public class ApiController {
@@ -36,12 +37,18 @@ public class ApiController {
     private InterestMapper interestMapper;
 
     /***************************************혜윤 부분***************************************/
-    //다음 api이용한 화장품검색결과 (관리자) -혜윤
+    /**
+     * 다음 api이용한 화장품검색결과 (관리자) -혜윤
+     * 다음 API를 이용한 상품정보 불러오기
+     *
+     * @param query
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST, value = "api/daumSearch")
-    public List<searchResultVO> getDaumSearch(@RequestBody List<String> query){
-        System.out.println("검색어 : "+query.get(0) + "페이지 : " + query.get(1));
+    public List<searchResultVO> getDaumSearch(@RequestBody List<String> query) {
+        System.out.println("검색어 : " + query.get(0) + "페이지 : " + query.get(1));
 
-        String url = "https://apis.daum.net/shopping/search?apikey=1516115ec314a5b7745a9deb2e30158a74e3a58e&q="+ query.get(0) + "&output=json&result=20&pageno=" + query.get(1);
+        String url = "https://apis.daum.net/shopping/search?apikey=1516115ec314a5b7745a9deb2e30158a74e3a58e&q=" + query.get(0) + "&output=json&result=20&pageno=" + query.get(1);
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders header = new HttpHeaders();
@@ -63,20 +70,20 @@ public class ApiController {
         JSONParser parser = new JSONParser();
 
         JSONObject obj = (JSONObject) parser.parse(response);
-        JSONObject channel = (JSONObject)obj.get("channel");
-        JSONArray item = (JSONArray)channel.get("item");
-        for(int i = 0; i < item.size(); i++){
-            JSONObject imsi = (JSONObject)item.get(i);
+        JSONObject channel = (JSONObject) obj.get("channel");
+        JSONArray item = (JSONArray) channel.get("item");
+        for (int i = 0; i < item.size(); i++) {
+            JSONObject imsi = (JSONObject) item.get(i);
 
-            String publish_date = (String)imsi.get("publish_date");
-            String title = (String)imsi.get("title");
-            String image_url = (String)imsi.get("image_url");
-            String description = (String)imsi.get("description");
-            String price_min = (String)imsi.get("price_min");
-            String brand = (String)imsi.get("brand");
-            String price_max = (String)imsi.get("price_max");
-            String shoppingmall = (String)imsi.get("shoppingmall");
-            String type = (String)imsi.get("category_name");
+            String publish_date = (String) imsi.get("publish_date");
+            String title = (String) imsi.get("title");
+            String image_url = (String) imsi.get("image_url");
+            String description = (String) imsi.get("description");
+            String price_min = (String) imsi.get("price_min");
+            String brand = (String) imsi.get("brand");
+            String price_max = (String) imsi.get("price_max");
+            String shoppingmall = (String) imsi.get("shoppingmall");
+            String type = (String) imsi.get("category_name");
             String splitStr[] = type.split("&gt;");
             type = splitStr[splitStr.length - 1];
             searchResultVO result_data = new searchResultVO();
@@ -92,31 +99,33 @@ public class ApiController {
 
             result_list.add(result_data);
         }
+
         return result_list;
     }
 
     //회원 사진 업데이트 -혜윤
-    @RequestMapping(method = RequestMethod.POST, value="api/updateMemberImage")
-    public void updateMemberImage(@ModelAttribute MemberVO member){
+    @RequestMapping(method = RequestMethod.POST, value = "api/updateMemberImage")
+    public void updateMemberImage(@ModelAttribute MemberVO member) {
         System.out.println("update Image : " + member);
         File rootFolder = new File(Constant.ROOT_FOLDER + Constant.UPLOAD_FOLDER);
         AttachVO attach;
         try {
-            attach = FileUtil.fileUpload(member.getFiles(),rootFolder.getAbsolutePath());
-            String url = Constant.UPLOAD_FOLDER +"/"+ attach.getUpd_name();
+            attach = FileUtil.fileUpload(member.getFiles(), rootFolder.getAbsolutePath());
+            String url = Constant.UPLOAD_FOLDER + "/" + attach.getUpd_name();
             member.setImage(url);
             memberMapper.updateMemberImage(member);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     //신규 member 데이터 db에 저장 -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/main")
     public String addMember(@ModelAttribute MemberVO member) {
         System.out.println(member.toString());
-        if(member.getFiles() == null){
-            member.setImage( Constant.UPLOAD_FOLDER +"/no_image.jpg");
-        }else {
+        if (member.getFiles() == null) {
+            member.setImage(Constant.UPLOAD_FOLDER + "/no_image.jpg");
+        } else {
             File rootFolder = new File(Constant.ROOT_FOLDER + Constant.UPLOAD_FOLDER);
 
             AttachVO attach = null;
@@ -131,7 +140,8 @@ public class ApiController {
         memberMapper.insertMember(member);
         return "true";
     }
-//memberList 불러오기 -혜윤
+
+    //memberList 불러오기 -혜윤
     @RequestMapping(method = RequestMethod.GET, value = "api/memberList")
     public List<MemberVO> getMemberList() {
         return memberMapper.findAll();
@@ -146,13 +156,12 @@ public class ApiController {
         System.out.println("test : " + cosmeticsMapper.findCosByName(cosmetics.getCos_name()));
         test = cosmeticsMapper.findCosByName(cosmetics.getCos_name());
 
-        if(test == null) {
+        if (test == null) {
             cosmeticsMapper.insertCosmetics(cosmetics);
             System.out.println("DB에 저장할 cosmetics: " + cosmetics.toString());
             r.setResult(0);
             r.setMsg("새로운 화장품 " + cosmetics.getCos_name() + " 이 저장되었습니다.");
-        }
-        else{
+        } else {
             r.setResult(1);
             r.setMsg("이미존재하는 화장품정보 입니다.\n" + cosmetics.getCos_name());
 
@@ -161,17 +170,17 @@ public class ApiController {
     }
 
     //비슷한화장품 갖고있는 회원 상위 3개 리스트 전송 -혜윤
-   @RequestMapping(method = RequestMethod.POST, value = "api/getUserRelation")
+    @RequestMapping(method = RequestMethod.POST, value = "api/getUserRelation")
     public List<UserRelationVO> getUserRelation(@RequestBody int member_idx) {
         return userRelationMapper.findByMemberIndex(member_idx);
     }
 
     //화장대 엿보기 - 유사한 테이블 상위 3개 리스트 전송  -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/getRelatedMemberList")
-    public List<RelatedMemberVO> getRelatedMemberList(@RequestBody int member_idx){
+    public List<RelatedMemberVO> getRelatedMemberList(@RequestBody int member_idx) {
         List<UserRelationVO> userRelationList = getUserRelation(member_idx);
         List<RelatedMemberVO> memberList = new ArrayList<>();
-        for(int i = 0; i < userRelationList.size(); i++){
+        for (int i = 0; i < userRelationList.size(); i++) {
             int m_idx = userRelationList.get(i).getRelated_member_index();
             MemberVO mem = memberMapper.findByIndex(m_idx);
             RelatedMemberVO relatedMem = new RelatedMemberVO();
@@ -188,30 +197,29 @@ public class ApiController {
 
     //추천수 ++ -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/updateMemberStar")
-    public void updateMemberStar(@RequestBody String member_id){
+    public void updateMemberStar(@RequestBody String member_id) {
         memberMapper.updateMemberStar(member_id);
     }
+
     //화장대엿보기 - 추천수순 상위 3개 리스트 전송 -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/getHighRankList")
-    public List<RelatedMemberVO> getHighRankList(@RequestBody int index){
+    public List<RelatedMemberVO> getHighRankList(@RequestBody int index) {
         System.out.println(memberMapper.findHighRankList());
         return memberMapper.findHighRankList();
     }
 
 
     //로그인 관련 회원id와 pw 확인 -혜윤
-   @RequestMapping(method = RequestMethod.POST,value = "api/login")
-    public MemberVO checkLoginInfo(@RequestBody MemberVO member){
-        MemberVO result =  memberMapper.findById(member.getId());
+    @RequestMapping(method = RequestMethod.POST, value = "api/login")
+    public MemberVO checkLoginInfo(@RequestBody MemberVO member) {
+        MemberVO result = memberMapper.findById(member.getId());
         System.out.println("login check : " + member.getId());
-        if(result == null) {
+        if (result == null) {
             return null;
-        }
-        else if(result.getPassword().equals(member.getPassword())) {
+        } else if (result.getPassword().equals(member.getPassword())) {
             System.out.println("return id : " + result.getId() + ", index : " + result.getMember_index() + ", image: " + result.getImage());
             return result;
-        }
-        else
+        } else
             return null;
     }
     /***************************************혜윤 부분끝***************************************/
@@ -219,11 +227,11 @@ public class ApiController {
 
     //화장품 선택 후 등록이 된다! 혜윤이가 병합 후 내가 수정한 부분
     @RequestMapping(method = RequestMethod.POST, value = "/api/myCosmetics")
-    public void addMyCosmetics2(@ModelAttribute My_CosmeticsVO myCosmetics){
+    public void addMyCosmetics2(@ModelAttribute My_CosmeticsVO myCosmetics) {
         System.out.println("add 진입");
         System.out.println("m_open_date :" + myCosmetics);
         File rootFolder = new File(Constant.ROOT_FOLDER + Constant.UPLOAD_FOLDER);
-        if(myCosmetics.getFiles() == null){             //사진등록을 안해서 File 정보가 없을경우
+        if (myCosmetics.getFiles() == null) {             //사진등록을 안해서 File 정보가 없을경우
             //방법 1) DB파일에 등록된 사진(no_image)를 저장해준다
 //            myCosmetics.setM_cosimage(Constant.UPLOAD_FOLDER + "/no_image.jpg");
             // 방법 2) 등록하려는 화장품의 기본이미지로 저장해준다
@@ -241,7 +249,7 @@ public class ApiController {
         }
 
         List<Integer> member_index_list = my_CosmeticsMapper.findByCos(myCosmetics.getCos_index());
-        for(int i = 0; i < member_index_list.size(); i++) {
+        for (int i = 0; i < member_index_list.size(); i++) {
             UserRelationVO userRelationVO = new UserRelationVO();
             userRelationVO.setMember_index(myCosmetics.getMember_index());
             userRelationVO.setRelated_member_index(member_index_list.get(i));
@@ -252,7 +260,7 @@ public class ApiController {
                 userRelationVO.setRelated_member_index(myCosmetics.getMember_index());
                 userRelationMapper.insertUserRelation(userRelationVO);
                 System.out.println("insert: " + userRelationVO.toString());
-            }catch (Exception e){
+            } catch (Exception e) {
                 userRelationMapper.updateUserRelation(userRelationVO);
                 userRelationVO.setMember_index(member_index_list.get(i));
                 userRelationVO.setRelated_member_index(myCosmetics.getMember_index());
@@ -271,7 +279,7 @@ public class ApiController {
     public List<AllInfoOfMyCosmeticsVO> findByMemIndex(@RequestBody int member_index) {
 //        System.out.println("memberIndex: " + member_index);
 
-        List <AllInfoOfMyCosmeticsVO> allList = new ArrayList<>();
+        List<AllInfoOfMyCosmeticsVO> allList = new ArrayList<>();
         List<My_CosmeticsVO> mycostable = my_CosmeticsMapper.findByMemIndex(member_index);
         for (int i = 0; i < mycostable.size(); i++) {
             int cos_index = mycostable.get(i).getCos_index();
@@ -362,7 +370,6 @@ public class ApiController {
     /***************************************정민 부분끝***************************************/
 
 
-
     /***************************************예은 부분***************************************/
 
     /// 관심리스트 저장
@@ -385,16 +392,17 @@ public class ApiController {
 
         return 1;
     }
-        /// 화장품 검색
-        @RequestMapping(method = RequestMethod.POST, value = "/api/search")
-        public List<CosmeticsVO> getSearch(@RequestBody String query) {
-            System.out.println("검색어: " + query);
 
-            List<CosmeticsVO> r = cosmeticsMapper.findCosListByName(query);
-            System.out.println("전송값확인: " + r.toString());
-            return r;
+    /// 화장품 검색
+    @RequestMapping(method = RequestMethod.POST, value = "/api/search")
+    public List<CosmeticsVO> getSearch(@RequestBody String query) {
+        System.out.println("검색어: " + query);
 
-        }
+        List<CosmeticsVO> r = cosmeticsMapper.findCosListByName(query);
+        System.out.println("전송값확인: " + r.toString());
+        return r;
+
+    }
 
     /// 화장품 전체목록 불러오기
     @RequestMapping(method = RequestMethod.GET, value = "/api/cosmeticsList")
