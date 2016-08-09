@@ -1,0 +1,20 @@
+<ion-view view-title="리뷰상세페이지">
+  <ion-content class="padding">
+    <table class="table table-striped .table-bordered .table-condensed">
+      <thead>
+      </thead>
+      <tbody>
+      <div ng-controller="MyCosTableDetailCtrl">
+        <img src={{mycostable.m_cosimage}}><br>
+        개봉날짜 : {{mycostable.m_open_date}}<br>
+        사용기한 : {{mycostable.m_expire_date}}<br>
+        후기 : {{mycostable.m_review}}<br>
+
+      </div>
+      </tbody>
+    </table>
+    <button type="button" ng-click="editDetail()">수정</button>
+    <button type="button" ng-click="deleteDetail(mycostable)">삭제</button>
+
+  </ion-content>
+</ion-view>

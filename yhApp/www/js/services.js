@@ -63,14 +63,7 @@ memo : service는 HttpSvc 로 통일
       });
     };
     /****************************혜윤부분끝****************************/
-    /****************************정민부분****************************/
-    this.getMy_Cosmetics = function () {
-      return $http({
-        url: HOST + '/api/mycosmeticsList',
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'}
-      });
-    };
+    /****************************정민부분*****************************/
 
     this.getCosInformation2 = function(cos_index) {
       return $http({
@@ -88,6 +81,7 @@ memo : service는 HttpSvc 로 통일
         headers: {'Content-Type': 'application/json'}
       });
     };
+
     this.findByMemIndex = function(param) {
       return $http({
         url: HOST + '/api/mycostableList', //이부분은 포스트맨에서 해준 것과 동일한 역할이라고볼 수 있음
@@ -96,6 +90,28 @@ memo : service는 HttpSvc 로 통일
         headers: {'Content-Type': 'application/json'}
       });
     };
+
+    this.findByMIndex = function(param) {
+      return $http({
+        url: HOST + '/api/mCosdetailByMIndex',
+        method: 'POST',
+        data: param,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+
+    this.deleteReview = function (param) {
+      return $http({
+        url: HOST + '/api/mCosdetailDelete',
+        method: 'POST',
+        data : param,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+
+
     /****************************정민부분끝****************************/
     /****************************예은부분****************************/
     this.getCosmeticsList = function () {

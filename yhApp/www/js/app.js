@@ -115,17 +115,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
-    .state('tab.mycoslist', { //추가2
-      url: '/mycoslist',
-      views: {
-        'tab-mycoslist': {
-          templateUrl: 'templates/tab-mycoslist.html',
-          controller: 'MycoslistCtrl'
-        }
-      }
-    })
-
-    .state('tab.mycostable', { // 추가3
+    .state('tab.mycostable', {
       url: '/mycostable',
       views: {
         'tab-mycostable': {
@@ -135,16 +125,35 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
-    .state('tab.writeaftersearch', {
+    .state('writeaftersearch', {
       url: '/writeaftersearch',
-      views: {
-        'tab-writeaftersearch': {
-          templateUrl: 'templates/tab-writeaftersearch.html',
-          controller: 'WriteAfterSearchCtrl'
-        }
-      }
+      templateUrl: 'templates/writeaftersearch.html',
+      controller: 'WriteAfterSearchCtrl'
     })
-  /*******************정민부분끝*******************/
+
+    .state('searchAtWrite', {
+      url: '/searchAtWrite',
+      templateUrl: 'templates/searchAtWrite.html',
+      controller: 'SearchAtWriteCtrl'
+
+    })
+
+    .state('mycostable-detail', {
+      url: '/mycostable-detail',
+      templateUrl: 'templates/mycostable-detail.html',
+      controller: 'MyCosTableDetailCtrl'
+
+    })
+
+    .state('mycostable-edit', {
+      url: '/mycostable-edit',
+      templateUrl: 'templates/mycostable-edit.html',
+      controller: 'MyCosTableEditCtrl'
+
+    })
+
+
+    /*******************정민부분끝*******************/
   /*******************예은부분*******************/
 
     .state('tab.search', { //화장품검색

@@ -24,7 +24,7 @@
             <td>&nbsp;&nbsp;<img src={{cosmeticsinformList.cos_pic}}></td>
           </tr>
         </table>
-        <button class="button button-positive" type="button" ng-click="searchCosByBrand()">다시 검색</button>
+        <button class="button button-positive" type="button" ng-click="reSearchCosByBrand()">다시 검색</button>
         <label class="item item-input item-stacked-label">
           <p>
             <input type="file" ngf-select ng-model="write.picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
@@ -37,17 +37,23 @@
         </label>
 
         <label class="item item-input item-stacked-label">
-          <span class="input-label" >개봉날짜</span>
-          <input type="text" placeholder="0000-00-00" name="m_open_date" ng-model="write.m_open_date" required>
-          <span ng-show="myCosmeticsForm.m_open_date.$error.required">* 개봉 날짜를 입력해 주세요</span>
+          <span class="input-label">개봉일자</span>
+          <input type="date" name="m_open_date" ng-model="write.m_open_date" required>
+          <span ng-show="myCosmeticsForm.m_open_date.$error.required">* 만료 날짜를 입력해 주세요</span>
         </label>
 
-        <label class="item item-input item-stacked-label">
-          <span class="input-label" >만료날짜</span>
-          <input type="text" placeholder="0000-00-00" name="m_expire_date" ng-model="write.m_expire_date" required>
-          <!-- show an error if this isn't filled in -->
-          <span ng-show="myCosmeticsForm.m_expire_date.$error.required">* 만료 날짜를 입력해 주세요</span>
-        </label>
+        <!--<label class="item item-input item-stacked-label">-->
+          <!--<span class="input-label" >개봉날짜</span>-->
+          <!--<input type="text" placeholder="0000-00-00" name="m_open_date" ng-model="write.m_open_date" required>-->
+          <!--<span ng-show="myCosmeticsForm.m_open_date.$error.required">* 개봉 날짜를 입력해 주세요</span>-->
+        <!--</label>-->
+
+        <!--<label class="item item-input item-stacked-label">-->
+          <!--<span class="input-label" >만료날짜</span>-->
+          <!--<input type="text" placeholder="0000-00-00" name="m_expire_date" ng-model="write.m_expire_date" required>-->
+          <!--&lt;!&ndash; show an error if this isn't filled in &ndash;&gt;-->
+          <!--<span ng-show="myCosmeticsForm.m_expire_date.$error.required">* 만료 날짜를 입력해 주세요</span>-->
+        <!--</label>-->
 
         <!--회원 아이디의 멤버인덱스로 저장시키는 것으로 변경 -->
         <!--<label class="item item-input item-stacked-label">-->
@@ -64,7 +70,7 @@
         </label>
 
         <div align="center">
-          <button class="button button-positive" type="button" ng-click="submit(write)">내 화장품 등록</button>
+          <button class="button button-positive" type="button" ng-click="submit2(write)">내 화장품 등록</button>
           <button class="button button-positive" type="reset">취소</button>
         </div>
       </div>

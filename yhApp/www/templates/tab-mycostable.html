@@ -9,50 +9,32 @@
 </ion-header-bar>
 <ion-view view-title="Mycostable">
   <ion-content class="padding">
-    <div class="list">
-      <form id="mycostable">
-        <label class="item item-input">
 
-        </label>
-      </form>
-    </div>
-   <table class="table table-striped .table-bordered .table-condensed">
-     <thead>
-     <tr>
-       <td>&nbsp;개봉날짜</td>
-       <td>&nbsp;만료날짜</td>
-       <td>&nbsp;화장품명</td>
-       <td>&nbsp;브랜드</td>
-       <td>&nbsp;가격</td>
-       <td>&nbsp;타입</td>
-       <td>&nbsp;사진</td>
-
-     </tr>
-     </thead>
-     <tbody>
      <button class="button button-block button-positive" type="button" ng-click="submit()">내 화장품 등록</button>
-     <tr ng-repeat="mycostable in mycosmeticsList">
-       <td>&nbsp;&nbsp;{{mycostable.m_open_date }}</td>
-       <td>&nbsp;&nbsp;{{mycostable.m_expire_date }}</td>
-       <td>&nbsp;&nbsp;{{mycostable.cos_name}}</td>
-       <td>&nbsp;&nbsp;{{mycostable.cos_brand}}</td>
-       <td>&nbsp;&nbsp;{{mycostable.cos_price}}</td>
-       <td>&nbsp;&nbsp;{{mycostable.cos_type}}</td>
-       <td>&nbsp;&nbsp;<img src={{mycostable.cos_pic}}></td>
-      <!-- <button type="button" ng-click="submit(mycostable)">click</button> -->
-     </tr>
-     <!--<tr ng-repeat="mycostable2 in mycosmeticsList2">-->
-       <!--<td>&nbsp;&nbsp;{{mycostable2.cos_name}}</td>-->
-       <!--<td>&nbsp;&nbsp;{{mycostable2.cos_brand}}</td>-->
-       <!--<td>&nbsp;&nbsp;{{mycostable2.cos_price}}</td>-->
-       <!--<td>&nbsp;&nbsp;<img src={{mycostable2.cos_pic}}></td>-->
+     <ion-list ng-controller="MycostableCtrl"  show-delete="shouldShowDelete" can-swipe="listCanSwipe"  show-reorder="shouldShowReorder">
+       <div>
+      <b>
+        &nbsp;화장품이름 &nbsp;&nbsp;
+        &nbsp;브랜드 &nbsp;&nbsp;
+        &nbsp;가격 &nbsp;&nbsp;
+        &nbsp;타입 &nbsp;&nbsp;
+        &nbsp;사진 &nbsp;&nbsp;
+
+        </b>
+       <ion-item ng-repeat="mycostable in mycosmeticsList">
+
+         |{{mycostable.cos_name}}
+         |{{mycostable.cos_brand}}
+         |{{mycostable.cos_price}}
+         |{{mycostable.cos_type}}
+         |<img ng-src="{{mycostable.cos_pic}}">
+         <button class="button button-positive" type="button" ng-click="detailOfMycosTable(mycostable.m_index)">상세보기</button>
+
+         </ion-item>
+
+         </div>
+     </ion-list>
 
 
-     <!--</tr>-->
-
-     <!-- 보내는 값 없으면 그냥 submit() -->
-
-     </tbody>
-   </table>
   </ion-content>
   </ion-view>

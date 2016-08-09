@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
   /*
-최종 변경일 : 20160727 16:40
+최종 변경일 : 20160809 16:11
 변경자 : 정혜윤
 memo : 사용자 정보가져올땐 AuthService 사용해주세요
             ex) 사용자 Id -> AuthService.id();   사용자 index -> AuthService.index();
@@ -238,14 +238,18 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
   /*******관리자 끝*********/
 /*******************혜윤부분끝*******************/
 
-  /*******************정민부분*******************/
+  /*******************정민부분********************/
+
+  // 내 화장대 리뷰쓰기
   .controller('WriteCtrl', function($scope, $ionicPopup, $log, HOST, Upload, $timeout, $location, AuthService){ //추가
     console.log("writeController");
 
     $scope.searchCosByBrand = function () {
-      $location.path('/tab/search');
+      $location.path('/searchAtWrite');
     };
   })
+
+  //로그인된 회원의 리뷰 목록
   .controller('MycostableCtrl', function ($scope, HttpSvc, $location, $rootScope, $ionicPopup, AuthService) { // 추가 4 html파일에서 submit 버튼이 있을때만 $scope쓴다
     var member_index = AuthService.index();
     HttpSvc.findByMemIndex(member_index)
@@ -261,10 +265,93 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
     $scope.submit = function () {
       $location.path('/tab/write');
     };
+
+    //내 화장대들 각 리뷰 상세페이지로 넘겨주는 부분
+    $scope.detailOfMycosTable = function(query) {
+      console.log("detailOfMyCosTable Query : " + query);
+      $location.path('/mycostable-detail').search({param: query});
+      location.reload();
+    };
+
+  })
+
+  // 리뷰 상세페이지
+  .controller('MyCosTableDetailCtrl', function ($scope, $location, HttpSvc, HOST, AuthService) {
+    var m_index = $location.search().param;
+    console.log("m_index" + m_index);
+    HttpSvc.findByMIndex(m_index)
+      .success(function (values) {
+        $scope.mycostable = values;
+      })
+
+    //수정페이지로 이동
+    $scope.editDetail = function () {
+      $location.path('/mycostable-edit').search({param: m_index});
+    };
+
+    //리뷰삭제
+    $scope.deleteDetail = function(query) {
+      HttpSvc.deleteReview(query)
+        .success( function() {
+          alert("삭제되었습니다.");
+          $location.path('/tab/mycostable');
+          location.reload();
+        })
+        .error( function(values) {
+          alert("삭제실패");
+        })
+
+    };
+  })
+
+  //리뷰 수정페이지
+  .controller('MyCosTableEditCtrl', function ($scope, $location, HttpSvc, Upload, $timeout, $log, $state, HOST, $rootScope) {
+    var m_index = $location.search().param;
+    var cos_index;
+    var member_index;
+    console.log("수정 할 리뷰 번호 : " + m_index);
+    $rootScope.m_index = m_index;
+    HttpSvc.findByMIndex(m_index)
+      .success(function (values) {
+        $scope.editmycostable = values;
+        console.log("editmycostable" + values.cos_index);
+        cos_index = values.cos_index;
+        member_index = values.member_index;
+      })
+
+    $scope.submit3 = function(editForm) {
+      console.log("edit" + $rootScope.m_index);
+      var file = Upload.upload({
+        url: HOST + '/api/mCosdetailEdit',
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        data: {
+          m_index: $rootScope.m_index,
+          m_open_date: editForm.m_open_date,
+          m_expire_date: editForm.m_expire_date,
+          cos_index: cos_index,
+          member_index: member_index,
+          m_review: editForm.m_review,
+          files: editForm.picFile
+        }
+      });
+      file.then(function(response) {
+        $timeout(function() {
+          alert(response.data);
+        });
+      }), function(evt) {
+        editForm.picFile.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total))
+      }
+
+
+      // $location.path('/tab/mycostable');
+      $state.go('tab.mycostable');
+      location.reload();
+    };
   })
 
   // 검색 후 화장품 등록 페이지
-  .controller ('WriteAfterSearchCtrl', function ($scope, $location, HttpSvc, HOST, $rootScope, $ionicPopup, AuthService, $log, Upload, $timeout) {
+  .controller ('WriteAfterSearchCtrl', function ($scope, $location, HttpSvc, HOST, $rootScope, $ionicPopup, AuthService, $log, Upload, $timeout, $state) {
     var cos_index = $location.search().param;
     console.log("writeAfterSearchCtrl 에서 등록 전 cos_index" + cos_index)
 
@@ -275,21 +362,62 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
           $scope.cosmeticsinformList = values;
           console.log("cosmeticsinform: " + $scope.cosmeticsinformList.cos_brand);
         })
-        .error(function (values) {
-          alert("Wrong access");
-        });
+      // .error(function (values) {
+      //   alert("Wrong access");
+      // });
     };
     $scope.writeAfterSearch();
 
     var member_index3 = AuthService.index();
     $scope.submit2 = function(write) {
+      // 보완할 수 없을까?..............
+      var m_open_date_toString = write.m_open_date.toString();
+      var yearString = m_open_date_toString.substring(11, 15);
+      var monthString = m_open_date_toString.substring(4, 7);
+
+      if (monthString == 'Jan')
+        monthString = '01';
+      else if (monthString == 'Feb')
+        monthString = '02';
+      else if (monthString == 'Mar')
+        monthString = '03';
+      else if (monthString == 'Apr')
+        monthString = '04';
+      else if (monthString == 'May')
+        monthString = '05';
+      else if (monthString == 'Jun')
+        monthString = '06';
+      else if (monthString == 'Jul')
+        monthString = '07';
+      else if (monthString == 'Aug')
+        monthString = '08';
+      else if (monthString == 'Sep')
+        monthString = '09';
+      else if (monthString == 'Oct')
+        monthString = '10';
+      else if (monthString == 'Nov')
+        monthString = '11';
+      else if (monthString == 'Dec')
+        monthString = '12';
+      var DateString = m_open_date_toString.substring(8, 10);
+      var selectedOpenDate = yearString + monthString + DateString;
+      // var i = new Integer();
+      // var i2 = i.parseInt(yearString);
+      // var editedExpireDate = Integer.parseInt
+      // var editedExpireDate = document.write(parseInt('yearString', 10));
+      var editedExpireDate = Number(yearString);
+      // alert("연도 자른거 숫자로 바꾸면" + editedExpireDate);
+      var expireDate = editedExpireDate + 2;
+      var expireDate2 = expireDate.toString();
+      var resultExpireDate = expireDate2 + monthString + DateString;
+      // alert("연도 2년 더하면" + expireDate2);
       var file = Upload.upload({
-        url: HOST + '/api/myCosmetics2',
+        url: HOST + '/api/myCosmetics',
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         data: {
-          m_open_date: write.m_open_date,
-          m_expire_date: write.m_expire_date,
+          m_open_date: selectedOpenDate,
+          m_expire_date: resultExpireDate,
           cos_index: cos_index,
           member_index: member_index3,
           m_review: write.m_review,
@@ -299,31 +427,57 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
 
       file.then(function(response) {
         $timeout(function() {
-          alert("새로운 화장품 등록 완료!");
+          alert(response.data);
         });
       }, function(evt) {
         write.picFile.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total))
       });
+
+      console.log("cosmeticsinform: " + write.m_open_date);
+      $state.go('tab.mycostable'); //등록 후 내화장대 목록으로 이동
+      // location.reload();
+
     };
 
 
     $scope.reSearchCosByBrand = function() {
-      $location.path('/tab/search');
+      $location.path('searchAtWrite');
       location.reload();
     };
   })
 
-  .controller('MycoslistCtrl', function ($scope, HttpSvc) { //추가
-    $scope.getMy_Cosmetics = function () {
-      HttpSvc.getMy_Cosmetics()
-        .success(function (values, status, headers) {
-          $scope.mycosmeticsList = values;
+  //리뷰 쓰는 페이지에서 화장품 검색
+  .controller('SearchAtWriteCtrl', function ($scope, HttpSvc, $location ) {
+    console.log("SearchAtWriteCtrl");
+    $scope.searchAtWriteSubmit = function (cos_brand) {
+      HttpSvc.getSearch(cos_brand)
+        .success(function (values) {
+          $scope.list = values;
+
         })
         .error(function (values, status) {
+          alert("wrong stuff");
         });
     };
-    $scope.getMy_Cosmetics();
+
+    $scope.selectToWriteReview = function (cos_index) {
+      HttpSvc.getCosInformation(cos_index)
+        .success(function (values) {
+          $scope.list2 = values;
+          //클릭한 화장품의 cos_index를 가지고 검색 후 화장품등록 페이지로 이동
+          $location.path('/writeaftersearch').search({param: values.cos_index });
+          location.reload();
+
+        }).error(function (values, status) {
+        alert('Wrong access');
+      });
+
+    };
+
   })
+
+
+
   /*******************정민부분끝*******************/
 
 /*******************예은부분*******************/
