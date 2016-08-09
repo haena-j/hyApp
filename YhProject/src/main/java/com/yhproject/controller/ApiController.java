@@ -17,12 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- 최종변경일 : 20160727 17:08
+ 최종변경일 : 20160829 15:50
  변경자 : 정혜윤
  memo :
- 정민언니"api/myCosmetics"  부분 내가 임의로 수정해놈 확인요망
- import org.json.simple 부분 오류날경우 : src/main/java/resources/WEB-INF 오른쪽클릭 -> Add as Library
- */
+ **/
 @RestController
 public class ApiController {
 
@@ -113,7 +111,7 @@ public class ApiController {
         }
     }
     //신규 member 데이터 db에 저장 -혜윤
-    @RequestMapping(method = RequestMethod.POST, value = "api/member")
+    @RequestMapping(method = RequestMethod.POST, value = "api/main")
     public String addMember(@ModelAttribute MemberVO member) {
         System.out.println(member.toString());
         if(member.getFiles() == null){
@@ -219,17 +217,19 @@ public class ApiController {
     /***************************************혜윤 부분끝***************************************/
     /***************************************정민 부분***************************************/
 
-    //내 화장대 등록부분 ---부분 수정함!(혜윤)
-    @RequestMapping(method = RequestMethod.POST, value = "api/myCosmetics")
-    public void addMyCosmetics(@RequestBody My_CosmeticsVO myCosmetics){
+    //화장품 선택 후 등록이 된다! 혜윤이가 병합 후 내가 수정한 부분
+    @RequestMapping(method = RequestMethod.POST, value = "/api/myCosmetics")
+    public void addMyCosmetics2(@ModelAttribute My_CosmeticsVO myCosmetics){
+        System.out.println("add 진입");
+        System.out.println("m_open_date :" + myCosmetics);
         File rootFolder = new File(Constant.ROOT_FOLDER + Constant.UPLOAD_FOLDER);
         if(myCosmetics.getFiles() == null){             //사진등록을 안해서 File 정보가 없을경우
             //방법 1) DB파일에 등록된 사진(no_image)를 저장해준다
-            myCosmetics.setM_cosimage(Constant.UPLOAD_FOLDER + "/no_image.jpg");
+//            myCosmetics.setM_cosimage(Constant.UPLOAD_FOLDER + "/no_image.jpg");
             // 방법 2) 등록하려는 화장품의 기본이미지로 저장해준다
-//          CosmeticsVO cos = cosmeticsMapper.findByCosIndex(myCosmetics.getCos_index()); //myCosmetics의 cos_index값으로 Cosmetics table에서 일치하는 값 검색
-//            myCosmetics.setM_cosimage(cos.getCos_pic()); //검색한 화장품의 기본이미지를 설정
-        }else {
+            CosmeticsVO cos = cosmeticsMapper.findByCosIndex(myCosmetics.getCos_index()); //myCosmetics의 cos_index값으로 Cosmetics table에서 일치하는 값 검색
+            myCosmetics.setM_cosimage(cos.getCos_pic()); //검색한 화장품의 기본이미지를 설정
+        } else {
             AttachVO attach;
             try {
                 attach = FileUtil.fileUpload(myCosmetics.getFiles(), rootFolder.getAbsolutePath());
@@ -239,7 +239,6 @@ public class ApiController {
                 e.printStackTrace();
             }
         }
-        my_CosmeticsMapper.insertMyCosmetics(myCosmetics);
 
         List<Integer> member_index_list = my_CosmeticsMapper.findByCos(myCosmetics.getCos_index());
         for(int i = 0; i < member_index_list.size(); i++) {
@@ -261,19 +260,16 @@ public class ApiController {
                 System.out.println("update: " + userRelationVO.toString());
             }
         }
+
+        System.out.println("m_open_date :" + myCosmetics);
         my_CosmeticsMapper.insertMyCosmetics(myCosmetics);
     }
 
-    //내가 등록한 화장품 전체 목록
-    @RequestMapping(method = RequestMethod.GET, value = "/api/mycosmeticsList")
-    public List<My_CosmeticsVO> getMy_Cosmetics() {
-        return my_CosmeticsMapper.findAll();
 
-    }
     //memeber_index에 따른 내 화장대 불러오기
     @RequestMapping(method = RequestMethod.POST, value = "/api/mycostableList") //member_index, cos_index로 화장대 전체정보 찾기
     public List<AllInfoOfMyCosmeticsVO> findByMemIndex(@RequestBody int member_index) {
-        System.out.println("memberIndex: " + member_index);
+//        System.out.println("memberIndex: " + member_index);
 
         List <AllInfoOfMyCosmeticsVO> allList = new ArrayList<>();
         List<My_CosmeticsVO> mycostable = my_CosmeticsMapper.findByMemIndex(member_index);
@@ -281,6 +277,7 @@ public class ApiController {
             int cos_index = mycostable.get(i).getCos_index();
             CosmeticsVO cosmetics = cosmeticsMapper.findByCosIndex(cos_index);
             AllInfoOfMyCosmeticsVO allInfoOfMyCosmetic = new AllInfoOfMyCosmeticsVO();
+            allInfoOfMyCosmetic.setM_index(mycostable.get(i).getM_index());
             allInfoOfMyCosmetic.setM_open_date(mycostable.get(i).getM_open_date());
             allInfoOfMyCosmetic.setM_expire_date(mycostable.get(i).getM_expire_date());
             allInfoOfMyCosmetic.setM_review(mycostable.get(i).getM_review());
@@ -292,7 +289,8 @@ public class ApiController {
 
 
             allList.add(allInfoOfMyCosmetic);
-            System.out.println("cosmetics name" + allList.get(0).getCos_name());
+//            System.out.println("cosmetics name" + allList.get(0).getCos_name());
+//            System.out.println("review index" + allList.get(0).getM_index());
         }
         return allList;
     }
@@ -300,24 +298,70 @@ public class ApiController {
     //화장품 인덱스로 화장품 정보 불러오기
     @RequestMapping(method = RequestMethod.POST, value = "/api/cosmeticsinformations")
     public CosmeticsVO getCosInformation(@RequestBody int cos_index) {
-        System.out.println("cos_index: " + cos_index);
+//        System.out.println("cos_index: " + cos_index);
 
         CosmeticsVO cosmeticsInformation = cosmeticsMapper.writeReviewByCosIndex(cos_index);
-        System.out.println("리뷰쓸 화장품 전송값 확인: " + cosmeticsInformation.toString());
+//        System.out.println("리뷰쓸 화장품 전송값 확인: " + cosmeticsInformation.toString());
         return cosmeticsInformation;
     }
 
-    //
     @RequestMapping(method = RequestMethod.POST, value = "/api/cosmeticsinformations2")
     public CosmeticsVO getCosInformation2(@RequestBody int cos_index) {
-        System.out.println("cos_index2: " + cos_index);
+//        System.out.println("cos_index2: " + cos_index);
 
         CosmeticsVO cosmeticsInformation2 = cosmeticsMapper.writeReviewByCosIndex(cos_index);
-        System.out.println("리뷰쓸 화장품 전송값 확인2: " + cosmeticsInformation2.toString());
+//        System.out.println("리뷰쓸 화장품 전송값 확인2: " + cosmeticsInformation2.toString());
         return cosmeticsInformation2;
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/api/mCosdetailByMIndex")
+    public My_CosmeticsVO findByMIndex(@RequestBody int m_index) {
+        System.out.println("리뷰 번호 : " + m_index);
+
+        My_CosmeticsVO my_cosmetics = my_CosmeticsMapper.findByMIndex(m_index);
+        System.out.println("수정하려는 리뷰번호에 담긴 my_cosmetics정보 :" + my_cosmetics.getCos_index());
+
+        return my_cosmetics;
+    }
+
+
+    // 회원 리뷰수정 혜윤이꺼참고로 코딩중!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 오류해결해야해
+    @RequestMapping(method = RequestMethod.POST, value = "/api/mCosdetailEdit")
+    public void updateReview(@ModelAttribute My_CosmeticsVO my_cosmetics) {
+        System.out.println("edit My_cosmetics's m_index: " + my_cosmetics);
+
+        File rootFolder2 = new File(Constant.ROOT_FOLDER + Constant.UPLOAD_FOLDER);
+        if (my_cosmetics.getFiles() == null) {
+            CosmeticsVO cosmetics = cosmeticsMapper.findByCosIndex(my_cosmetics.getCos_index());
+            my_cosmetics.setM_cosimage(cosmetics.getCos_pic());
+        } else {
+            AttachVO attachVO;
+            try {
+                attachVO = FileUtil.fileUpload(my_cosmetics.getFiles(), rootFolder2.getAbsolutePath());
+                String url = Constant.UPLOAD_FOLDER + "/" + attachVO.getPath();
+                my_cosmetics.setM_cosimage(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        my_CosmeticsMapper.updateReview(my_cosmetics);
+    }
+
+    //회원 리뷰 삭제 작성중
+    @RequestMapping(method = RequestMethod.POST, value = "/api/mCosdetailDelete")
+    public void deleteReview(@RequestBody My_CosmeticsVO my_cosmetics) {
+        System.out.println("삭제");
+        System.out.println("삭제할 m_index:" + my_cosmetics.getM_index());
+
+        my_CosmeticsMapper.deleteReview(my_cosmetics);
+
+    }
+
+
     /***************************************정민 부분끝***************************************/
+
+
 
     /***************************************예은 부분***************************************/
 

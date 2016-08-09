@@ -3,12 +3,15 @@ package com.yhproject.domian;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
+
 /**
  * Created by jungmini on 2016. 7. 9..
  */
 
 @Data
 public class My_CosmeticsVO {
+    private int m_index;
     private String m_open_date;
     private String m_expire_date;
     private int cos_index;
