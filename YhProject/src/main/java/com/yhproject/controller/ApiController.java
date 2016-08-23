@@ -155,7 +155,6 @@ public class ApiController {
         test.setCos_name("");
         System.out.println("test : " + cosmeticsMapper.findCosByName(cosmetics.getCos_name()));
         test = cosmeticsMapper.findCosByName(cosmetics.getCos_name());
-
         if (test == null) {
             cosmeticsMapper.insertCosmetics(cosmetics);
             System.out.println("DB에 저장할 cosmetics: " + cosmetics.toString());

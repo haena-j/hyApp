@@ -16,5 +16,6 @@ public class MemberVO {
     private String count;
     private String image;
     private int level;
+    private String level_name;
     private MultipartFile files;
 }
