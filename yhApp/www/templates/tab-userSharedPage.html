@@ -1,28 +1,29 @@
 <!--혜윤/ 화장대엿보기페이지
 20160727 최종수정 -->
-<ion-header-bar class="bar-positive">
+<ion-header-bar class="bar">
   <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
-  <div class="buttons">
-    <button class="button button-icon ion-android-search"
-            ng-click="searchCosmetics(cos_name)"></button>
-  </div>
+
+  <button class="button button-icon ion-android-search" id="searchButton"
+          ng-click="searchCosmetics(cos_name)"></button>
+  <button class="button button-icon ion-android-settings" id="settingsButton"
+          ng-click="goToSettings()"></button>
 </ion-header-bar>
 <ion-view view-title="화장대 엿보기">
   <ion-content class="padding">
-나와 유사한 화장대
+    나와 유사한 화장대
     <div class="row header">
-          <div class="col" ng-repeat="result in RelationList">
-            <img src={{host}}{{result.image}}><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
-            회원 ID : {{result.id}}<br>
-            이름 : {{result.name}}<br>
-            생년월일 : {{result.birth}}<br>
-            겹치는 화장품 개수 : {{result.count}}<br>
-            <button type="button" ng-click="giveStar(result)">추천</button>
-            <button type="button" ng-click="goToDetail(result)">상세보기</button>
-          </div>
+      <div class="col" ng-repeat="result in RelationList">
+        <img src={{host}}{{result.image}}><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
+        회원 ID : {{result.id}}<br>
+        이름 : {{result.name}}<br>
+        생년월일 : {{result.birth}}<br>
+        겹치는 화장품 개수 : {{result.count}}<br>
+        <button type="button" ng-click="giveStar(result)">추천</button>
+        <button type="button" ng-click="goToDetail(result)">상세보기</button>
       </div>
+    </div>
     인기 화장대
-    <div class="row header" >
+    <div class="row header">
       <div class="col" ng-repeat="result in highRankList">
         <img src={{host}}{{result.image}}><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
         회원 ID : {{result.id}}<br>

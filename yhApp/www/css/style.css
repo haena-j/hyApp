@@ -1,4 +1,24 @@
 /* Empty. Add your own CSS if you like */
+.bar {
+  position: relative;
+  overflow: hidden;
+}
+/*검색바 부분*/
+#searchInputBox {
+  width: 80%;
+  font-size: 8pt;
+  background-color: whitesmoke;
+  text-align: center;
+}
+#searchButton {
+  width: 10%;
+  color: gray;
+}
+#settingsButton{
+  width: 10%;
+  color: gray;
+}
+/*검색바 부분*/
 div {
   font-family: 맑은고딕;
   display: block;
@@ -13,27 +33,26 @@ div {
 }
 img {
   width: 70pt;
-
 }
-.thumb {  width:150px;}
+.thumb {
+  width:150px;
+}
 .progress div {  font-size: smaller;  background: orange;  width: 0;}
+
 table{
   text-align: center;
 }
-#searchInputBox {
-  width : 850px;
-  font-family: 맑은고딕;
-  font-size: 8pt;
-}
+
 .nav-bar-block, .bar {
-  background-color: #e4a2a3 !important;
 }
 .button-block, .button{
-  background-color: #e4a2a3 !important;
 }
 .tabs-color-active-positive{
   background-color: #e4a2a3 !important;
 }
 .tabs-icon-top{
   background-color: #e4a2a3 !important;
+}
+html {
+  height:100%;
 }

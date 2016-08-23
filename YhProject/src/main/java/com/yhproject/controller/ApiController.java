@@ -203,7 +203,7 @@ public class ApiController {
 
     //화장대엿보기 - 추천수순 상위 3개 리스트 전송 -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/getHighRankList")
-    public List<RelatedMemberVO> getHighRankList(@RequestBody int index) {
+    public List<RelatedMemberVO> getHighRankList(@RequestBody int member_idx) {
         System.out.println(memberMapper.findHighRankList());
         return memberMapper.findHighRankList();
     }
@@ -289,6 +289,7 @@ public class ApiController {
             allInfoOfMyCosmetic.setM_open_date(mycostable.get(i).getM_open_date());
             allInfoOfMyCosmetic.setM_expire_date(mycostable.get(i).getM_expire_date());
             allInfoOfMyCosmetic.setM_review(mycostable.get(i).getM_review());
+            allInfoOfMyCosmetic.setM_cosimage(mycostable.get(i).getM_cosimage());
             allInfoOfMyCosmetic.setCos_brand(cosmetics.getCos_brand());
             allInfoOfMyCosmetic.setCos_name(cosmetics.getCos_name());
             allInfoOfMyCosmetic.setCos_pic(cosmetics.getCos_pic());
@@ -327,7 +328,7 @@ public class ApiController {
         System.out.println("리뷰 번호 : " + m_index);
 
         My_CosmeticsVO my_cosmetics = my_CosmeticsMapper.findByMIndex(m_index);
-        System.out.println("수정하려는 리뷰번호에 담긴 my_cosmetics정보 :" + my_cosmetics.getCos_index());
+        System.out.println("수정하려는 리뷰번호에 담긴 my_cosmetics정보 :" + my_cosmetics.getCos_index() +", cosimage : " + my_cosmetics.getM_cosimage());
 
         return my_cosmetics;
     }

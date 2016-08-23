@@ -1,40 +1,43 @@
 <!--정민/ 내화장품목록페이지
 20160727 최종수정 -->
-<ion-header-bar class="bar-positive">
+<ion-header-bar class="bar">
   <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
-  <div class="buttons">
-    <button class="button button-icon ion-android-search"
-            ng-click="searchCosmetics(cos_name)"></button>
-  </div>
+
+  <button class="button button-icon ion-android-search" id="searchButton"
+          ng-click="searchCosmetics(cos_name)"></button>
+  <button class="button button-icon ion-android-settings" id="settingsButton"
+          ng-click="goToSettings()"></button>
 </ion-header-bar>
 <ion-view view-title="Mycostable">
   <ion-content class="padding">
 
-     <button class="button button-block button-positive" type="button" ng-click="submit()">내 화장품 등록</button>
-     <ion-list ng-controller="MycostableCtrl"  show-delete="shouldShowDelete" can-swipe="listCanSwipe"  show-reorder="shouldShowReorder">
-       <div>
-      <b>
-        &nbsp;화장품이름 &nbsp;&nbsp;
-        &nbsp;브랜드 &nbsp;&nbsp;
-        &nbsp;가격 &nbsp;&nbsp;
-        &nbsp;타입 &nbsp;&nbsp;
-        &nbsp;사진 &nbsp;&nbsp;
+    <button class="button button-block button-positive" type="button" ng-click="submit()">내 화장품 등록</button>
+    <ion-list ng-controller="MycostableCtrl" show-delete="shouldShowDelete" can-swipe="listCanSwipe"
+              show-reorder="shouldShowReorder">
+      <div>
+        <b>
+          &nbsp;화장품이름 &nbsp;&nbsp;
+          &nbsp;브랜드 &nbsp;&nbsp;
+          &nbsp;가격 &nbsp;&nbsp;
+          &nbsp;타입 &nbsp;&nbsp;
+          &nbsp;사진 &nbsp;&nbsp;
 
         </b>
-       <ion-item ng-repeat="mycostable in mycosmeticsList">
+        <ion-item ng-repeat="mycostable in mycosmeticsList">
 
-         |{{mycostable.cos_name}}
-         |{{mycostable.cos_brand}}
-         |{{mycostable.cos_price}}
-         |{{mycostable.cos_type}}
-         |<img ng-src="{{mycostable.cos_pic}}">
-         <button class="button button-positive" type="button" ng-click="detailOfMycosTable(mycostable.m_index)">상세보기</button>
+          |{{mycostable.cos_name}}
+          |{{mycostable.cos_brand}}
+          |{{mycostable.cos_price}}
+          |{{mycostable.cos_type}}
+          |<img ng-src="{{mycostable.cos_pic}}">
+          <button class="button button-positive" type="button" ng-click="detailOfMycosTable(mycostable.m_index)">상세보기
+          </button>
 
-         </ion-item>
+        </ion-item>
 
-         </div>
-     </ion-list>
+      </div>
+    </ion-list>
 
 
   </ion-content>
-  </ion-view>
+</ion-view>

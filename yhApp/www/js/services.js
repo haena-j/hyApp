@@ -203,7 +203,7 @@ memo : service는 HttpSvc 로 통일
       }
 
       // // Set the token as header for your requests!
-      $http.defaults.headers.common['X-Auth-Token'] = token;
+      // $http.defaults.headers.common['X-Auth-Token'] = token;
     }
 
     function destroyUserCredentials() {
@@ -215,7 +215,7 @@ memo : service는 HttpSvc 로 통일
       image='';
       birth='';
       isAuthenticated = false;
-      $http.defaults.headers.common['X-Auth-Token'] = undefined;
+      // $http.defaults.headers.common['X-Auth-Token'] = undefined;
       window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }
 
@@ -269,22 +269,22 @@ memo : service는 HttpSvc 로 통일
       image: function () {return image;}
     };
   })
-
-  .factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
-    return {
-      responseError: function (response) {
-        $rootScope.$broadcast({
-          401: AUTH_EVENTS.notAuthenticated,
-          403: AUTH_EVENTS.notAuthorized
-        }[response.status], response);
-        return $q.reject(response);
-      }
-    };
-  })
-
-  .config(function ($httpProvider) {
-    $httpProvider.interceptors.push('AuthInterceptor');
-  });
+  //
+  // .factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
+  //   return {
+  //     responseError: function (response) {
+  //       $rootScope.$broadcast({
+  //         401: AUTH_EVENTS.notAuthenticated,
+  //         403: AUTH_EVENTS.notAuthorized
+  //       }[response.status], response);
+  //       return $q.reject(response);
+  //     }
+  //   };
+  // })
+  //
+  // .config(function ($httpProvider) {
+  //   $httpProvider.interceptors.push('AuthInterceptor');
+  // });
 
 
 

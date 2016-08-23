@@ -1,9 +1,10 @@
-<ion-header-bar class="bar-positive">
+<ion-header-bar class="bar">
   <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
-  <div class="buttons">
-    <button class="button button-icon ion-android-search"
-            ng-click="searchCosmetics(cos_name)"></button>
-  </div>
+
+  <button class="button button-icon ion-android-search" id="searchButton"
+          ng-click="searchCosmetics(cos_name)"></button>
+  <button class="button button-icon ion-android-settings" id="settingsButton"
+          ng-click="goToSettings()"></button>
 </ion-header-bar>
 <ion-view view-title="화장대상세페이지">
   <ion-content class="padding">
@@ -12,11 +13,11 @@
       </thead>
       <tbody>
       <div ng-repeat="result in cosmeticsInfoList">
-        <img src={{result.image_url}}><br>
+        <img ng-src={{result.image_url}}><br>
         화장품이름 : {{ result.cos_name}}<br>
         후기 : {{result.m_review}}<br>
-        사진 : <img src={{host}}{{result.m_cosimage}}><br>
-        원래 화장품 사진 : <img src={{result.cos_pic}}><br>
+        사진 : <img ng-src={{host}}{{result.m_cosimage}}><br>
+        원래 화장품 사진 : <img ng-src={{result.cos_pic}}><br>
       </div>
       </tbody>
     </table>

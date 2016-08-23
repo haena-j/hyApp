@@ -101,7 +101,7 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
           alert("★");
           location.reload();     //화면 refresh 해줌 -> 추천수 증가시킨 것이 바로 반영되도록!
         })
-        .error(function (values) {alert(values);})
+        .error(function (values) {})
     };
 
     //클릭한 회원의 화장대 상세페이지로 이동
@@ -117,13 +117,12 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
         .success(function (values) {
           $scope.RelationList=values;
         }).error(function (values) {
-        alert("related table error : " + values);
       });
 
       HttpSvc.getHighRankList(AuthService.index())      //추천수순 상위 3개 회원 List 가져옴
         .success(function (values) {
           $scope.highRankList = values;
-        }).error(function (values, status) {alert("High error " + values + " , status : " + status);});
+        }).error(function (values, status) {});
 
     };
     $scope.Test();   //함수 Test 실행
@@ -277,12 +276,13 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
 
   // 리뷰 상세페이지
   .controller('MyCosTableDetailCtrl', function ($scope, $location, HttpSvc, HOST, AuthService) {
+    $scope.host = HOST;
     var m_index = $location.search().param;
     console.log("m_index" + m_index);
     HttpSvc.findByMIndex(m_index)
       .success(function (values) {
         $scope.mycostable = values;
-      })
+      });
 
     //수정페이지로 이동
     $scope.editDetail = function () {
@@ -525,7 +525,7 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
   .controller('InterestCtrl', function($scope, HttpSvc, AuthService) { // 관심리스트 목록 불러오기
     $scope.getInterestList = function() {
       HttpSvc.getInterestList(AuthService.index())
-         .success(function (values, status, headers) {
+         .success(function (values) {
            $scope.cosmeticsList = values;
          }).error(function(values, status) {
           alert('실패');
