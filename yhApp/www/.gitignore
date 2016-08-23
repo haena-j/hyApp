@@ -1,1 +1,4 @@
 public/photos
+/build
+/.idea
+/gradle

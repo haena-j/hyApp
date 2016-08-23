@@ -15,5 +15,6 @@ public class MemberVO {
     private String birth;
     private String count;
     private String image;
+    private int level;
     private MultipartFile files;
 }
