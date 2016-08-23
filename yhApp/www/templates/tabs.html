@@ -3,12 +3,15 @@ Create tabs with an icon and label, using the tabs-positive style.
 Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
-<ion-tabs class="tabs-icon-top tabs-color-active-positive">
-
-  <!-- 혜윤부분 -->
+<ion-tabs class="tabs-icon-left tabs-striped ">
   <!-- User Tab -혜윤-->
-  <ion-tab title="Main" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/main">
+  <ion-tab title="Main" href="#/tab/main">
     <ion-nav-view name="tab-main"></ion-nav-view>
+  </ion-tab>
+
+  <!-- 내 화장대 목록 Tab -->
+  <ion-tab title="내 화장대" icon="ion-ios-icon00" href="#/tab/mycostable" >
+    <ion-nav-view name="tab-mycostable"></ion-nav-view>
   </ion-tab>
 
   <!--Api Tab (관리자) -혜윤-->
@@ -17,20 +20,17 @@ navigation history that also transitions its views in and out.
   <!--</ion-tab>-->
 
   <!-- userSharedPage Tab -혜윤 -->
-  <ion-tab title="화장대엿보기" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/userSharedPage">
+  <ion-tab title="이웃화장대" icon="ion-ios-sharedicon" href="#/tab/userSharedPage">
     <ion-nav-view name="tab-userSharedPage"></ion-nav-view>
   </ion-tab>
-  <!-- 혜윤부분끝 -->
 
-  <!-- 정민부분-->
+  <!-- InterestList Tab -예은 -->
+  <ion-tab title="관심리스트" icon="ion-ios-redheart" href="#/tab/interest">
+    <ion-nav-view name="tab-interest"></ion-nav-view>
+  </ion-tab>
   <!-- 내 화장품 등록 Tab -->
   <ion-tab title="Write" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/write">
     <ion-nav-view name="tab-write"></ion-nav-view>
-  </ion-tab>
-
-  <!-- 내 화장대 목록 Tab -->
-  <ion-tab title="Mycostable" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/mycostable">
-    <ion-nav-view name="tab-mycostable"></ion-nav-view>
   </ion-tab>
 
   <!-- WriteAfterSearch Tab -->
@@ -38,19 +38,9 @@ navigation history that also transitions its views in and out.
       <ion-nav-view name="tab-writeaftersearch"></ion-nav-view>
     </ion-tab>-->
 
-  <!-- 정민부분끝-->
-
-
-  <!--예은 부분-->
-
   <!-- Search Tab -예은 -->
-  <ion-tab title="Search" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/search">
-    <ion-nav-view name="tab-search"></ion-nav-view>
-  </ion-tab>
+  <!--<ion-tab title="Search" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/search">-->
+    <!--<ion-nav-view name="tab-search"></ion-nav-view>-->
+  <!--</ion-tab>-->
 
-  <!-- InterestList Tab -예은 -->
-  <ion-tab title="Interest" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/interest">
-    <ion-nav-view name="tab-interest"></ion-nav-view>
-  </ion-tab>
-  <!--예은부분 끝-->
 </ion-tabs>

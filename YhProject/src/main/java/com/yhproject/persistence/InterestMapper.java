@@ -20,7 +20,7 @@ public interface InterestMapper {
 
     @Delete("delete from INTEREST where cos_index = #{cos_index}")
     void deleteInterest(InterestVO interest);
-    
+
     @Select("SELECT distinct COS_BRAND FROM COSMETICS join INTEREST on COSMETICS.COS_INDEX=INTEREST.COS_INDEX where INTEREST.MEMBER_INDEX = #{member_index}")
     List<String> getBrandFromInterestList(@Param("member_index") int member_index);
 }

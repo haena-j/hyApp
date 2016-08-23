@@ -775,7 +775,15 @@
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
-
+.ion-ios-icon00:before {
+  content: url("../../../img/icon00.png");
+}
+.ion-ios-sharedicon:before{
+  content: url("../../../img/sharedicon.png");
+}
+.ion-ios-redheart:before{
+  content: url("../../../img/redheart.png");
+}
 .ion-alert:before {
   content: ""; }
 

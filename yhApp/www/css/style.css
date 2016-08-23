@@ -50,8 +50,7 @@ table{
 .tabs-color-active-positive{
   background-color: #e4a2a3 !important;
 }
-.tabs-icon-top{
-  background-color: #e4a2a3 !important;
+.tabs-icon-left{
 }
 html {
   height:100%;
