@@ -440,7 +440,7 @@ public class ApiController {
     }
 
 
-    //게시판 글 삭제하기 -예은
+    //관심리스트 삭제하기 -예은
     @RequestMapping(method = RequestMethod.POST, value = "/api/deleteInterest")
     public void deleteInterest(@RequestBody InterestVO interest) {
         System.out.println("삭제");
@@ -448,8 +448,17 @@ public class ApiController {
         System.out.println("member_index:" + interest.getMember_index());
 
         interestMapper.deleteInterest(interest);
-
     }
+
+    //GPS이용을 위해 관심리스트의 브랜드이름 가져오기
+    @RequestMapping(method = RequestMethod.POST, value = "api/getBrandFromInterestList")
+    public List<String> getBrandFromInterestList(@RequestBody int member_index) {
+        List<String> result = interestMapper.getBrandFromInterestList(member_index);
+        System.out.println(member_index);
+        System.out.println("접속");
+        return result;
+    }
+
     /***************************************예은 부분끝***************************************/
 }
 
