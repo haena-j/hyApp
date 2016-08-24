@@ -13,8 +13,8 @@ public class MemberVO {
     private String password;
     private String name;
     private String birth;
-    private String count;
     private String image;
+    private int count;
     private int level;
     private String level_name;
     private MultipartFile files;

@@ -15,7 +15,7 @@ public interface CosmeticsMapper {
     @Select("SELECT * FROM COSMETICS WHERE cos_index = #{cos_index}")
     CosmeticsVO findByCosIndex(@Param("cos_index") int cos_index);
 
-    @Select("select * from COSMETICS where cos_name or cos_type or cos_brand like CONCAT('%', #{cos_name}, '%')")
+    @Select("select * from COSMETICS where cos_name like CONCAT('%', #{cos_name}, '%') or cos_type like CONCAT('%', #{cos_name}, '%') or cos_brand like CONCAT('%', #{cos_name}, '%')")
     List<CosmeticsVO> findCosListByName(@Param("cos_name") String cos_name);
 
     @Select("select * from COSMETICS where cos_name = #{cos_name}")

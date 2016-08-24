@@ -1,6 +1,36 @@
 <!--혜윤/ 화장대엿보기페이지
 20160727 최종수정 -->
-<ion-header-bar class="bar">
+<style>
+  .heart {
+    width: 15px;
+  }
+  .profile {
+    max-width: 250px;
+    min-width : 150px;
+    width: 100%;
+  }
+
+  .col {
+    display: inline-block;
+    margin: 3px;
+    position: relative;
+    text-align: center;
+    padding: 7px 0;
+    width: 40%;
+  }
+  .row {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    text-align: center;
+  }
+  div {
+    font-size: 9pt;
+    text-align: center;
+  }
+
+</style>
+<ion-header-bar class="bar" ng-controller="searchTabCtrl">
   <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
 
   <button class="button button-icon ion-android-search" id="searchButton"
@@ -13,23 +43,21 @@
     나와 유사한 화장대
     <div class="row header">
       <div class="col" ng-repeat="result in RelationList">
-        <img ng-src={{host}}{{result.image}}><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
+        <img class="profile" ng-src={{host}}{{result.image}}  ng-click="goToDetail(result)"><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
         {{result.id}}<br>
-        이름 : {{result.name}}<br>
-        생년월일 : {{result.birth}}<br>
-        겹치는 화장품 개수 : {{result.count}}<br>
-        <button type="button" ng-click="giveStar(result)">추천</button>
-        <button type="button" ng-click="goToDetail(result)">상세보기</button>
+        Lv.{{result.level}} {{result.level_name}}<br>
+        {{result.count}} <i class="ion-ios-redheart" ng-click="giveStar(result)"></i><br>
+        {{result.same_count}} 같은화장품<br>
       </div>
     </div>
     인기 화장대
     <div class="row header">
-      <div class="col" ng-repeat="result in highRankList">
-        <img src={{host}}{{result.image}}><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
-        {{result.id}}<br>
-        추천수 : {{result.count}}<br>
-        <button type="button" ng-click="giveStar(result)">추천</button>
-        <button type="button" ng-click="goToDetail(result)">상세보기</button>
+      <div class="col"  ng-repeat="result in highRankList">
+            <img class="profile" ng-src={{host}}{{result.image}} ng-click="goToDetail(result)"><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
+            {{result.id}}<br>
+            Lv.{{result.level}} {{result.level_name}}<br>
+            {{result.count}}  <i class="ion-ios-redheart"  ng-click="giveStar(result)"></i><br>
+
       </div>
     </div>
   </ion-content>

@@ -26,7 +26,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     });
   })
 
-  .config(function ($stateProvider, $urlRouterProvider, USER_ROLES) {
+  .config(function ($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -83,7 +83,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       .state('userSharedPage-detail', {
         url: '/userSharedPage-detail',
         templateUrl: 'templates/userSharedPage-detail.html',
-        controller: 'SharedPageDetailCtrl'
+        controller: 'SharedPageDetailCtrl',
+        cache: 'false'
       })
       .state('tab.api', { //관리자페이지
         url: '/api',
@@ -92,10 +93,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             templateUrl: 'templates/tab-api.html',
             controller: 'ApiCtrl'
           }
-        }
-        ,
-        data: {
-          authorizedRoles: [USER_ROLES.admin]
         }
       })
       .state('searchApi', { //관리자페이지
@@ -142,7 +139,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       .state('mycostable-detail', {
         url: '/mycostable-detail',
         templateUrl: 'templates/mycostable-detail.html',
-        controller: 'MyCosTableDetailCtrl'
+        controller: 'MyCosTableDetailCtrl',
+        cache: 'false'
 
       })
 

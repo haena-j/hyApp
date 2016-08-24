@@ -72,7 +72,7 @@ memo : service는 HttpSvc 로 통일
         data: cos_index,
         headers: {'Content-Type': 'application/json'}
       });
-    }
+    };
     this.getCosInformation = function(data) {  //cos_index에 따른 화장품 정보 가져오기
       return $http({
         url: HOST + '/api/cosmeticsinformations',
@@ -284,7 +284,8 @@ memo : service는 HttpSvc 로 통일
   //
   // .config(function ($httpProvider) {
   //   $httpProvider.interceptors.push('AuthInterceptor');
-  // });
+  // })
+ ;
 
 
 

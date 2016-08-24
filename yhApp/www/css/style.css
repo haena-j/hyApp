@@ -3,6 +3,9 @@
   position: relative;
   overflow: hidden;
 }
+.thumb{
+
+}
 /*검색바 부분*/
 #searchInputBox {
   width: 80%;
@@ -19,24 +22,11 @@
   color: gray;
 }
 /*검색바 부분*/
-div {
-  font-family: 맑은고딕;
-  display: block;
-  width:100%;
-  table-layout:fixed;
-  word-break:break-all;
-  font-size: 9pt;
-  text-align: center;
-}
+
 .subject{
   color: lightpink;
 }
-img {
-  width: 70pt;
-}
-.thumb {
-  width:150px;
-}
+
 .progress div {  font-size: smaller;  background: orange;  width: 0;}
 
 table{

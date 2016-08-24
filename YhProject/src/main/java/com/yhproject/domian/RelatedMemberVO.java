@@ -12,5 +12,8 @@ public class RelatedMemberVO {
     private String name;
     private String birth;
     private String image;
+    private int level;
+    private String level_name;
     private int count;
+    private int same_count;
 }

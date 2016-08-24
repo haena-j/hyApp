@@ -1,15 +1,44 @@
 <!--혜윤/ 로그인페이지
 20160727 최종수정 -->
+<head>
+  <style>
+    html {
+      text-align: center;
+    }
+    button {
+      width: 222px;
+      height: 49px;
+    }
+    .kakao-button {
+      opacity: 0.8;
+    }
+    input {
+      align-content: center;
+      align-items: center;
+    }
+    .item-input {
+      margin: 20px;
+      width: 222px;
+      height: 49px;
+    }
+
+  </style>
+</head>
+<body>
 <ion-view view-title="Login">
   <ion-content class="padding">
     <div class="list list-inset">
       <label class="item item-input">
-        <input type="text" name="id" ng-model="data.id" placeholder="ID"> </label>
+        <input class="inputbox" type="text" name="id" ng-model="data.id" placeholder="ID"> </label>
       <label class="item item-input">
-        <input type="password" name="password" ng-model="data.password" placeholder="PASSWORD"></label>
+        <input class="inputbox" type="password" name="password" ng-model="data.password" placeholder="PASSWORD"></label>
 
-      <button class="button button-block button-positive" type="button" ng-click="login(data)">Login</button>
-      <button class="button button-block button-positive" type="button" ng-click="signIn()">Sign in</button>
+      <p><input class="kakao-button" type="image" src="./img/kakao_account_login_btn_medium_narrow.png" ng-click="kakaoLogin()"></p>
+      <p><button class="button button-stable " ng-click="login(data)">Login</button></p>
+      <p><button class="button button-stable " type="button" ng-click="signIn()">Sign in</button></p>
     </div>
+
+
   </ion-content>
 </ion-view>
+</body>

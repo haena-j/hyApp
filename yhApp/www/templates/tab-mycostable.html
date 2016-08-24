@@ -1,6 +1,28 @@
 <!--정민/ 내화장품목록페이지
 20160727 최종수정 -->
-<ion-header-bar class="bar">
+<style>
+  img {
+    border-radius: 50%;
+  }
+
+  h5 {
+    color: dimgrey;
+    font-size:10px;
+
+  }
+
+  h5.thick {
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size:12px;
+    color: grey;
+    margin-left: 40px;
+  }
+</style>
+
+<ion-header-bar class="bar" ng-controller="searchTabCtrl">
   <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
 
   <button class="button button-icon ion-android-search" id="searchButton"
@@ -11,33 +33,64 @@
 <ion-view view-title="Mycostable">
   <ion-content class="padding">
 
-    <button class="button button-block button-positive" type="button" ng-click="submit()">내 화장품 등록</button>
-    <ion-list ng-controller="MycostableCtrl" show-delete="shouldShowDelete" can-swipe="listCanSwipe"
-              show-reorder="shouldShowReorder">
-      <div>
-        <b>
-          &nbsp;화장품이름 &nbsp;&nbsp;
-          &nbsp;브랜드 &nbsp;&nbsp;
-          &nbsp;가격 &nbsp;&nbsp;
-          &nbsp;타입 &nbsp;&nbsp;
-          &nbsp;사진 &nbsp;&nbsp;
-
-        </b>
-        <ion-item ng-repeat="mycostable in mycosmeticsList">
-
-          |{{mycostable.cos_name}}
-          |{{mycostable.cos_brand}}
-          |{{mycostable.cos_price}}
-          |{{mycostable.cos_type}}
-          |<img ng-src="{{mycostable.cos_pic}}">
-          <button class="button button-positive" type="button" ng-click="detailOfMycosTable(mycostable.m_index)">상세보기
-          </button>
-
-        </ion-item>
-
+    <br><br><button class="button button-stable button-clear eag-home-button" ng-click="submit()"><img src="img/plusicon.png" width="100"></button><br><br><br><br><br><br><br>
+    <div class="row">
+      <div class="col">
+        <h4>파우치에 화장품을 등록해보세요</h4>
       </div>
-    </ion-list>
+      <div class="col">
+        <!--<div class="grow pic">-->
+        <img src="img/checkicon.png">
+        <!--</div>-->
+      </div>
+
+      <!--<div class="col">-->
+      <!--<img src="img/checkicon.png">-->
+      <!--</div>-->
+    </div>
+
+    <!--<ion-list ng-controller="MycostableCtrl" show-delete="shouldShowDelete" can-swipe="listCanSwipe" show-reorder="shouldShowReorder">-->
+    <!--<br>-->
+    <!--<br>-->
+    <!--<br>-->
+
+    <!--<div>-->
+    <!--<b>-->
+    <!--&nbsp;화장품이름 &nbsp;&nbsp;-->
+    <!--&nbsp;브랜드 &nbsp;&nbsp;-->
+    <!--&nbsp;가격 &nbsp;&nbsp;-->
+    <!--&nbsp;타입 &nbsp;&nbsp;-->
+    <!--&nbsp;사진 &nbsp;&nbsp;-->
+
+    <!--</b>-->
+    <!--<body bgcolor="#e6e6fa">-->
+    <div ng-repeat="mycostable in mycosmeticsList">
+      <div class="row">
+        <div class="col" >
+          <img ng-src="{{mycostable.cos_pic}}" width="70">
+        </div>
+        <div class="col"><p>
+          <h4>{{mycostable.cos_brand}}</h4>
+          <h5>{{mycostable.cos_name}}</h5><br>
+          </p></div>
+        <!--<ion-item ng-repeat="mycostable in mycosmeticsList">-->
+        <div class="col"><button class="button button-stable button-clear eag-home-button" ng-click="detailOfMycosTable(mycostable.m_index)"><img src="img/icon01.png" width="50"></button></div>
+      </div>
+    </div>
 
 
+    <!--|{{mycostable.cos_price}}-->
+    <!--|{{mycostable.cos_type}}-->
+
+
+
+    <!--</ion-item>-->
+
+
+    <!--</div>-->
+    <!--</ion-list>-->
+
+    </body>
   </ion-content>
+
 </ion-view>

@@ -20,10 +20,10 @@ public interface MemberMapper {
     @Select("SELECT * FROM MEMBER")
     List<MemberVO> findAll();
 
-    @Select("SELECT * FROM MEMBER WHERE member_index = #{member_index}")
+    @Select("SELECT MEMBER_INDEX, ID, PASSWORD, NAME, BIRTH, IMAGE, COUNT, MEMBER.level, level_name FROM MEMBER join LEVEL_NAME on MEMBER.level = LEVEL_NAME.level WHERE member_index = #{member_index}")
     MemberVO findByIndex(@Param("member_index") int member_index);
 
-    @Select("SELECT * FROM MEMBER WHERE id = #{id}")
+    @Select("SELECT MEMBER_INDEX, ID, PASSWORD, NAME, BIRTH, IMAGE, COUNT, MEMBER.level, level_name FROM MEMBER join LEVEL_NAME on MEMBER.level = LEVEL_NAME.level WHERE id = #{id}")
     MemberVO findById(@Param("id") String id);
 
     @Update("UPDATE MEMBER SET COUNT = COUNT + 1 WHERE ID = #{member_id}")
@@ -31,6 +31,6 @@ public interface MemberMapper {
 
     @Update("UPDATE MEMBER SET IMAGE = #{image} WHERE ID = #{id}")
     void updateMemberImage(MemberVO member);
-    @Select("SELECT MEMBER_INDEX, ID, NAME, BIRTH, IMAGE, COUNT, LEVEL FROM MEMBER ORDER BY COUNT")
+    @Select("SELECT MEMBER_INDEX, ID, PASSWORD, NAME, BIRTH, IMAGE, COUNT, MEMBER.level, level_name FROM MEMBER join LEVEL_NAME on MEMBER.level = LEVEL_NAME.level ORDER BY COUNT DESC")
     List<RelatedMemberVO> findHighRankList();
 }

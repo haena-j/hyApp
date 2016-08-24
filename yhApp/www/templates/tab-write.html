@@ -1,5 +1,40 @@
 <!--정민/ 내화장품등록페이지
 20160727 최종수정 -->
+<style>
+
+
+  h2.thick {
+    font-weight: bold;
+  }
+
+  h2 {
+    color: grey;
+    margin-left: 40px;
+  }
+
+</style>
+<ion-header-bar class="bar">
+  <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
+
+  <button class="button button-icon ion-android-search" id="searchButton"
+          ng-click="searchCosmetics(cos_name)"></button>
+  <button class="button button-icon ion-android-settings" id="settingsButton"
+          ng-click="goToSettings()"></button>
+</ion-header-bar>
+
+<style>
+
+
+  h4.thick {
+    font-weight: bold;
+  }
+
+  h4 {
+    color: grey;
+    margin-left: 40px;
+  }
+
+</style>
 <ion-header-bar class="bar">
   <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
 
@@ -15,31 +50,53 @@
     <form action="/write" method="post" name="myCosmeticsForm">
       <div class="list" ng-class="{ 'has-error' : myCosmeticsForm.name.$invalid && !myCosmeticsForm.name.$pristine }"
            ng-controller="WriteCtrl">
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">화장품 찾기</span>
-          <input type="text" name="cos_index" ng-model="write.cos_index" required>
-          <span ng-show="myCosmeticsForm.cos_index.$error.required">* 화장품을 선택해 주세요 </span>
-        </label>
+        <!--<label class="item item-input item-stacked-label">-->
+        <span class="input-label"></span>
+        <input type="text" name="cos_index" ng-model="write.cos_index" required>
+        <table>
+          <tr>
+            <span ng-show="myCosmeticsForm.cos_index.$error.required"><td><h4>* 등록하고자 하는 화장품을 검색해주세요</h4></td><td><img src="img/checkicon.png"></td> </span>
+          </tr>
+        </table>
+        <!--</label>-->
+        <br>
+        <button class="button button-stable button-clear eag-home-button" ng-click="searchCosByBrand()"><img src="img/searchicon.png"></button>
+        <!--<button class="button button-positive" type="button" ng-click="searchCosByBrand()">화장품 검색</button>-->
+        <br><br><br>
 
-        <button class="button button-positive" type="button" ng-click="searchCosByBrand()">화장품 검색</button>
-        </label>
-        <label class="item item-input item-stacked-label">
-          <p>
-            <input type="file" ngf-select ng-model="write.picFile" name="file" accept="image/*" ngf-max-size="2MB"
-                   required ngf-model-invalid="errorFile">
-            <i ng-show="myCosmeticsForm.file.$error.required">* 화장품 사진을 등록해 주세요</i><br>
-            <i ng-show="myCosmeticsForm.file.$error.maxSize">File too large
-              {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-            <img ng-show="myCosmeticsForm.file.$valid" ngf-thumbnail="write.picFile" class="thumb">
-            <button ng-click="write.picFile = null" ng-show="write.picFile">Remove</button>
-          </p>
-        </label>
+        <!--<label class="item item-input item-stacked-label">-->
+        <table align="center">
+          <tr align="center">
+            <span ng-show="myCosmeticsForm.file.$error.required"><td><h4>* 자신만의 화장품 사진을 등록해주세요</h4></td><td><img src="img/checkicon.png"></td></span><br>
+          </tr>
+          <tr>
+            <td>
+              <input type="file" ngf-select ng-model="write.picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile"></td></tr>
 
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">개봉일자</span>
-          <input type="date" name="m_open_date" ng-model="write.m_open_date" required>
-          <span ng-show="myCosmeticsForm.m_open_date.$error.required">* 만료 날짜를 입력해 주세요</span>
-        </label>
+          <span ng-show="myCosmeticsForm.file.$error.maxSize">File too large
+              {{errorFile.size / 1000000|number:1}}MB: max 2M</span>
+          <img ng-show="myCosmeticsForm.file.$valid" ngf-thumbnail="write.picFile" class="thumb"/>
+          <tr>
+            <td>
+              <button ng-click="write.picFile = null" ng-show="write.picFile">Remove</button>
+            </td>
+          </tr>
+        </table>
+        <!--</label>-->
+
+        <!--<label class="item item-input item-stacked-label">-->
+        <!--<span class="input-label">개봉일자</span>-->
+        <table align="center">
+          <tr align="center">
+            <span ng-show="myCosmeticsForm.m_open_date.$error.required"><td align="center"><h4>* 개봉 날짜를 선택해주세요 </h4></td><td><img src="img/checkicon.png"></td> </span>
+          </tr>
+          <tr align="center">
+            <td align="center">
+              <input type="date" name="m_open_date" ng-model="write.m_open_date" required />
+            </td>
+          </tr>
+        </table>
+        <!--</label>-->
 
         <!--<label class="item item-input item-stacked-label">-->
         <!--<span class="input-label" >개봉날짜</span>-->
@@ -61,15 +118,29 @@
         <!--<span ng-show="myCosmeticsForm.member_index.$error.required">* 회원 번호를 입력해 주세요</span>-->
         <!--</label>-->
 
+        <!--<table align="center">-->
+        <!--<tr align="center">-->
+        <!--<span ng-show="myCosmeticsForm.m_open_date.$error.required"><td align="center"><h4>* 개봉 날짜를 선택해주세요 </h4></td><td><img src="img/checkicon.png"></td> </span>-->
+        <!--</tr>-->
+        <!--<tr align="center">-->
+        <!--<td align="center">-->
+        <!--<!—<input type="date" name="m_open_date" ng-model="write.m_open_date" required />—>-->
+        <!--<!—</td>—>-->
+        <!--<!—</tr>—>-->
+        <!--<!—</table>—>-->
 
-        <label class="item item-input item-stacked-label">
-          <span class="input-label">리뷰</span>
-          <input type="text" placeholder="OO에 대한 리뷰 작성" name="m_review" ng-model="write.m_review" required>
-          <span ng-show="myCosmeticsForm.m_review.$error.required">* 리뷰를 작성해 주세요.</span>
-        </label>
-
+        <table align="center">
+          <tr align="center">
+            <span ng-show="myCosmeticsForm.m_review.$error.required"><td align="center"><h4>* 리뷰를 작성해 주세요 </h4></td><td><img src="img/checkicon.png"></td> </span>
+          </tr>
+          <tr align="center">
+            <td align="center">
+              <input type="text area" rows="4" cols="35" placeholder="리뷰를 작성해주세요" name="m_review" ng-model="write.m_review" required>
+            </td>
+          </tr>
+        </table>
         <div align="center">
-          <!--<button class="button button-positive" type="button" ng-click="submit(write)">내 화장품 등록</button>-->
+          <!—<button class="button button-positive" type="button" ng-click="submit(write)">내 화장품 등록</button>—>
           <button class="button button-positive" type="reset">취소</button>
         </div>
       </div>

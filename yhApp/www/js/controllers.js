@@ -6,13 +6,7 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
             ex) 사용자 Id -> AuthService.id();   사용자 index -> AuthService.index();
 */
 /*******************혜윤부분*******************/
-//App 실행시 사용자 인증 -> 저장된 ID 있을경우 바로 접속, 없을 경우 login.html 로 이동 등....
   .controller('AppCtrl', function($scope, $state, $ionicPopup, AuthService,  AUTH_EVENTS, $location) {
-    $scope.searchCosmetics = function (cos_name) { //검색부분
-      $location.path('/tab/search').search({param: cos_name});
-      location.reload();
-    };
-
     $scope.id = AuthService.id();
 
     $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
@@ -32,6 +26,18 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
     });
     $scope.setCurrentUserId = function(id) {
       $scope.id = id;
+    };
+  })
+
+  // 검색탭 부분
+  .controller('searchTabCtrl', function ($scope, $location) {
+    $scope.searchCosmetics = function (cos_name) { //검색부분
+      $location.path('/tab/search').search({param: cos_name});
+      location.reload();
+    };
+
+    $scope.goToSettings= function(){
+      $location.path('/settings');
     };
   })
 
@@ -183,9 +189,6 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
       });
     };
     $scope.getMemberList();
-    $scope.goToSettings= function(){
-      $location.path('/settings');
-    };
   })
 /******* 관리자 로그인시 가능한 기능 부분*******/
 //관리자 - 화장품 검색

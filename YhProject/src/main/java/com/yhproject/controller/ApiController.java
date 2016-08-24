@@ -177,10 +177,13 @@ public class ApiController {
     //화장대 엿보기 - 유사한 테이블 상위 3개 리스트 전송  -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/getRelatedMemberList")
     public List<RelatedMemberVO> getRelatedMemberList(@RequestBody int member_idx) {
+        System.out.println("0.접근 :" + member_idx);
         List<UserRelationVO> userRelationList = getUserRelation(member_idx);
+        System.out.println("1.userRelationList :" + userRelationList);
         List<RelatedMemberVO> memberList = new ArrayList<>();
         for (int i = 0; i < userRelationList.size(); i++) {
             int m_idx = userRelationList.get(i).getRelated_member_index();
+            System.out.println("2.m_idx :" + m_idx);
             MemberVO mem = memberMapper.findByIndex(m_idx);
             RelatedMemberVO relatedMem = new RelatedMemberVO();
             relatedMem.setMember_index(mem.getMember_index());
@@ -188,9 +191,15 @@ public class ApiController {
             relatedMem.setName(mem.getName());
             relatedMem.setBirth(mem.getBirth());
             relatedMem.setImage(mem.getImage());
-            relatedMem.setCount(userRelationList.get(i).getCount());
+            relatedMem.setCount(mem.getCount());
+            relatedMem.setSame_count(userRelationList.get(i).getCount());
+            relatedMem.setLevel(mem.getLevel());
+            relatedMem.setLevel_name(mem.getLevel_name());
+
+            System.out.println("3.relatedMem :" + relatedMem.toString());
             memberList.add(relatedMem);
         }
+        System.out.println("관련도순 " + memberList);
         return memberList;
     }
 
@@ -203,16 +212,16 @@ public class ApiController {
     //화장대엿보기 - 추천수순 상위 3개 리스트 전송 -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/getHighRankList")
     public List<RelatedMemberVO> getHighRankList(@RequestBody int member_idx) {
-        System.out.println(memberMapper.findHighRankList());
-        return memberMapper.findHighRankList();
+        List<RelatedMemberVO> result = memberMapper.findHighRankList();
+        System.out.println("추천수 : " + result);
+        return result;
     }
-
 
     //로그인 관련 회원id와 pw 확인 -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/login")
     public MemberVO checkLoginInfo(@RequestBody MemberVO member) {
         MemberVO result = memberMapper.findById(member.getId());
-        System.out.println("login check : " + member.getId());
+        System.out.println("login check : " + member.getId() + ", " + memberMapper.findById(member.getId()).toString());
         if (result == null) {
             return null;
         } else if (result.getPassword().equals(member.getPassword())) {
@@ -248,11 +257,13 @@ public class ApiController {
         }
 
         List<Integer> member_index_list = my_CosmeticsMapper.findByCos(myCosmetics.getCos_index());
+        System.out.println("화장품갖고있는회원index List : " + member_index_list);
         for (int i = 0; i < member_index_list.size(); i++) {
             UserRelationVO userRelationVO = new UserRelationVO();
             userRelationVO.setMember_index(myCosmetics.getMember_index());
             userRelationVO.setRelated_member_index(member_index_list.get(i));
             userRelationVO.setCount(1);
+            System.out.println("userRelationVO : " + userRelationVO);
             try {
                 userRelationMapper.insertUserRelation(userRelationVO);
                 userRelationVO.setMember_index(member_index_list.get(i));

@@ -16,7 +16,7 @@ public interface UserRelationMapper {
     @Insert("INSERT INTO USER_RELATION(MEMBER_INDEX, RELATED_MEMBER_INDEX, COUNT) VALUES(#{member_index}, #{related_member_index}, #{count})")
     void insertUserRelation(UserRelationVO userRelation);
 
-    @Update("UPDATE USER_RELATION SET COUNT= COUNT + 1 WHERE MEMBER_INDEX=#{member_index} AND RELATED_MEMBER_INDEX=#{related_member_index}")
+    @Update("UPDATE USER_RELATION SET COUNT = COUNT + 1 WHERE MEMBER_INDEX=#{member_index} AND RELATED_MEMBER_INDEX=#{related_member_index}")
     void updateUserRelation(UserRelationVO userRelation);
 
     @Select("SELECT * FROM USER_RELATION WHERE member_index = #{member_index} ORDER BY COUNT desc limit 3")
