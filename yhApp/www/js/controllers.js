@@ -323,15 +323,76 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
       })
 
     $scope.submit3 = function(editForm) {
-      console.log("edit" + $rootScope.m_index);
+
+      var m_open_date_toString = editForm.m_open_date.toString();
+      console.log(m_open_date_toString);
+      var yearString = m_open_date_toString.substring(11,15);
+      var monthString = m_open_date_toString.substring(4, 7);
+
+      if (monthString == 'Jan')
+
+        monthString = '01';
+
+      else if (monthString == 'Feb')
+
+        monthString = '02';
+
+      else if (monthString == 'Mar')
+
+        monthString = '03';
+
+      else if (monthString == 'Apr')
+
+        monthString = '04';
+
+      else if (monthString == 'May')
+
+        monthString = '05';
+
+      else if (monthString == 'Jun')
+
+        monthString = '06';
+
+      else if (monthString == 'Jul')
+
+        monthString = '07';
+
+      else if (monthString == 'Aug')
+
+        monthString = '08';
+
+      else if (monthString == 'Sep')
+
+        monthString = '09';
+
+      else if (monthString == 'Oct')
+
+        monthString = '10';
+
+      else if (monthString == 'Nov')
+
+        monthString = '11';
+
+      else if (monthString == 'Dec')
+
+        monthString = '12';
+      var DateString = m_open_date_toString.substring(8, 10);
+      var selectedOpenDate = yearString + monthString + DateString;
+      console.log("수정된 개봉일자" + selectedOpenDate);
+      var editedExpireDate = Number(yearString);
+      var expireDate = editedExpireDate + 2;
+      var expireDate2 = expireDate.toString();
+      var resultExpireDate = expireDate2 + monthString + DateString;
+      console.log("최종 만료날짜" + resultExpireDate);
+
       var file = Upload.upload({
         url: HOST + '/api/mCosdetailEdit',
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         data: {
           m_index: $rootScope.m_index,
-          m_open_date: editForm.m_open_date,
-          m_expire_date: editForm.m_expire_date,
+          m_open_date: selectedOpenDate,
+          m_expire_date: resultExpireDate,
           cos_index: cos_index,
           member_index: member_index,
           m_review: editForm.m_review,
@@ -348,11 +409,10 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
 
 
       // $location.path('/tab/mycostable');
-      $state.go('tab.mycostable');
-      location.reload();
+      // $state.go('tab.mycostable');
+      // location.reload();
     };
   })
-
   // 검색 후 화장품 등록 페이지
   .controller ('WriteAfterSearchCtrl', function ($scope, $location, HttpSvc, HOST, $rootScope, $ionicPopup, AuthService, $log, Upload, $timeout, $state) {
     var cos_index = $location.search().param;

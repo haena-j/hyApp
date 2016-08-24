@@ -23,18 +23,23 @@
           </p>
         </label>
 
+        <!--<label class="item item-input item-stacked-label">-->
+        <!--<span class="input-label" >개봉날짜</span>-->
+        <!--<input type="text" placeholder="개봉날짜를 수정해주세요" nam`e="m_open_date" ng-model="editForm.m_open_date" required>-->
+        <!--<span ng-show="mycostableeditForm.m_open_date.$error.required">{{editmycostable.m_open_date}}</span>-->
+        <!--</label>-->
         <label class="item item-input item-stacked-label">
-          <span class="input-label" >개봉날짜</span>
-          <input type="text" placeholder="개봉날짜를 수정해주세요" name="m_open_date" ng-model="editForm.m_open_date" required>
-          <span ng-show="mycostableeditForm.m_open_date.$error.required">{{editmycostable.m_open_date}}</span>
+          <span class="input-label">개봉일자</span>
+          <input type="date" name="m_open_date" ng-model="editForm.m_open_date" required>
+          <span ng-show="mycostableeditForm.m_open_date.$error.required"> 수정 전 개봉날짜 {{editmycostable.m_open_date}}</span>
         </label>
 
-        <label class="item item-input item-stacked-label">
-          <span class="input-label" >만료날짜</span>
-          <input type="text" placeholder="만료날짜를 수정해주세요" name="m_expire_date" ng-model="editForm.m_expire_date" required>
-          <!-- show an error if this isn't filled in -->
-          <span ng-show="mycostableeditForm.m_expire_date.$error.required">{{editmycostable.m_expire_date}}</span>
-        </label>
+        <!--<label class="item item-input item-stacked-label">-->
+        <!--<span class="input-label" >만료날짜</span>-->
+        <!--<input type="text" placeholder="만료날짜를 수정해주세요" name="m_expire_date" ng-model="editForm.m_expire_date" required>-->
+        <!--&lt;!&ndash; show an error if this isn't filled in &ndash;&gt;-->
+        <!--<span ng-show="mycostableeditForm.m_expire_date.$error.required">{{editmycostable.m_expire_date}}</span>-->
+        <!--</label>-->
 
         <label class="item item-input item-stacked-label">
           <span class="input-label" >리뷰</span>
