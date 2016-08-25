@@ -1,10 +1,7 @@
 <!--혜윤/ 화장대엿보기페이지
 20160727 최종수정 -->
 <style>
-  .ion-ios-redheart {
-    background-color: transparent;
-    max-width: 50%
-  }
+
   .profile {
     max-width: 100%;
     width: 100%;
@@ -12,6 +9,7 @@
   .profile-related {
     max-width: 100%;
     width: 100%;
+    border-radius: 50%;
   }
 .related-title {
   margin-top: 10px;
@@ -26,8 +24,9 @@
     display: inline-block;
     position: relative;
     width: 31%;
+    font-size: 70%;
   }
-  .related {
+  .row-related {
     background-color: #ffe0d1;
     width: 100%;
   }
@@ -53,14 +52,14 @@
 <ion-view view-title="화장대 엿보기">
   <ion-content class="padding">
 
-    <div class="row header related">
+    <div class="row header row-related">
       <p class="related-title">나와 취향이 비슷한 이웃님의 화장대를 확인해 보세요
       <img width="5%" src="img/checkicon.png"></p><br>
       <div class="col col-related" ng-repeat="result in RelationList">
         <img class="profile-related" ng-src={{host}}{{result.image}}  ng-click="goToDetail(result)"><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
         {{result.id}}<br>
-        <img width="10%" src="img/medalicon.png"> Lv.{{result.level}} {{result.level_name}}<br>
-        {{result.count}} <i class="ion-ios-redheart" ng-click="giveStar(result)"></i><br>
+        <img width="15%" src="img/medalicon.png"> Lv.{{result.level}} {{result.level_name}}<br>
+        {{result.count}} <img width="20%" src="img/redheart.png" ng-click="giveStar(result)">
         {{result.same_count}} 취향<br>
       </div>
     </div>
@@ -70,7 +69,7 @@
             <img class="profile" ng-src={{host}}{{result.image}} ng-click="goToDetail(result)"><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
             {{result.id}}<br>
             Lv.{{result.level}} {{result.level_name}}<br>
-            {{result.count}}  <i class="ion-ios-redheart"  ng-click="giveStar(result)"></i><br>
+            {{result.count}}  <img width="20%" src="img/redheart.png" ng-click="giveStar(result)"><br>
 
       </div>
     </div>
