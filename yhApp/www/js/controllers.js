@@ -163,16 +163,15 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
         }
       }).then(function (response) {
         $timeout(function () {
-          $ionicPopup.alert({
-            title: '프로필 사진 변경',
-            template: '변경 되었습니다'
-          });
+          alert("프로필 사진 변경완료");
         });
         location.reload();
+      }, function (response) {
+        if (response.status > 0)
+          $scope.errorMsg = response.status + ': ' + response.data;
       }, function (evt) {
-        alert("error");
-        // Math.min is to fix IE which reports 200% sometimes
-        param.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        file.progress = Math.min(100, parseInt(100.0 *
+          evt.loaded / evt.total));
       });
     };
   })

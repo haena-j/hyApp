@@ -7,7 +7,10 @@
   }
   .profile {
     max-width: 100%;
-    min-width : 100px;
+    width: 100%;
+  }
+  .profile-related {
+    max-width: 100%;
     width: 100%;
   }
 .related-title {
@@ -18,6 +21,11 @@
     display: inline-block;
     position: relative;
     width: 46%;
+  }
+  .col-related {
+    display: inline-block;
+    position: relative;
+    width: 31%;
   }
   .related {
     background-color: #ffe0d1;
@@ -48,10 +56,10 @@
     <div class="row header related">
       <p class="related-title">나와 취향이 비슷한 이웃님의 화장대를 확인해 보세요
       <img width="5%" src="img/checkicon.png"></p><br>
-      <div class="col" ng-repeat="result in RelationList">
-        <img class="profile" ng-src={{host}}{{result.image}}  ng-click="goToDetail(result)"><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
+      <div class="col col-related" ng-repeat="result in RelationList">
+        <img class="profile-related" ng-src={{host}}{{result.image}}  ng-click="goToDetail(result)"><br> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
         {{result.id}}<br>
-        <img width="13%" src="img/medalicon.png"> Lv.{{result.level}} {{result.level_name}}<br>
+        <img width="10%" src="img/medalicon.png"> Lv.{{result.level}} {{result.level_name}}<br>
         {{result.count}} <i class="ion-ios-redheart" ng-click="giveStar(result)"></i><br>
         {{result.same_count}} 취향<br>
       </div>
