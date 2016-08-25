@@ -85,10 +85,12 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
             template: '로그인 해주세요.'
           });
         });
+      }, function (response) {
+        if (response.status > 0)
+          $scope.errorMsg = response.status + ': ' + response.data;
       }, function (evt) {
-        alert("error");
-        // Math.min is to fix IE which reports 200% sometimes
-        join.picFile.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        file.progress = Math.min(100, parseInt(100.0 *
+          evt.loaded / evt.total));
       });
 
       $location.path('/login');    //가입완료시 login.html 로 이동
@@ -401,11 +403,13 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
       file.then(function(response) {
         $timeout(function() {
           alert(response.data);
-        });
-      }), function(evt) {
-        editForm.picFile.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total))
-      }
-
+        })}, function (response) {
+        if (response.status > 0)
+          $scope.errorMsg = response.status + ': ' + response.data;
+      }, function (evt) {
+        file.progress = Math.min(100, parseInt(100.0 *
+          evt.loaded / evt.total));
+      });
 
       // $location.path('/tab/mycostable');
       // $state.go('tab.mycostable');
@@ -491,9 +495,13 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
         $timeout(function() {
           alert(response.data);
         });
-      }, function(evt) {
-        write.picFile.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total))
-      });
+      }, function (response) {
+      if (response.status > 0)
+        $scope.errorMsg = response.status + ': ' + response.data;
+    }, function (evt) {
+      file.progress = Math.min(100, parseInt(100.0 *
+        evt.loaded / evt.total));
+    });
 
       console.log("cosmeticsinform: " + write.m_open_date);
       $state.go('tab.mycostable'); //등록 후 내화장대 목록으로 이동
