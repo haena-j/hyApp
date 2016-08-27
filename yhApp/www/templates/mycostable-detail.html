@@ -7,7 +7,7 @@
 
   h5 {
     color: black;
-    font-size:15px;
+    font-size: 12px;
 
   }
 
@@ -16,21 +16,18 @@
   }
 
   h4 {
-    font-size:17px;
+    font-size: 13px;
     color: grey;
     margin-left: 40px;
   }
 
   tr, td {
-    padding: 15px;
-    text-align: center;
+    padding: 1px;
+
   }
 
 
-
 </style>
-
-
 <ion-header-bar class="bar" ng-controller="searchTabCtrl">
   <input type="text" placeholder="화장품명 또는 브랜드명을 입력해주세요." ng-model="cos_name" id="searchInputBox">
 
@@ -39,33 +36,38 @@
   <button class="button button-icon ion-android-settings" id="settingsButton"
           ng-click="goToSettings()"></button>
 </ion-header-bar>
-
 <ion-view view-title="리뷰상세페이지">
-  <!--<ion-content class="padding">-->
-  <!--<div>-->
+  <br><br><br>
   <center>
-    <table>
-      <tr>
-        <img ng-src={{host}}{{mycostable.m_cosimage}} width="1000" height="300"/><br>
+    <table align="center">
+      <tr align="center">
+        <img ng-src={{host}}{{mycostable.m_cosimage}} width="100" height="300"/><br>
       </tr>
-      <tr>
-        <td><h4>개봉날짜</h4></td><td><h5>{{mycostable.m_open_date}}</h5></td></tr><br>
-      <tr>
-        <td><h4>사용기한</h4></td><td><h5>{{mycostable.m_expire_date}}</h5></td></tr><br>
-      <tr>
-        <td><h4>후기내용</h4></td><td><h5>{{mycostable.m_review}}</h5></td></tr><br>
+      <tr align="center">
+        <td align="center"><h4>개봉날짜</h4></td>
+        <td align="center"><h5>{{mycostable.m_open_date}}</h5></td>
+      </tr>
+      <br>
+      <tr align="center">
+        <td align="center"><h4>사용기한</h4></td>
+        <td align="center"><h5>{{mycostable.m_expire_date}}</h5></td>
+      </tr>
+      <br>
+      <tr align="center">
+        <td align="center"><h4>후기내용</h4></td>
+        <td align="center"><h5>{{mycostable.m_review}}</h5></td>
+      </tr>
+      <br>
     </table>
   </center>
 
-  <!--</div>-->
 
-  <!—<button class="button button-icon ion-android-search" id="searchButton"—>
-  <!—ng-click="searchCosmetics(cos_name)"></button>—>
-  <button class="button button-stable button-clear eat-home-button" ng-click="editDetail()"><img src="img/pencil.png">수정</button>
-  <!—<button type="button" ng-click="editDetail()">수정</button>—>
-  <button class="button button-stable button-clear eat-home-button" ng-click="deleteDetail(mycostable)"><img src="img/eraser.png">삭제</button>
-  <!—<button type="button" ng-click="deleteDetail(mycostable)">삭제</button>—>
-
+  <center>
+    <button class="button button-stable button-clear eat-home-button" ng-click="editDetail()"><img src="img/pencil.png">수정
+    </button>
+    <button class="button button-stable button-clear eat-home-button" ng-click="deleteDetail(mycostable)"><img
+      src="img/eraser.png">삭제
+    </button>
+  </center>
   </ion-content>
-
 </ion-view>

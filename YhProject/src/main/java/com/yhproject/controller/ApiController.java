@@ -41,7 +41,7 @@ public class ApiController {
      * 다음 api이용한 화장품검색결과 (관리자) -혜윤
      * 다음 API를 이용한 상품정보 불러오기
      *
-     * @param query
+//     * @param query
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, value = "api/daumSearch")
