@@ -1,0 +1,54 @@
+<!-- 내 화장대 이후 검색페이지 -->
+<style>
+  img {
+    width: 40%;
+  }
+
+  #searchInputBox {
+    width: 80%;
+    font-size: 8pt;
+    background-color: whitesmoke;
+    text-align: center;
+  }
+
+</style>
+
+<md-content>
+  <!--<ion-content class="padding">-->
+  <!--<div class="list">-->
+  <!--<form id="searchAtWrite">-->
+  <div>
+    <table>
+      <tr>
+        <td>
+          <input type="text" id="searchInputBox" size="40" placeholder="제품명 / 브랜드명" name="cos_name" ng-model="cos_name">
+        </td>
+        <td>
+          <img width="30" src="assets/images/searchicon.png" ng-click="searchAtWrite.searchAtWriteSubmit(cos_name)">
+        </td>
+      </tr>
+      <!--<button class="button button-positive" type="button" ng-click="searchAtWriteSubmit(cos_name)">검색</button>-->
+      <!--</form>-->
+      <!--</div>-->
+      </tr>
+
+    </table>
+  </div>
+
+  <table class="table table-striped .table-bordered .table-condensed">
+    <thead>
+    </thead>
+    <tbody>
+    <div ng-repeat="cosmetics in searchAtWrite.list">
+      {{cosmetics.cos_index}}<br>
+      {{cosmetics.cos_name}}<br>
+      {{cosmetics.cos_brand}}<br>
+      {{cosmetics.cos_price}}<br>
+      <img src={{cosmetics.cos_pic}}>
+      <img width="10%" src="assets/images/writeicon.png" ng-click="searchAtWrite.selectToWriteReview(cosmetics.cos_index)"></button>
+      <!--<button class="button button-positive" type="button" ng-click="selectToWriteReview(cosmetics.cos_index)">선택</button>-->
+
+    </div>
+    </tbody>
+  </table>
+</md-content>

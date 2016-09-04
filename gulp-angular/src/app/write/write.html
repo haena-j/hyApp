@@ -1,0 +1,116 @@
+<!-- 내 화장품 등록페이지 -->
+<style>
+  h5.thick {
+    font-weight: bold;
+  }
+
+  h5 {
+    font-size:12px;
+    color: grey;
+    margin-left: 40px;
+  }
+
+  h4.thick {
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size:13px;
+    color: grey;
+    margin-left: 40px;
+  }
+</style>
+<html>
+
+  <md-content class="padding">
+    <form method="post" name="myCosmeticsForm">
+      <div class="container" ng-class="{ 'has-error' : myCosmeticsForm.name.$invalid && !myCosmeticsForm.name.$pristine }">
+
+        <div class="row header">
+          <div class="col" align="center">
+            <script language="javascript">
+              function cosIndexCheck()
+              {
+                if (cosmeticsinformList.cos_name != null) {
+                  document.write("다시선택");
+                }
+              }
+            </script>
+            <h4>* 등록하고자 하는 화장품을 검색해주세요  <img width="20" src="assets/images/checkicon.png"></h4>
+            <span ng-show="myCosmeticsForm.cos_index.$error.required"></span><br>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col" align="center">
+            선택한 화장품 정보<br>
+            <table align="center">
+              <tr>
+                <td><img src="{{ writeController.cosmeticsinformList.cos_pic}}" width="70"></td>
+                <td>
+                  <div class="col">
+                    <h4>{{writeController.cosmeticsinformList.cos_brand}}</h4>
+                    <h5>{{writeController.cosmeticsinformList.cos_name}}</h5><br>
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <img width="40" src="assets/images/searchicon.png" ng-click="writeController.searchCosByBrand()">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col" align="center">
+            <span ng-show="myCosmeticsForm.file.$error.required"></span>
+            <h4>* 자신만의 화장품 사진을 등록해주세요  <img src="assets/images/checkicon.png" width="20"></h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col" align="center">
+            <p>
+              <input type="file" ngf-select ng-model="write.picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+              <i ng-show="myCosmeticsForm.file.$error.required">*required</i><br>
+              <i ng-show="myCosmeticsForm.file.$error.maxSize">File too large
+                {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+              <img ng-show="myCosmeticsForm.file.$valid" ngf-thumbnail="write.picFile" class="thumb"/>
+              <button ng-click="write.picFile = null" ng-show="write.picFile">Remove</button>
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col" align="center">
+            <span ng-show="myCosmeticsForm.m_open_date.$error.required"><h4>* 개봉 날짜를 선택해주세요<img src="assets/images/checkicon.png" width="20"></h4> </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col" align="center">
+            <input type="date" name="m_open_date" ng-model="write.m_open_date" required />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col" align="center">
+            <span ng-show="myCosmeticsForm.m_review.$error.required"><h4>* 리뷰를 작성해 주세요 <img src="assets/images/checkicon.png" width="20"></h4> </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col" align="center">
+            <input type="textarea" rows="4" cols="50"placeholder="리뷰를 작성해주세요" name="m_review" ng-model="write.m_review" required>
+          </div>
+        </div>
+
+        <br><br>
+        <div align="center">
+          <button class="button button-positive" type="button" ng-click="writeController.submitAtWrite(write)">내 화장품 등록</button>
+          <button class="button button-positive" type="reset">취소</button>
+        </div>
+      </div>
+    </form>
+  </md-content>
+
+</html>

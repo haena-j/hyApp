@@ -1,0 +1,59 @@
+<!-- 내화장대목록페이지 -->
+<style>
+  img {
+    border-radius: 50%;
+  }
+
+  h5 {
+    color: dimgrey;
+    font-size:10px;
+
+  }
+
+  h5.thick {
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size:14px;
+    test-align:center;
+    color: grey;
+    margin-left: 40px;
+  }
+</style>
+
+<div layout="vertical" layout-fill>
+  <md-content>
+    <br><br>
+    <div class="row">
+      <div class="col" align="center">
+        <img width="90" src="assets/images/plusicon.png" ng-click="mycostable.submit()"><br><br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h4>파우치에 화장품을 등록해보세요<img width="20" src="assets/images/checkicon.png"></h4>
+      </div>
+    </div>
+
+    <br><br><br><br>
+    <div class="col" ng-repeat="mycostablelist in mycostable.mycosmeticsList">
+      <table>
+        <tr>
+          <td>
+            <img ng-src={{mycostablelist.cos_pic}} width="70">
+          </td>
+          <td>
+            <div class="col">
+              <h4>{{mycostablelist.cos_brand}}</h4>
+              <h5>{{mycostablelist.cos_name}}</h5><br>
+            </div>
+          </td>
+          <td>
+            <div class="col"><img width="50" src="assets/images/icon01.png" ng-click="mycostable.detailOfMycosTable(mycostablelist.m_index)"></div>
+          </td>
+        </tr>
+      </table>
+      </div>
+    </md-content>
+</div>

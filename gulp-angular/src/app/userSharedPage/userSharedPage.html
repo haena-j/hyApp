@@ -1,0 +1,118 @@
+<style>
+  .profile {
+    max-width: 100%;
+    width: 100%;
+  }
+  .redheart-related{
+    position: absolute;
+    top: 40%;
+    left: 60%;
+    font-size: 18px;
+  }
+  .center {
+    position: absolute;
+    top: 46%;
+    left: 72%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+  }
+  .profile-related {
+    max-width: 100%;
+    width: 100px;
+    height: 100px;
+    min-width: 20px;
+    min-height: 20px;
+    border-radius: 50%;
+  }
+  .related-title {
+    margin-top: 10px;
+  }
+  .col {
+    display: inline-block;
+    position: relative;
+    width: 46%;
+  }
+  .col-related {
+    position: relative;
+    width: 31%;
+    font-size: 80%;
+    color: white;
+  }
+  .row-related {
+    background-color: #ffe0d1;
+    width: 100%;
+  }
+  .row {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    text-align: center;
+  }
+  div {
+    font-size: 9pt;
+  }
+
+</style>
+<div layout="vertical" layout-fill>
+  <!--<md-content>-->
+    <!--<div class="row header row-related">-->
+      <!--<p class="related-title">나와 취향이 비슷한 이웃님의 화장대를 확인해 보세요-->
+        <!--<img width="5%" src="assets/images/checkicon.png"></p><br>-->
+      <!--<div class="col col-related" ng-repeat="result in userSharedPage.RelationList">-->
+        <!--<img class="profile-related" ng-src={{userSharedPage.host}}{{result.image}}  ng-click="userSharedPage.goToDetail(result)">-->
+        <!--<img class="redheart-related" ng-src="assets/images/redheart.png" ng-click="userSharedPage.giveStar(result)">-->
+        <!--<div class="center">{{result.count}}</div> &lt;!&ndash;회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함&ndash;&gt;-->
+        <!--{{result.id}}<br>-->
+        <!--<img width="15%" src="assets/images/medalicon.png"> Lv.{{result.level}} {{result.level_name}}<br>-->
+        <!--{{result.same_count}}개 화장품 일치<br>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--인기 화장대-->
+    <!--<div class="row header">-->
+      <!--<div class="col"  ng-repeat="result in userSharedPage.highRankList">-->
+        <!--<img class="profile" ng-src={{userSharedPage.host}}{{result.image}} ng-click="userSharedPage.goToDetail(result)"><br> &lt;!&ndash;회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함&ndash;&gt;-->
+        <!--{{result.id}}<br>-->
+        <!--Lv.{{result.level}} {{result.level_name}}<br>-->
+        <!--{{result.count}}  <img width="20%" src="assets/images/redheart.png" ng-click="userSharedPage.giveStar(result)"><br>-->
+
+      <!--</div>-->
+    <!--</div>-->
+  <!--</md-content>-->
+
+  <md-content>
+    <div class="row header row-related">
+      <p class="related-title">나와 취향이 비슷한 이웃님의 화장대를 확인해 보세요
+        <img width="5%" src="assets/images/checkicon.png"></p><br>
+      <div class="col col-related" ng-repeat="result in userSharedPage.RelationList">
+        <img class="profile-related" ng-src={{userSharedPage.host}}{{result.image}}  ng-click="userSharedPage.goToDetail(result)">
+        <img class="redheart-related" ng-src="assets/images/redheart.png" ng-click="userSharedPage.giveStar(result)">
+        <div class="center">{{result.count}}</div> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
+        {{result.id}}<br>
+        <img width="15%" src="assets/images/medalicon.png"> Lv.{{result.level}} {{result.level_name}}<br>
+        {{result.same_count}}개 화장품 일치<br>
+      </div>
+    </div>
+
+
+    <div class="md-padding" layout-xs="column" layout="row" >
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch ng-repeat="result in userSharedPage.highRankList">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline"><img class="profile" ng-src={{userSharedPage.host}}{{result.image}} ng-click="userSharedPage.goToDetail(result)"></span>
+            <span class="md-subhead">{{result.id}}<br>Lv.{{result.level}} {{result.level_name}}</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-lg card-media"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Action 1</md-button>
+          <md-button>Action 2</md-button>
+        </md-card-actions>
+      </md-card>
+    </div>
+    </div>
+  </md-content>
+
+</div>

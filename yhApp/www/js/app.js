@@ -9,7 +9,7 @@
 //변경자 : 정혜윤
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ngAnimate', 'ui.router', 'ngFileUpload', 'jett.ionic.filter.bar'])
 
-  .constant('HOST', 'http://localhost:8080')
+  .constant('HOST', 'http://192.168.11.112:8080')
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

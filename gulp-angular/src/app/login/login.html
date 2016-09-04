@@ -1,0 +1,37 @@
+<!--혜윤/ 로그인페이지
+20160727 최종수정 -->
+  <style>
+    header {
+      display: none !important;
+    }
+    html {
+      text-align: center;
+    }
+    button {
+      width: 222px;
+      height: 49px;
+      border-radius: 20px;
+      -webkit-border-radius: 20px;
+    }
+    input {
+      align-content: center;
+      align-items: center;
+    }
+    .item-input {
+      margin: 20px;
+      width: 222px;
+      height: 49px;
+    }
+  </style>
+
+  <md-content class="padding">
+    <div class="list list-inset">
+      <label class="item item-input">
+        <input class="inputbox" type="text" name="id" ng-model="data.id" placeholder="ID"> </label>
+      <label class="item item-input">
+        <input class="inputbox" type="password" name="password" ng-model="data.password" placeholder="PASSWORD"></label>
+
+      <p><button class="button button-stable " ng-click="login.login(data)">Login</button></p>
+      <p><button class="button button-stable " type="button" ng-click="login.signIn()">Sign in</button></p>
+    </div>
+  </md-content>
