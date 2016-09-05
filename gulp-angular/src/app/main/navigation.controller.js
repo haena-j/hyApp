@@ -30,5 +30,11 @@
     vm.goToMain = function () {
       $location.path('/main');
     };
+
+    vm.searchCosmetics = function (cos_name) {
+      alert(cos_name);
+      $location.path('/search').search({param: cos_name});
+      location.reload();
+    }
   }
 })();

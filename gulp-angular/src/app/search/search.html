@@ -1,0 +1,26 @@
+
+<!--<button class="button button-icon ion-android-search" id="searchButton"-->
+        <!--ng-click="searchCosmetics(cos_name)"></button>-->
+
+<div layout="vertical" layout-fill>
+
+  <md-content>
+    <h3 class="md-title"><span md-highlight-text="searchText">{{item.searchText}}</span> " " 검색결과</h3>
+    <hr>
+    <div ng-repeat="cosmetics in search.cosmeticsList">
+      <div layout="row">
+        <div flex="30"><img id="cos_pic" ng-src={{cosmetics.cos_pic}}></div>
+        <div flex="60">
+          <div layout="column" layout-align="center start">
+            <div><p>{{ cosmetics.cos_brand}}</p></div>
+            <div><b>{{ cosmetics.cos_name}}</b></div>
+            <div>{{ cosmetics.cos_price}}원</div></div></div>
+        <div flex="10">
+
+
+          <img src="assets/images/addInterest.png" ng-click="search.save(cosmetics)" width="45" height="45" align="center"></div>
+
+      </div>
+    </div>
+    <md-content>
+</div>

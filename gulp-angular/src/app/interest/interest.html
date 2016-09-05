@@ -1,0 +1,39 @@
+<style>
+
+  #cos_pic {
+    max-width: 150px;
+    min-width: 50px;
+    width :100%;
+    height: 100%;
+  }
+
+</style>
+<div layout="vertical" layout-fill>
+
+  <md-content>
+
+
+
+
+    <h3 class="md-title"> 관심리스트 목록</h3>
+    <hr>
+    <div ng-repeat="cosmetics in interest.cosmeticsList">
+      <div layout="row">
+        <div flex="30"><img id="cos_pic" ng-src={{cosmetics.cos_pic}}></div>
+        <div flex="60">
+          <div layout="column" layout-align="center start">
+            <div><p>{{ cosmetics.cos_brand}}</p></div>
+            <div><b>{{ cosmetics.cos_name}}</b></div>
+            <div>{{ cosmetics.cos_price}}원</div></div></div>
+        <div flex="10">
+
+
+          <img src="assets/images/deleteInterest.png" ng-click="interest.delete(cosmetics)" width="45" height="45"></div>
+
+</div>
+</div>
+        <md-content>
+</div>
+
+
+

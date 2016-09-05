@@ -33,6 +33,7 @@
           <md-content layout-padding layout="row">
             <form ng-submit="$event.preventDefault()" style="width: 100%">
               <md-autocomplete
+                ng-model="cos_name"
                 ng-disabled="ctrl.isDisabled"
                 md-no-cache="ctrl.noCache"
                 md-selected-item="ctrl.selectedItem"
@@ -61,7 +62,7 @@
               </md-autocomplete>
             </form>
 
-            <md-button class="md-icon-button" style="width: inherit">
+            <md-button class="md-icon-button" style="width: inherit" ng-click="navigation.searchCosmetics(cos_name)">
               <md-icon md-svg-icon="assets/images/searchIcon.svg"></md-icon>
             </md-button>
           </md-content>
@@ -71,7 +72,9 @@
   </div>
   <acme-navbar creation-date="main.creationDate"></acme-navbar>
 </header>
+
 <div ui-view></div>
+
 <footer>
   <div class="lock-size" layout="row" layout-align="center center">
     <md-fab-speed-dial md-open="demo.isOpen"  md-direction="left" class="md-scale md-fab-bottom-right">

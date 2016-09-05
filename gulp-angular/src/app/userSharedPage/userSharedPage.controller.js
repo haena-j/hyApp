@@ -42,13 +42,59 @@
       HttpSvc.getHighRankList(AuthService.index())      //추천수순 상위 3개 회원 List 가져옴
         .success(function (values) {
           vm.highRankList = values;
+
+          vm.tiles = buildGridModel({
+            img : "",
+            id : "",
+            level : "",
+            level_name : "",
+            background : ""
+          });
+
+          function buildGridModel(tileTmpl){
+            var it, results = [ ];
+            for (var i=0; i<10; i++) {
+              it = angular.extend({},tileTmpl);
+              it.img = vm.host + vm.highRankList[i].image;
+              it.id = vm.highRankList[i].id;
+              it.level = vm.highRankList[i].level;
+              it.level_name = vm.highRankList[i].level_name;
+              it.span  = { row : 1, col : 1 };
+              switch(i+1) {
+                case 1:
+                  it.background = "red";
+                  it.span.row = it.span.col = 2;
+                  break;
+                case 2: it.background = "green";         break;
+                case 3: it.background = "darkBlue";      break;
+                case 4:
+                  it.background = "blue";
+                  it.span.col = 2;
+                  break;
+                case 5:
+                  it.background = "yellow";
+                  it.span.row = it.span.col = 2;
+                  break;
+                case 6: it.background = "pink";          break;
+                case 7: it.background = "darkBlue";      break;
+                case 8: it.background = "purple";        break;
+                case 9: it.background = "deepBlue";      break;
+                case 10: it.background = "lightPurple";  break;
+                case 11: it.background = "yellow";       break;
+              }
+              results.push(it);
+            }
+            return results;
+          }
+
         }).error(function () {
       });
 
     };
     vm.Test();   //함수 Test 실행
 
-  }
+
+    }
   function UserSharedDetailController( $location, HttpSvc, HOST) {
     var vm = this;
     vm.host = HOST;

@@ -75,6 +75,19 @@
         controllerAs: 'searchAtWrite'
       })
 
+    //예은부분
+      .state('interest', {
+        url: '/interest',
+        templateUrl: 'app/interest/interest.html',
+        controller: 'InterestController',
+        controllerAs: 'interest'
+      })
+      .state('search', {
+        url: '/search',
+        templateUrl: 'app/search/search.html',
+        controller: 'SearchController',
+        controllerAs: 'search'
+      })
     ;
 
     $urlRouterProvider.otherwise('/login');
