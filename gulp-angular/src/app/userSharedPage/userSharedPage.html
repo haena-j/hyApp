@@ -1,138 +1,172 @@
 <style>
-  .profile {
-    max-width: 100%;
-    width: 100%;
-  }
-  .redheart-related{
-    position: absolute;
-    top: 40%;
-    left: 60%;
-    font-size: 18px;
-  }
-  .center {
-    position: absolute;
-    top: 46%;
-    left: 72%;
-    transform: translate(-50%, -50%);
-    font-size: 12px;
-  }
-  .profile-related {
-    max-width: 100%;
-    width: 100px;
-    height: 100px;
-    min-width: 20px;
-    min-height: 20px;
-    border-radius: 50%;
-  }
   .related-title {
-    margin-top: 10px;
+    margin-top: 15px;
+    text-align: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
-  .col {
-    display: inline-block;
-    position: relative;
-    width: 46%;
+
+  .md-padding {
+    padding: 0;
   }
-  .col-related {
-    position: relative;
-    width: 31%;
-    font-size: 80%;
-    color: white;
-  }
+
   .row-related {
-    background-color: #ffe0d1;
+    background-color: #f2dede;
     width: 100%;
   }
+
+  .profile_icon {
+    padding: 2px 2px 2px 2px;
+    width: 100%;
+  }
+
   .row {
     display: table;
     table-layout: fixed;
     width: 100%;
-    text-align: center;
   }
+
   div {
     font-size: 9pt;
   }
 
+  .td-img {
+    width: 20%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .related-review-img {
+    height: 45%;
+  }
+
+  md-card {
+    height: 340px;
+  }
+
+  .md-headline {
+    font-size: 12px;
+  }
+
+  md-content {
+    font-family: 맑은고딕, "Malgun Gothic";
+  }
+
+  md-card md-card-title {
+    padding: 0 0 0 0;
+    padding-left: 10px;
+  }
+
+  md-card md-card-title md-card-title-text .md-subhead {
+    padding-top: 0;
+    font-size: 10px;
+  }
+
+  md-card md-card-title md-card-title-text:only-child .md-subhead {
+    padding-top: 0;
+  }
+
+  .md-icon-button {
+    margin-right: 0;
+  }
+  table {
+    width: 100%;
+    position: relative;
+  }
+  .td-padding {
+    width: 30%;
+  }
 </style>
 <div layout="vertical" layout-fill>
-  <!--<md-content>-->
-    <!--<div class="row header row-related">-->
-      <!--<p class="related-title">나와 취향이 비슷한 이웃님의 화장대를 확인해 보세요-->
-        <!--<img width="5%" src="assets/images/checkicon.png"></p><br>-->
-      <!--<div class="col col-related" ng-repeat="result in userSharedPage.RelationList">-->
-        <!--<img class="profile-related" ng-src={{userSharedPage.host}}{{result.image}}  ng-click="userSharedPage.goToDetail(result)">-->
-        <!--<img class="redheart-related" ng-src="assets/images/redheart.png" ng-click="userSharedPage.giveStar(result)">-->
-        <!--<div class="center">{{result.count}}</div> &lt;!&ndash;회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함&ndash;&gt;-->
-        <!--{{result.id}}<br>-->
-        <!--<img width="15%" src="assets/images/medalicon.png"> Lv.{{result.level}} {{result.level_name}}<br>-->
-        <!--{{result.same_count}}개 화장품 일치<br>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--인기 화장대-->
-    <!--<div class="row header">-->
-      <!--<div class="col"  ng-repeat="result in userSharedPage.highRankList">-->
-        <!--<img class="profile" ng-src={{userSharedPage.host}}{{result.image}} ng-click="userSharedPage.goToDetail(result)"><br> &lt;!&ndash;회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함&ndash;&gt;-->
-        <!--{{result.id}}<br>-->
-        <!--Lv.{{result.level}} {{result.level_name}}<br>-->
-        <!--{{result.count}}  <img width="20%" src="assets/images/redheart.png" ng-click="userSharedPage.giveStar(result)"><br>-->
-
-      <!--</div>-->
-    <!--</div>-->
-  <!--</md-content>-->
 
   <md-content>
     <div class="row header row-related">
       <p class="related-title">나와 취향이 비슷한 이웃님의 화장대를 확인해 보세요
-        <img width="5%" src="assets/images/checkicon.png"></p><br>
-      <div class="col col-related" ng-repeat="result in userSharedPage.RelationList">
-        <img class="profile-related" ng-src={{userSharedPage.host}}{{result.image}}  ng-click="userSharedPage.goToDetail(result)">
-        <img class="redheart-related" ng-src="assets/images/redheart.png" ng-click="userSharedPage.giveStar(result)">
-        <div class="center">{{result.count}}</div> <!--회원 Image는 DB파일로 저장되 있기 때문에 HOST주소 + image 값 입력이 필요함-->
-        {{result.id}}<br>
-        <img width="15%" src="assets/images/medalicon.png"> Lv.{{result.level}} {{result.level_name}}<br>
-        {{result.same_count}}개 화장품 일치<br>
+        <md-icon md-svg-src="assets/images/correct.svg"></md-icon>
+      </p>
+      <br>
+      <div class="md-padding" layout-xs="column" layout="row">
+        <div flex-xs flex-gt-xs="50" layout="column">
+          <md-card ng-repeat="result in userSharedPage.RelationList">
+            <md-card-header>
+              <md-card-avatar>
+                <img class="md-user-avatar" ng-src="{{userSharedPage.host}}{{result.image}}"/>
+              </md-card-avatar>
+              <md-card-header-text>
+                <span class="md-title">{{result.id}}</span>
+                <span class="md-subhead"> Lv.{{result.level}} {{result.level_name}}</span>
+              </md-card-header-text>
+            </md-card-header>
+
+            <img class="related-review-img" ng-src="{{userSharedPage.host}}{{result.recent_review_img}}" alt="Washed Out"
+                 ng-click="userSharedPage.goToDetail(result)">
+       <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">최근리뷰) {{result.recent_review_name}}</span>
+                  <span class="md-subhead">
+                   <table>
+                  <tr>
+                    <td>회원님과 {{result.same_count}}개의 화장품 일치</td>
+                    <td class="td-padding"></td>
+                    <td > {{result.count}}</td>
+                    <td>
+                      <md-button class="md-icon-button"
+                                 ng-click="userSharedPage.giveStar(result)">
+                        <md-icon md-svg-icon="assets/images/like.svg"></md-icon>
+                      </md-button>
+                    </td>
+                  </tr>
+                </table>
+                  </span>
+                </md-card-title-text>
+              </md-card-title>
+          </md-card>
+        </div>
       </div>
     </div>
 
-    <div flex ng-cloak>
-      <md-grid-list
-        md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
-        md-row-height-gt-md="1:1" md-row-height="4:3"
-        md-gutter="8px" md-gutter-gt-sm="4px" >
-        <md-grid-tile ng-repeat="tile in userSharedPage.tiles"
-                      md-rowspan="{{tile.span.row}}"
-                      md-colspan="{{tile.span.col}}"
-                      md-colspan-sm="1"
-                      md-colspan-xs="1"
-                      ng-class="tile.background" ng-click="tile.show = !tile.show">
-          <img ng-src="{{tile.img}}" style="width:100%; height:100%;">
-          <!--<md-icon md-svg-icon="../svg/avatar-1.svg"></md-icon>-->
-          <div ng-init="tile.show = false" ng-show="tile.show">
-            <md-grid-tile-footer><h3>{{tile.id}}</h3></md-grid-tile-footer></div>
-        </md-grid-tile>
-      </md-grid-list>
-    </div>
 
-    <!--<div class="md-padding" layout-xs="column" layout="row" >-->
-    <!--<div flex-xs flex-gt-xs="50" layout="column">-->
-      <!--<md-card ng-repeat="result in userSharedPage.highRankList" >-->
-        <!--<md-card-title >-->
-          <!--<md-card-title-text>-->
-            <!--<span class="md-headline">{{result.id}}</span>-->
-            <!--<span class="md-subhead">Lv.{{result.level}} {{result.level_name}}</span>-->
-          <!--</md-card-title-text>-->
-          <!--<md-card-title-media>-->
-            <!--<div class="md-media-sm card-media">-->
-              <!--<img class="profile" ng-src={{userSharedPage.host}}{{result.image}} ng-click="userSharedPage.goToDetail(result)">-->
-            <!--</div>-->
-          <!--</md-card-title-media>-->
-        <!--</md-card-title>-->
-        <!--<md-card-actions layout="row" layout-align="end center">-->
-          <!--<md-button>Action 1</md-button>-->
-          <!--<md-button>Action 2</md-button>-->
-        <!--</md-card-actions>-->
-      <!--</md-card>-->
-    <!--</div>-->
-    <!--</div>-->
-  </md-content>
+    <div>
+      <p class="related-title">핫한 이웃님의 화장대를 확인해 보세요
+        <md-icon md-svg-src="assets/images/correct.svg"></md-icon>
+      </p>
+      <br>
+      <div flex ng-cloak>
+        <md-grid-list
+          md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
+          md-row-height-gt-md="1:1" md-row-height="4:3"
+          md-gutter="8px" md-gutter-gt-sm="4px">
+          <md-grid-tile ng-repeat="tile in userSharedPage.tiles"
+                        md-rowspan="{{tile.span.row}}"
+                        md-colspan="{{tile.span.col}}"
+                        md-colspan-sm="1"
+                        md-colspan-xs="1"
+                        ng-class="tile.background" ng-click="tile.show = !tile.show">
+            <img ng-src="{{userSharedPage.host}}{{tile.recent_review_img}}" style="width:100%; height:100%;">
+            <!--<md-icon md-svg-icon="../svg/avatar-1.svg"></md-icon>-->
+            <div ng-init="tile.show = true" ng-show="tile.show">
+              <md-grid-tile-footer style="height: 70px">
+                <table>
+                  <tr>
+                    <td class="td-img" rowspan="2">
+                      <img class="profile_icon" ng-src="{{tile.img}}">
+                    </td>
+                    <td>
+                      {{tile.id}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      Lv. {{tile.level}} {{tile.level_name}}
+                    </td>
+                  </tr>
+                </table>
+              </md-grid-tile-footer>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
+      </div>
+    </div>
+</div>
 
 </div>

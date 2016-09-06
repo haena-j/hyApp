@@ -15,5 +15,7 @@ public class RelatedMemberVO {
     private int level;
     private String level_name;
     private int count;
-    private int same_count;
+    private int same_count; //같은화장품갯수
+    private String recent_review_name; //최근등록리뷰관련
+    private String recent_review_img; //최근등록리뷰관련
 }

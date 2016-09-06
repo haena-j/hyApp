@@ -27,6 +27,9 @@ public interface MyCosmeticsMapper {
     @Select("SELECT * FROM MY_COSMETICS WHERE m_index = #{m_index}")
     My_CosmeticsVO findByMIndex(@Param("m_index") int m_index);
 
+    @Select("SELECT COSMETICS.cos_name, MY_COSMETICS.m_cosimage FROM COSMETICS join MY_COSMETICS on COSMETICS.cos_index = MY_COSMETICS.cos_index WHERE member_index = #{member_index} ORDER BY m_index DESC limit 1")
+    My_CosmeticsVO findRecentReview(@Param("member_index") int member_index);
+
     @Update("UPDATE MY_COSMETICS SET M_OPEN_DATE = #{m_open_date}, M_EXPIRE_DATE = #{m_expire_date}, M_REVIEW = #{m_review}, M_COSIMAGE = #{m_cosimage} WHERE M_INDEX = #{m_index}")
     void updateReview(My_CosmeticsVO my_cosmetics);
 

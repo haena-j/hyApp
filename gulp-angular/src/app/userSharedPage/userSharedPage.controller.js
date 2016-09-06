@@ -48,7 +48,8 @@
             id : "",
             level : "",
             level_name : "",
-            background : ""
+            background : "",
+            recent_review_img : ""
           });
 
           function buildGridModel(tileTmpl){
@@ -60,6 +61,7 @@
               it.level = vm.highRankList[i].level;
               it.level_name = vm.highRankList[i].level_name;
               it.span  = { row : 1, col : 1 };
+              it.recent_review_img = vm.highRankList[i].recent_review_img;
               switch(i+1) {
                 case 1:
                   it.background = "red";

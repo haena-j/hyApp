@@ -31,6 +31,7 @@ public interface MemberMapper {
 
     @Update("UPDATE MEMBER SET IMAGE = #{image} WHERE ID = #{id}")
     void updateMemberImage(MemberVO member);
+
     @Select("SELECT MEMBER_INDEX, ID, PASSWORD, NAME, BIRTH, IMAGE, COUNT, MEMBER.level, level_name FROM MEMBER join LEVEL_NAME on MEMBER.level = LEVEL_NAME.level ORDER BY COUNT DESC")
     List<RelatedMemberVO> findHighRankList();
 }

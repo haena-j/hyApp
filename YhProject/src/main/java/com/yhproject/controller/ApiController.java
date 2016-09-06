@@ -196,6 +196,14 @@ public class ApiController {
             relatedMem.setSame_count(userRelationList.get(i).getCount());
             relatedMem.setLevel(mem.getLevel());
             relatedMem.setLevel_name(mem.getLevel_name());
+            My_CosmeticsVO CosVo = my_CosmeticsMapper.findRecentReview(m_idx);
+            if(CosVo != null){
+                relatedMem.setRecent_review_img(CosVo.getM_cosimage());
+                relatedMem.setRecent_review_name(CosVo.getCos_name());
+            }else{
+                relatedMem.setRecent_review_img(Constant.UPLOAD_FOLDER + "/no_image.jpg");
+                relatedMem.setRecent_review_name("최근리뷰가없습니다.");
+            }
 
             System.out.println("3.relatedMem :" + relatedMem.toString());
             memberList.add(relatedMem);
@@ -214,6 +222,20 @@ public class ApiController {
     @RequestMapping(method = RequestMethod.POST, value = "api/getHighRankList")
     public List<RelatedMemberVO> getHighRankList(@RequestBody int member_idx) {
         List<RelatedMemberVO> result = memberMapper.findHighRankList();
+        for(int i = 0; i < result.size(); i++){
+            int m_idx = result.get(i).getMember_index();
+            My_CosmeticsVO CosVo = my_CosmeticsMapper.findRecentReview(m_idx);
+            if(CosVo != null) {
+                if(CosVo.getM_cosimage() == null){
+                    result.get(i).setRecent_review_img(Constant.UPLOAD_FOLDER + "/no_image.jpg");
+                }
+                result.get(i).setRecent_review_img(CosVo.getM_cosimage());
+                result.get(i).setRecent_review_name(CosVo.getCos_name());
+            }else{
+                result.get(i).setRecent_review_img(Constant.UPLOAD_FOLDER + "/no_image.jpg");
+                result.get(i).setRecent_review_name("최근리뷰가없습니다.");
+            }
+        }
         System.out.println("추천수 : " + result);
         return result;
     }

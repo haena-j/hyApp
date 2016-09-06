@@ -553,9 +553,9 @@ memo : 사용자 정보가져올땐 AuthService 사용해주세요
 /*******************예은부분*******************/
   .controller('SearchCtrl', function ($scope,AuthService,$state, HttpSvc, $location) {
       HttpSvc.getSearch($location.search().param)   //혜윤추가.. 수정이필요
-        .success(function (values) {
-          $scope.cosmeticsList = values;
-        }).error(function (values, status) {
+      .success(function (values) {
+        $scope.cosmeticsList = values;
+      }).error(function (values, status) {
       });
 
     $scope.viewInterest = function() {  //관심리스트 보기

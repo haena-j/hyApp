@@ -3,8 +3,6 @@ package com.yhproject.domian;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-
 /**
  * Created by jungmini on 2016. 7. 9..
  */
@@ -18,5 +16,6 @@ public class My_CosmeticsVO {
     private int member_index;
     private String m_review;
     private String m_cosimage;
+    private String cos_name;
     private MultipartFile files;
 }
