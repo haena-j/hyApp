@@ -91,6 +91,15 @@ memo : service는 HttpSvc 로 통일
       });
     };
 
+    this.findUserByMIndex = function(param) {
+      return $http({
+        url: HOST + '/api/UserInformation',
+        method: 'POST',
+        data: param,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
     this.findByMIndex = function(param) {
       return $http({
         url: HOST + '/api/mCosdetailByMIndex',

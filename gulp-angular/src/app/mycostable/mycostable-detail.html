@@ -1,0 +1,53 @@
+<style>
+  img {
+    max-width: 100%;
+    height: auto;
+
+  }
+  h5 {
+    color: black;
+    font-size:12px;
+
+  }
+
+  h4.thick {
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size:13px;
+    color: grey;
+    margin-left: 40px;
+  }
+
+  tr, td {
+    padding: 1px;
+
+  }
+
+
+
+</style>
+<md-content>
+  <center>
+    <br><br><br><br>
+    <table align="center">
+      <tr align="center">
+        <img ng-src={{mycostableDetail.mycostabledetail.m_cosimage}} width="100" height="300"/><br>
+      </tr>
+      <tr align="center">
+        <td align="center"><h4>개봉날짜</h4></td><td align="center"><h5>{{mycostableDetail.mycostabledetail.m_open_date}}</h5></td></tr><br>
+      <tr align="center">
+        <td align="center"><h4>사용기한</h4></td><td align="center"><h5>{{mycostableDetail.mycostabledetail.m_expire_date}}</h5></td></tr><br>
+      <tr align="center">
+        <td align="center"><h4>후기내용</h4></td><td align="center"><h5>{{mycostableDetail.mycostabledetail.m_review}}</h5></td></tr><br>
+    </table>
+  </center>
+</md-content>
+
+
+  <center>
+    <img src="assets/images/pencil.png" ng-click="mycostableDetail.editDetail()">수정</button>
+    <img src="assets/images/eraser.png" ng-click="mycostableDetail.deleteDetail(mycostable)">삭제</button>
+  </center>
+

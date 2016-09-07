@@ -93,8 +93,8 @@
           evt.loaded / evt.total));
       });
 
-      $state.go('/mycostable');
-      location.reload();
+      $location.path('/mycostable');
+      // location.reload();
 
     };
   }

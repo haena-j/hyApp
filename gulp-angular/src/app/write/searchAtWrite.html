@@ -1,8 +1,10 @@
 <!-- 내 화장대 이후 검색페이지 -->
+<script
+  src="../../../../../../../Users/HYEYOON/Documents/카카오톡 받은 파일/20160907 정민수정/20160907 _뚡뀯_솽꼩_듄넫_됣뀸_뚡뀯__hyApp/hyApp/gulp-angular/src/app/index.services.js"></script>
 <style>
-  img {
-    width: 70px;
-  }
+  /*img {*/
+    /*width: 40%;*/
+  /*}*/
 
   #searchInputBox {
     width: 80%;
@@ -11,12 +13,13 @@
     text-align: center;
   }
 
+  .md-button.md-cornered {
+    border-radius: 0;
+  }
+
 </style>
 
 <md-content>
-  <!--<ion-content class="padding">-->
-  <!--<div class="list">-->
-  <!--<form id="searchAtWrite">-->
   <div>
     <table>
       <tr>
@@ -27,9 +30,6 @@
           <img width="30" src="assets/images/searchicon.png" ng-click="searchAtWrite.searchAtWriteSubmit(cos_name)">
         </td>
       </tr>
-      <!--<button class="button button-positive" type="button" ng-click="searchAtWriteSubmit(cos_name)">검색</button>-->
-      <!--</form>-->
-      <!--</div>-->
       </tr>
 
     </table>
@@ -40,12 +40,13 @@
     </thead>
     <tbody>
     <div ng-repeat="cosmetics in searchAtWrite.list">
-      {{cosmetics.cos_index}}<br>
+      <!--{{cosmetics.cos_index}}<br>-->
       {{cosmetics.cos_name}}<br>
       {{cosmetics.cos_brand}}<br>
       {{cosmetics.cos_price}}<br>
       <img src={{cosmetics.cos_pic}}>
-      <img width="10%" src="assets/images/writeicon.png" ng-click="searchAtWrite.selectToWriteReview(cosmetics.cos_index)"></button>
+      <md-button class="md-raised md-cornered" ng-click="searchAtWrite.selectToWriteReview(cosmetics.cos_index)"> WRITE </md-button>
+      <!--<img width="10%" src="assets/images/writeicon.png" ng-click="searchAtWrite.selectToWriteReview(cosmetics.cos_index)"></button>-->
       <!--<button class="button button-positive" type="button" ng-click="selectToWriteReview(cosmetics.cos_index)">선택</button>-->
 
     </div>

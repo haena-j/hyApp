@@ -218,7 +218,7 @@ public class ApiController {
         memberMapper.updateMemberStar(member_id);
     }
 
-    //화장대엿보기 - 추천수순 상위 3개 리스트 전송 -혜윤
+    //화장대엿보기 - 추천수순 전송 -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/getHighRankList")
     public List<RelatedMemberVO> getHighRankList(@RequestBody int member_idx) {
         List<RelatedMemberVO> result = memberMapper.findHighRankList();
@@ -226,10 +226,10 @@ public class ApiController {
             int m_idx = result.get(i).getMember_index();
             My_CosmeticsVO CosVo = my_CosmeticsMapper.findRecentReview(m_idx);
             if(CosVo != null) {
+                result.get(i).setRecent_review_img(CosVo.getM_cosimage());
                 if(CosVo.getM_cosimage() == null){
                     result.get(i).setRecent_review_img(Constant.UPLOAD_FOLDER + "/no_image.jpg");
                 }
-                result.get(i).setRecent_review_img(CosVo.getM_cosimage());
                 result.get(i).setRecent_review_name(CosVo.getCos_name());
             }else{
                 result.get(i).setRecent_review_img(Constant.UPLOAD_FOLDER + "/no_image.jpg");
@@ -398,6 +398,17 @@ public class ApiController {
 
         my_CosmeticsMapper.deleteReview(my_cosmetics);
 
+    }
+
+    //내 화장대에서 회원 정보 불러오기
+    @RequestMapping(method = RequestMethod.POST, value="/api/UserInformation")
+    public MemberVO findUserByMIndex(@RequestBody int member_index) {
+        System.out.println("가져 오려는 member_index: " + member_index);
+
+        MemberVO memberInformation = memberMapper.findByIndex(member_index);
+        System.out.println("멤버 잘 가져왔나 확인:" + memberInformation.getName());
+
+        return memberInformation;
     }
 
 
