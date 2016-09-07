@@ -98,8 +98,7 @@
               </md-card-header-text>
             </md-card-header>
 
-            <img class="related-review-img" ng-src="{{userSharedPage.host}}{{result.recent_review_img}}" alt="Washed Out"
-                 ng-click="userSharedPage.goToDetail(result)">
+            <img class="related-review-img" ng-src="{{userSharedPage.host}}{{result.recent_review_img}}" ng-click="userSharedPage.goToDetail(result)">
        <md-card-title>
                 <md-card-title-text>
                   <span class="md-headline">최근리뷰) {{result.recent_review_name}}</span>
@@ -142,9 +141,10 @@
                         md-colspan-sm="1"
                         md-colspan-xs="1"
                         ng-class="tile.background" ng-click="tile.show = !tile.show">
-            <img ng-src="{{userSharedPage.host}}{{tile.recent_review_img}}" style="width:100%; height:100%;">
+            <img ng-if="tile.recent_review_img.substring(0,4) != 'http'" ng-src="{{userSharedPage.host}}{{tile.recent_review_img}}" style="width:100%; height:100%;">
+            <img ng-if="tile.recent_review_img.substring(0,4) == 'http'" ng-src="{{tile.recent_review_img}}" style="width:100%; height:100%;">
             <!--<md-icon md-svg-icon="../svg/avatar-1.svg"></md-icon>-->
-            <div ng-init="tile.show = true" ng-show="tile.show">
+            <div ng-init="tile.show = false" ng-show="tile.show">
               <md-grid-tile-footer style="height: 70px">
                 <table>
                   <tr>

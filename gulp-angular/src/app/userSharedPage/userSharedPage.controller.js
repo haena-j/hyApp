@@ -93,6 +93,15 @@
       .success(function (values) {
         vm.cosmeticsInfoList = values;
       })
-      .error(function (values) {alert("error" + values);});
+      .error(function (values) {
+        alert("error" + values);
+      });
+
+    HttpSvc.findUserByMIndex(member_index)
+      .success(function (values) {
+        vm.memberInfo = values;
+      })
+      .error(function () {
+      })
   }
     })();

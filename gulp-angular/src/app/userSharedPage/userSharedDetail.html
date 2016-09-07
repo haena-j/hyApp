@@ -1,9 +1,160 @@
-<md-content>
-    <div ng-repeat="result in userSharedDetail.cosmeticsInfoList">
-      <img ng-src={{result.image_url}}><br>
-      화장품이름 : {{ result.cos_name}}<br>
-      후기 : {{result.m_review}}<br>
-      사진 : <img ng-src={{userSharedDetail.host}}{{result.m_cosimage}}><br>
-      원래 화장품 사진 : <img ng-src={{result.cos_pic}}><br>
+<style>
+
+  img {
+    border-radius: 50%;
+  }
+
+  h5 {
+    color: dimgrey;
+    font-size:10px;
+
+  }
+  .flip-container {
+    background-color:white;
+
+  }
+
+  .row-header-row-related {
+    width: 100%;
+
+  }
+
+  .center {
+    position: relative;
+    top: -1%;
+    left: 57%;
+    transform: translate(-50%, -148%);
+    font-size: 12px;
+    color: white;
+  }
+
+  .col-related {
+    width: 100%;
+    height: 100%;
+
+  }
+
+  .md-button {
+    padding: 0 6px 0 6px;
+    margin: 6px 8px 6px 8px;
+    min-width: 88px;
+    border-radius: 3px;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration:none;
+    border: none;
+    outline: none;
+  }
+
+  .redheart-related {
+    position: relative;
+    top: 20%;
+    left: 1%;
+    font-size: 18px;
+  }
+
+  b {
+    font-size: 9pt;
+    color: darkgray;
+  }
+
+  .profile {
+    max-width: 100%;
+    width: 100px;
+    height: 100px;
+    min-width: 20px;
+    min-height: 20px;
+    border-radius: 50%;
+  }
+
+  .md-padding {
+    width: 100%;
+    padding-top: 10px;
+  }
+
+  .add-related {
+    top: 1%;
+    left: 75%;
+  }
+  h5.thick {
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size:14px;
+    text-align:center;
+    color: grey;
+    margin-left: 40px;
+  }
+</style>
+
+
+<div layout="vertical">
+  <md-content class="md-padding" layout-xs="column" layout="row" style="background-color: #f2dede">
+    <br>
+    <div class="row-header-row-related" >
+      <div class="row-header-row-related" align="center" >
+        <div class="row-header-row-related">
+          <img class="profile" width="90" ng-src={{userSharedDetail.host}}{{userSharedDetail.memberInfo.image}}><br>
+          <b>{{userSharedDetail.memberInfo.id}}
+            <img class="redheart-related" ng-src="assets/images/redheart.png"></b>
+          <div class="center">{{userSharedDetail.memberInfo.count}}</div>
+
+          <div class="row-header-row-related" >
+            <div class="row-header-row-related" align="center" >
+              <md-button class="md-icon-button">
+                <md-icon style="width: 20px;" md-svg-src="assets/images/plusicon.svg" ng-click="userSharedDetail.submit()"></md-icon>
+              </md-button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br><br>
+      <div class="row-header-row-related"   style="background-color:white">
+        <div class="row-header-row-related" ng-repeat="result in userSharedDetail.cosmeticsInfoList" style="background-color:white">
+
+          <md-card align="center" style="background-color: whitesmoke">
+
+            <md-card-title>
+              <md-card-title-media>
+                <div ng-if="result.m_cosimage.substring(0,4) != 'http'" class="md-media-lg card-media"><img width="20" md-card-sm-image ng-src={{userSharedDetail.host}}{{result.m_cosimage}} ></div>
+                <div ng-if="result.m_cosimage.substring(0,4) == 'http'" class="md-media-lg card-media"><img width="20" md-card-sm-image ng-src={{result.cos_pic}} ></div>
+              </md-card-title-media>
+              <md-card-title-text>
+                <span class="md-headline">{{ result.cos_name}}</span>
+                <h5><span class="md-subhead">{{result.m_review}}</span></h5>
+              </md-card-title-text>
+            </md-card-title>
+            <div class="md-menu-demo"  ng-cloak>
+              <div class="menu-demo-container" layout-align="right right" layout="column">
+                <md-menu>
+                  <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
+                    <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                  </md-button>
+                  <md-menu-content width="4">
+                    <md-menu-item>
+                      <md-button ng-click="ctrl.redial($event)">
+                        <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                        수정
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click="ctrl.delete($event)">
+                        <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                        삭제
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </div>
+            </div>
+
+          </md-card>
+        </div>
+      </div>
     </div>
-</md-content>
+  </md-content>
+</div>
