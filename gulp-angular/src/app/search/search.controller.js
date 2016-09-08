@@ -17,6 +17,7 @@
       HttpSvc.getSearch($location.search().param)
         .success(function (values) {
           vm.cosmeticsList = values;
+          vm.searchText = $location.search().param;
         }).error(function () {
       });
 
@@ -27,8 +28,10 @@
     };
     HttpSvc.addInterest(interestVO)
       .success(function (values) {
-        if(values == 1)
+        if(values == 1) {
           alert('저장하였습니다.');
+          $location.path('/interest');
+        }
         else
           alert('이미 저장되었습니다.');
       }).error(function (status) {

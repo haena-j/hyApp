@@ -31,40 +31,10 @@
       <div class="navbar-header" style="width: 100%">
         <div layout="column" ng-cloak>
           <md-content layout-padding layout="row">
-            <form ng-submit="$event.preventDefault()" style="width: 100%">
-              <md-autocomplete
-                ng-model="cos_name"
-                ng-disabled="ctrl.isDisabled"
-                md-no-cache="ctrl.noCache"
-                md-selected-item="ctrl.selectedItem"
-                md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-                md-search-text="ctrl.searchText"
-                md-selected-item-change="ctrl.selectedItemChange(item)"
-                md-items="item in ctrl.querySearch(ctrl.searchText)"
-                md-item-text="item.name"
-                md-min-length="0"
-                placeholder="제품명 / 브랜드를 입력해주세요."
-                md-menu-class="autocomplete-custom-template">
-                <md-item-template>
-          <span class="item-title">
-            <md-icon md-svg-icon="images/cos.png"></md-icon> <!--이미지 필요-->
-            <span> {{item.name}} ({{item.maker}}) </span>
-          </span>
-                  <span class="item-metadata">
-            <span class="item-metastat">
-              <strong>{{item.price}}</strong> 원
-            </span>
-            <span class="item-metastat">
-              <strong>{{item.watchers}}</strong> hit
-            </span>
-          </span>
-                </md-item-template>
-              </md-autocomplete>
-            </form>
-
-            <md-button class="md-icon-button" style="width: inherit" ng-click="navigation.searchCosmetics(cos_name)">
-              <md-icon md-svg-icon="assets/images/searchIcon.svg"></md-icon>
-            </md-button>
+              <input type="text" id="searchBox" placeholder="제품명 / 브랜드를 입력해주세요." name="cos_name" ng-model="cos_name" style="width: 100%">
+              <md-button class="md-icon-button" ng-click="navigation.searchCosmetics(cos_name)">
+                <md-icon md-svg-icon="assets/images/searchIcon.svg"></md-icon>
+              </md-button>
           </md-content>
         </div>
       </div>

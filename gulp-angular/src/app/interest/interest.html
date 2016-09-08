@@ -6,18 +6,33 @@
     width :100%;
     height: 100%;
   }
+  div {
+    max-width: 100%;
+  }
 
 </style>
 <div layout="vertical" layout-fill>
 
   <md-content>
 
+    <div ng-controller="SelectAsyncController" layout="row" ng-cloak>
+      <div layout="row">
+        <!--md-on-open은 선택창을 열때, md-on-open은 선택창을 닫을때 발생-->
+        <md-select placeholder="브랜드별" ng-model="brand" md-on-open="loadBrands()" style="min-width: 100px;" md-on-close="printSelectedBrands(brand.name)">
+          <md-option ng-value="brand" ng-repeat="brand in brands">{{brand.name}}</md-option>
+        </md-select>&nbsp;&nbsp;&nbsp;
+         <md-select placeholder="제품별" ng-model="type" md-on-open="loadTypes()" style="min-width: 100px;" md-on-close="printSelectedTypes(type.name)">
+          <md-option ng-value="type" ng-repeat="type in types">{{type.name}}</md-option>
+        </md-select>
 
-
+      </div>
+      <!--<p class="md-caption">선택된 브랜드: {{ brand ? brand.name : 'No one yet' }}</p>-->
+    </div>
 
     <h3 class="md-title"> 관심리스트 목록</h3>
     <hr>
     <div ng-repeat="cosmetics in interest.cosmeticsList">
+
       <div layout="row">
         <div flex="30"><img id="cos_pic" ng-src={{cosmetics.cos_pic}}></div>
         <div flex="60">
@@ -31,6 +46,7 @@
           <img src="assets/images/deleteInterest.png" ng-click="interest.delete(cosmetics)" width="45" height="45"></div>
 
 </div>
+
 </div>
         <md-content>
 </div>
