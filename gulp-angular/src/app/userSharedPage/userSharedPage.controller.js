@@ -8,7 +8,7 @@
     .module('gulpAngular')
     .controller('UserSharedPageController',UserSharedPageController)
     .controller('UserSharedDetailController', UserSharedDetailController);
-  /** @ngInject */
+
   function UserSharedPageController(HttpSvc, HOST, $location, AuthService) {
     var vm = this;
     vm.host = HOST;
@@ -49,7 +49,9 @@
             level : "",
             level_name : "",
             background : "",
-            recent_review_img : ""
+            recent_review_img : "",
+            count : "",
+            member_index: ""
           });
 
           function buildGridModel(tileTmpl){
@@ -62,6 +64,8 @@
               it.level_name = vm.highRankList[i].level_name;
               it.span  = { row : 1, col : 1 };
               it.recent_review_img = vm.highRankList[i].recent_review_img;
+              it.count = vm.highRankList[i].count;
+              it.member_index = vm.highRankList[i].member_index;
               if(i == 1){
                 it.span.row = it.span.col = 2;
               }
@@ -83,8 +87,21 @@
     };
     vm.Test();   //함수 Test 실행
 
-
+    vm.currentIndex = 0;
+    vm.setCurrentSlideIndex = function (index) {
+      vm.currentIndex = index;
+    };
+    vm.isCurrentSlideIndex = function (index) {
+      return vm.currentIndex === index;
+    };
+    vm.prevSlide = function () {
+      vm.currentIndex = (vm.currentIndex < vm.RelationList.length -1) ? ++vm.currentIndex : 0;
+    };
+    vm.nextSlide = function () {
+      vm.currentIndex = (vm.currentIndex > 0) ? --vm.currentIndex : vm.RelationList.length - 1;
+    };
     }
+
   function UserSharedDetailController( $location, HttpSvc, HOST) {
     var vm = this;
     vm.host = HOST;

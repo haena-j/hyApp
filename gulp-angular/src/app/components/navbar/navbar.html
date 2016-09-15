@@ -1,3 +1,18 @@
+<style>
+  .acme-navbar-text {
+    color: black;
+  }
+  md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+    background-color: white;
+
+  }
+  md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised) {
+    color: black;
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+  }
+</style>
 <md-toolbar class="test" layout="row" layout-align="center center" >
 
   <section flex layout="row" layout-align="center">
@@ -5,13 +20,13 @@
       <md-icon md-svg-src="assets/images/myDressingRoom.svg"></md-icon>
       내화장대</md-button>
     <md-button href="#/userSharedPage">
-      <md-icon md-svg-src="app/svg/myDressingRoom.svg"></md-icon>
+      <md-icon md-svg-src="assets/images/share.svg"></md-icon>
       이웃화장대</md-button>
     <md-button href="#/interest">
       <md-icon md-svg-src="assets/images/heart.svg"></md-icon>
       관심리스트</md-button>
     <md-button>
-      <md-icon md-svg-src="app/svg/myDressingRoom.svg"></md-icon>
+      <md-icon md-svg-src="assets/images/myDressingRoom.svg"></md-icon>
       이벤트</md-button>
   </section>
 

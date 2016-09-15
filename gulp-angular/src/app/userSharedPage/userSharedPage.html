@@ -5,18 +5,15 @@
     margin-bottom: 0;
     padding-bottom: 0;
   }
-
+  md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar){
+    position: relative;
+  }
   .md-padding {
     padding: 0;
   }
 
   .row-related {
     background-color: #f2dede;
-    width: 100%;
-  }
-
-  .profile_icon {
-    padding: 2px 2px 2px 2px;
     width: 100%;
   }
 
@@ -36,10 +33,22 @@
     padding-bottom: 5px;
   }
 
-  .related-review-img {
+  .container.review-img{
+    position: relative;
     height: 45%;
   }
 
+  .related-review-img {
+    height: 100%;
+  }
+
+  .test {
+    position: absolute;
+    left: 0;
+    top: 80%;
+    width: 100%;
+    text-align: center;
+  }
   md-card {
     height: 340px;
   }
@@ -65,6 +74,13 @@
   md-card md-card-title md-card-title-text:only-child .md-subhead {
     padding-top: 0;
   }
+  md-list-item.md-no-proxy, md-list-item .md-no-style {
+    position: relative;
+    padding: 0px;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+  }
 
   .md-icon-button {
     margin-right: 0;
@@ -76,10 +92,22 @@
   .td-padding {
     width: 30%;
   }
+   .icon-nav{
+    width: 10px;
+    height: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  .icon-nav:hover {
+       -webkit-transform : scale(1.5);
+       -moz-transform: scale(1.5);
+       transform: scale(1.5);
+     }
 </style>
-<div layout="vertical" layout-fill>
-
-  <md-content>
+  <div layout="vertical" layout-fill>
+  <md-content >
     <div class="row header row-related">
       <p class="related-title">나와 취향이 비슷한 이웃님의 화장대를 확인해 보세요
         <md-icon md-svg-src="assets/images/correct.svg"></md-icon>
@@ -87,7 +115,8 @@
       <br>
       <div class="md-padding" layout-xs="column" layout="row">
         <div flex-xs flex-gt-xs="50" layout="column">
-          <md-card ng-repeat="result in userSharedPage.RelationList">
+          <md-card ng-repeat="result in userSharedPage.RelationList" ng-hide="!userSharedPage.isCurrentSlideIndex($index)"
+                   md-swipe-left="userSharedPage.nextSlide()" md-swipe-right="userSharedPage.prevSlide()">
             <md-card-header>
               <md-card-avatar>
                 <img class="md-user-avatar" ng-src="{{userSharedPage.host}}{{result.image}}"/>
@@ -97,9 +126,14 @@
                 <span class="md-subhead"> Lv.{{result.level}} {{result.level_name}}</span>
               </md-card-header-text>
             </md-card-header>
+            <div class="container review-img">
+             <img class="related-review-img" ng-src="{{userSharedPage.host}}{{result.recent_review_img}}" ng-click="userSharedPage.goToDetail(result)">
+              <div class="test">  <md-button>
+                <md-icon class="icon-nav" md-svg-src="assets/images/like.svg" ng-repeat="result in userSharedPage.RelationList" ng-click="userSharedPage.setCurrentSlideIndex($index);">
+              </md-button></div>
 
-            <img class="related-review-img" ng-src="{{userSharedPage.host}}{{result.recent_review_img}}" ng-click="userSharedPage.goToDetail(result)">
-       <md-card-title>
+            </div>
+            <md-card-title>
                 <md-card-title-text>
                   <span class="md-headline">최근리뷰) {{result.recent_review_name}}</span>
                   <span class="md-subhead">
@@ -116,7 +150,9 @@
                     </td>
                   </tr>
                 </table>
+
                   </span>
+
                 </md-card-title-text>
               </md-card-title>
           </md-card>
@@ -124,8 +160,7 @@
       </div>
     </div>
 
-
-    <div>
+    <div >
       <p class="related-title">핫한 이웃님의 화장대를 확인해 보세요
         <md-icon md-svg-src="assets/images/correct.svg"></md-icon>
       </p>
@@ -145,19 +180,16 @@
             <img ng-if="tile.recent_review_img.substring(0,4) == 'http'" ng-src="{{tile.recent_review_img}}" style="width:100%; height:100%;">
             <!--<md-icon md-svg-icon="../svg/avatar-1.svg"></md-icon>-->
             <div ng-init="tile.show = false" ng-show="tile.show">
-              <md-grid-tile-footer style="height: 70px">
-                <table>
-                  <tr>
-                    <td class="td-img" rowspan="2">
-                      <img class="profile_icon" ng-src="{{tile.img}}">
-                    </td>
-                    <td>
-                      {{tile.id}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Lv. {{tile.level}} {{tile.level_name}}
+              <md-grid-tile-footer style="height: auto; font-size: 110%; padding: 0;">
+                <table style="width: 100%;">
+                  <tr >
+                    <td ng-click="userSharedPage.goToDetail(tile)"><md-list-item>
+                      <img class="md-avatar" ng-src="{{tile.img}}" style="margin-right: 0">
+                    </md-list-item></td>
+                    <td ng-click="userSharedPage.goToDetail(tile)">{{tile.id}}<br><div style="font-size: 90%"> Lv.{{tile.level}}</div></td>
+                    <td width="100%" ng-click="userSharedPage.goToDetail(tile)"></td>
+                    <td > {{tile.count}}</td>
+                    <td>  <md-icon md-svg-icon="assets/images/like.svg" ng-click="userSharedPage.giveStar(tile)"></md-icon>
                     </td>
                   </tr>
                 </table>
@@ -167,6 +199,6 @@
         </md-grid-list>
       </div>
     </div>
+    </md-content>
 </div>
 
-</div>

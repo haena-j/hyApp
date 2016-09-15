@@ -1,27 +1,31 @@
 <!--혜윤/ 설정페이지
 20160727 최종수정 -->
 <style>
-  img{
+  .profile{
     width: 100px;
+  }
+  .thumb{
+    max-width: 200px;
+    max-height: 200px;
   }
 </style>
 
-  <md-content class="padding">
+  <md-content layout-padding>
 
     <form name="setForm">
-      <div>
-        <img ng-src={{setting.pic}}><br>
-        {{AuthService.name()}}<br>
+      <div layout="row" layout-xs="column" layout-sm="column" layout-align="space-between center">
+
       </div>
+      <img class="profile" ng-src={{setting.pic}}>
+      {{setting.name}}<br>
     <button type="button" ng-click="setting.logout()">로그아웃</button>
-    <p>
-      <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required  ngf-model-invalid="errorFile">
-      <i ng-show="setForm.file.$error.required">*required</i><br>
-      <i ng-show="setForm.file.$error.maxSize">File too large
-        {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-      <img ng-show="setForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
+
+      <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="5MB" ngf-resize="{width:500, height: 500, quality:1.0,  centerCrop: true}" ngf-resize-if="{width > 5000 || height > 5000}">
+      <i ng-show="myForm.file.$error.maxSize">파일 사이즈 초과
+        {{myFile.size / 1000000|number:1}}MB: max 5MB</i>
+      <img ng-show="setForm.file.$valid" ngf-thumbnail="picFile" class="thumb"><br>
       <button ng-click="picFile = null" ng-show="picFile">Remove</button>
-    </p>
+
       <button type="button" ng-click="setting.changePhoto(picFile)">사진변경</button>
     </form>
   </md-content>

@@ -1,5 +1,6 @@
 <!doctype html>
 <html ng-app="gulpAngular">
+
 <head>
   <meta charset="utf-8">
   <title>gulpAngular</title>
@@ -28,19 +29,21 @@
 <header>
   <div class="navbar navbar-default" role="navigation">
     <div class="container" style="text-align: center;width: 100%;display:table; max-width: none;">
-      <div class="navbar-header" style="width: 100%">
+      <div class="navbar-header">
         <div layout="column" ng-cloak>
-          <md-content layout-padding layout="row">
+          <md-content>
+            <div layout-padding layout="row">
               <input type="text" id="searchBox" placeholder="제품명 / 브랜드를 입력해주세요." name="cos_name" ng-model="cos_name" style="width: 100%">
               <md-button class="md-icon-button" ng-click="navigation.searchCosmetics(cos_name)">
                 <md-icon md-svg-icon="assets/images/searchIcon.svg"></md-icon>
               </md-button>
+            </div>
           </md-content>
         </div>
+        <acme-navbar></acme-navbar>
       </div>
     </div>
   </div>
-  <acme-navbar creation-date="main.creationDate"></acme-navbar>
 </header>
 
 <div ui-view></div>

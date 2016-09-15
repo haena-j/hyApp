@@ -17,6 +17,7 @@ public class RequestFilter implements Filter {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//        response.setHeader("Access-Control-Allow-Credentials", "true");
         chain.doFilter(req, res);
     }
 

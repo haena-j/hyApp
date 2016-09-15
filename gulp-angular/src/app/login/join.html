@@ -4,41 +4,70 @@
   header {
     display: none !important;
   }
+  .thumb{
+    max-width: 200px;
+    max-height: 200px;
+  }
+  .hint {
+    /* Position the hint */
+    position: absolute;
+    left: 2px;
+    right: auto;
+    bottom: 7px;
+    /* Copy styles from ng-messages */
+    font-size: 12px;
+    line-height: 14px;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+    /* Set our own color */
+    color: grey;
+  }
 </style>
   <md-content class="padding">
     <form method="post" name="myForm">
-      <div class="list" ng-class="{ 'has-error' : myForm.name.$invalid && !myForm.name.$pristine }">
-        <label class="item item-input item-stacked-label">
-          <span class="input-label" >이름</span>
-           <input type="text" placeholder="홍길동" name="name" ng-model="join.name" required>
-          <span ng-show="myForm.name.$error.required">* 이름을 입력해주세요</span>
-          </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label" >아이디</span>
-       <input type="text" placeholder="User ID" name="id" ng-model="join.id" required>
-          <!-- show an error if this isn't filled in -->
-          <span ng-show="myForm.id.$error.required">* ID를 입력해주세요</span>
-          </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label" >비밀번호</span>
-          <input type="password" placeholder="User Password" name="password" ng-model="join.password" required>
-          <span ng-show="myForm.password.$error.required">* 비밀번호를 입력해주세요</span>
-          </label>
-        <label class="item item-input item-stacked-label">
-          <span class="input-label" >생년월일</span>
-          <input type="text" placeholder="901010" name="birth" ng-model="join.birth">
-        </label>
-        <p>
-          <input type="file" ngf-select ng-model="join.picFile" name="file" accept="image/*" ngf-max-size="2MB" required  ngf-model-invalid="errorFile">
-          <i ng-show="myForm.file.$error.required">*required</i><br>
-          <i ng-show="myForm.file.$error.maxSize">File too large
-            {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-          <img ng-show="myForm.file.$valid" ngf-thumbnail="join.picFile" class="thumb">
-          <button ng-click="join.picFile = null" ng-show="join.picFile">Remove</button>
-        </p>
+      <div>
+        <md-input-container class="md-block">
+          <label>Name</label>
+          <input name="name" ng-model="join.name" required />
+
+          <div ng-messages="myForm.name.$error">
+            <div ng-message="required">이름을 입력해주세요.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>ID</label>
+          <input name="id" ng-model="join.id" required />
+
+          <div ng-messages="myForm.id.$error">
+            <div ng-message="required">아이디를 입력해주세요.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Password</label>
+          <input type="password" name="password" ng-model="join.password" required />
+
+          <div ng-messages="myForm.password.$error">
+            <div ng-message="required">비밀번호를 입력해주세요.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+        <label>생년월일</label>
+        <input type="text" name="birth" ng-model="join.birth" />
+          <div class="hint">ex) 930903</div>
+      </md-input-container>
+
+        <md-input-container>
+          <input type="file"  ngf-select ng-model="join.picFile" name="file" accept="image/*" ngf-max-size="5MB" ngf-resize="{width:500, height: 500,  centerCrop: true}" ngf-resize-if="{width > 5000 || height > 5000}">
+          <i ng-show="myForm.file.$error.maxSize">파일 사이즈 초과
+            {{myFile.size / 1000000|number:1}}MB: max 5MB</i>
+          <img ng-show="myForm.file.$valid" ngf-thumbnail="join.picFile" class="thumb"><br>
+          <md-button ng-click="join.picFile = null" ng-show="join.picFile">사진삭제</md-button>
+        </md-input-container>
         <div align="center">
-        <button class="button button-positive" type="button" ng-click="submit(join)">회원가입</button>
-        <button class="button button-positive" type="reset">취소</button>
+        <md-button class="button button-positive" type="button" ng-click="signIn.submit(join)">회원가입</md-button>
+        <md-button class="button button-positive" type="reset" ng-click="signIn.goToLogin()">취소</md-button>
         </div>
       </div>
     </form>

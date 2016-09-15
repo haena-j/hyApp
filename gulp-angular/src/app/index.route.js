@@ -75,6 +75,20 @@
         controllerAs: 'searchAtWrite'
       })
 
+      .state('mycostable-detail', {
+        url: '/mycostable-detail',
+        templateUrl: 'app/mycostable/mycostable-detail.html',
+        controller: 'MyCosTableDetailController',
+        controllerAs: 'mycostableDetail'
+      })
+
+      .state('mycostable-edit', {
+        url: '/mycostable-edit',
+        templateUrl: 'app/mycostable/mycostable-edit.html',
+        controller: 'MyCosTableEditController',
+        controllerAs: 'mycostableEdit'
+      })
+
     //예은부분
       .state('interest', {
         url: '/interest',

@@ -22,7 +22,7 @@ import java.util.List;
  * 변경자 : 정혜윤
  * memo :
  **/
-
+@CrossOrigin
 @RestController
 public class ApiController {
 

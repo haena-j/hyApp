@@ -99,18 +99,51 @@
       vm.notificationsEnabled = !vm.notificationsEnabled;
     };
 
-    vm.redial = function() {
+    // vm.redial = function() {
+    //   $mdDialog.show(
+    //     $mdDialog.alert()
+    //       .targetEvent(originatorEv)
+    //       .clickOutsideToClose(true)
+    //       .parent('body')
+    //       .title('Suddenly, a redial')
+    //       .textContent('You just called a friend; who told you the most amazing story. Have a cookie!')
+    //       .ok('That was easy')
+    //   );
+    //
+    //   originatorEv = null;
+    // };
+
+    //리뷰 상세보기
+    vm.detailOfMycosTable = function(query) {
+      $location.path('/mycostable-detail').search({param: query});
+      //여기서 누른 리뷰의 번호를 가지고 detail 페이지로 이동함
+      location.reload();
+    };
+
+    //그 리뷰를 삭제
+    vm.deleteReview = function(query) {
       $mdDialog.show(
         $mdDialog.alert()
-          .targetEvent(originatorEv)
           .clickOutsideToClose(true)
           .parent('body')
-          .title('Suddenly, a redial')
+          .title('정말 삭제하시겠습니까?')
           .textContent('You just called a friend; who told you the most amazing story. Have a cookie!')
-          .ok('That was easy')
+          .ok('네')
+          .cancel('아니요')
+          .targetEvent(originatorEv)
       );
 
-      originatorEv = null;
+      HttpSvc.deleteReview(query)
+
+        .success(function() {
+          alert("삭제되었습니다");
+          location.reload();
+
+
+        })
+        .error(function(values) {
+          alert("error" + values);
+        })
     };
 
 
@@ -143,22 +176,22 @@
       });
 
     //그 리뷰의 수정페이지로 이동
-    vm.editDetail = function() {
-      $location.path('/mycostable-edit').search({param: m_index});
-    };
+    // vm.editDetail = function() {
+    //   $location.path('/mycostable-edit').search({param: m_index});
+    // };
 
     //그 리뷰를 삭제
-    vm.deleteDetail = function(query) {
-      HttpSvc.deleteReview(query)
-        .success(function() {
-          alert("삭제되었습니다");
-          $location.path('/mycostable');
-          location.reload();
-        })
-        .error(function(values) {
-          alert("error" + values);
-        })
-    };
+    // vm.deleteDetail = function(query) {
+    //   HttpSvc.deleteReview(query)
+    //     .success(function() {
+    //       alert("삭제되었습니다");
+    //       $location.path('/mycostable');
+    //       location.reload();
+    //     })
+    //     .error(function(values) {
+    //       alert("error" + values);
+    //     })
+    // };
 
 
 

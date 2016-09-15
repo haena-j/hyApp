@@ -19,8 +19,7 @@
         $location.path('/main');
 
         vm.setCurrentUserId(data.id);
-      }, function() {
-        alert("아이디와 비밀번호를 다시 확인해주세요.");
+
       });
     };
     vm.signIn = function(){
@@ -54,6 +53,10 @@
       });
       $location.path('/login');    //가입완료시 login.html 로 이동
     };
+
+    vm.goToLogin = function () {
+      $location.path('/login');
+    }
   }
 
 })();

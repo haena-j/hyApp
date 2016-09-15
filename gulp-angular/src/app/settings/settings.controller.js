@@ -10,7 +10,8 @@
 
   function SettingsController(AuthService, $location,HOST, Upload, $timeout) {
     var vm = this;
-    var pic = HOST.toString() + AuthService.image();
+    vm.pic = HOST.toString() + AuthService.image();
+    vm.name = AuthService.name();
     vm.logout = function () {     //로그아웃기능
       AuthService.logout();
       $location.path('/login');

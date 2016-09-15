@@ -11,13 +11,10 @@
     font-size:10px;
 
   }
-  .flip-container {
-    background-color:white;
-
-  }
 
   .row-header-row-related {
     width: 100%;
+
 
   }
 
@@ -58,7 +55,7 @@
 
   b {
     font-size: 9pt;
-    color: darkgray;
+    color: white;
   }
 
   .profile {
@@ -70,13 +67,14 @@
     border-radius: 50%;
   }
 
-  .row-related {
-    background-color: #ffe0d1;
+
+  .md-padding {
+    background-color: #f2dede;
     width: 100%;
   }
-  .md-padding {
-    background-color: #ffe0d1;
-    width: 100%;
+
+  md-menu {
+    margin-left: 0;
   }
 
   .add-related {
@@ -85,9 +83,7 @@
     left: 75%;
 
   }
-  h5.thick {
-    font-weight: bold;
-  }
+
 
 
   h4 {
@@ -97,38 +93,10 @@
     margin-left: 40px;
   }
 
-  /*.flipped-transform-back {*/
-  /*!*transform*!*/
-    /*-webkit-transform:rotateY(180deg);*/
-    /*-moz-transform:rotateY(180deg);*/
-    /*-ms-transform:rotateY(180deg);*/
-    /*-o-transform:rotateY(180deg);*/
-    /*transform:rotateY(180deg);*/
-  /*}*/
-
-  /*.flipped-transform-front {*/
-    /*-webkit-transform: rotateY(0deg);*/
-    /*-moz-transform: rotateY(0deg);*/
-    /*-o-transform: rotateY(0deg);*/
-    /*-ms-transform: rotateY(0deg);*/
-    /*transform: rotateY(0deg);*/
-  /*}*/
-
-  /*footer {*/
-    /*text-align: center;*/
-    /*padding: 1em;*/
-  /*}*/
-
-
-  /*.flipToFront {*/
-  /*.flipped-transform-front();*/
-  /*}*/
-
-
-  /*.flipToBack {*/
-  /*.flipped-transform-back();*/
-  /*}*/
-
+  .md-headline {
+    font-size: 20px;
+    color: grey;
+  }
 
 
 
@@ -137,147 +105,76 @@
 </style>
 
 <div layout="vertical">
-  <md-content class="md-padding" layout-xs="column" layout="row" style="background-color:#ffe0d1">
+  <md-content class="md-padding" layout-xs="column" layout="row">
     <br>
-    <div  style="background-color:white" class="row-header-row-related">
-    <div class="row-header-row-related" align="center">
-      <div class="row-header-row-related" style="background-color:#ffe0d1">
-        <img class="profile" width="90" ng-src={{mycostable.host}}{{mycostable.memberInfo.image}}><br>
-        <b>{{mycostable.memberInfo.id}}
-        <img class="redheart-related" ng-src="assets/images/redheart.png"></b>
-        <div class="center">{{mycostable.memberInfo.count}}</div>
+    <div  style="background-color:#f2dede" class="row-header-row-related">
+      <div class="row-header-row-related" align="center">
+        <div class="row-header-row-related" style="background-color:#f2dede">
+          <img class="profile" width="90" ng-src={{mycostable.host}}{{mycostable.memberInfo.image}}><br>
+          <b>{{mycostable.memberInfo.id}}
+            <img class="redheart-related" ng-src="assets/images/redheart.png"></b>
+          <div class="center">{{mycostable.memberInfo.count}}</div></b>
 
-        <!--<img width="50" src="assets/images/plusicon.png" ng-click="mycostable.submit()"><br><br>-->
-        <div class="row-header-row-related" >
-          <div class="row-header-row-related" align="center" >
-            <!--<h4>파우치에 화장품을 등록해보세요   <img width="20" src="assets/images/checkicon.png"></h4>-->
-            <!--<img class="add-related" width="50" src="assets/images/plusicon.png" ng-click="mycostable.submit()">-->
+
+          <div class="row-header-row-related" >
+            <div class="row-header-row-related" align="center" >
+
+              <h4>화장대에 리뷰를 등록해보세요</h4>
               <md-button class="md-icon-button">
-                <md-icon style="width: 20px;" md-svg-src="assets/images/plusicon.svg" ng-click="mycostable.submit()"></md-icon>
+                <md-icon style="width: 30px;" md-svg-src="assets/images/pencil.svg" ng-click="mycostable.submit()"></md-icon>
               </md-button>
 
+            </div>
           </div>
         </div>
       </div>
+      <br>
+      <br><br>
+
+
+      <div ng-app="gulpAngular" ng-controller="MyCosTableController as ctrl" class="row-header-row-related">
+        <div class="row-header-row-related" ng-repeat="mycostablelist in mycostable.mycosmeticsList">
+          <md-card align="center" style="background-color: whitesmoke">
+
+            <md-card-title>
+              <md-card-title-media>
+                <div class="md-media-lg card-media">
+                  <img width="20" ng-if="mycostablelist.m_cosimage.substring(0,4) != 'http'" md-card-sm-image ng-src="{{mycostable.host}}{{mycostablelist.m_cosimage}}" >
+                  <img width="20" ng-if="mycostablelist.m_cosimage.substring(0,4) == 'http'" md-card-sm-image ng-src="{{mycostablelist.m_cosimage}}"></div>
+                <!--<div class="md-media-lg card-media"><img width="20" md-card-sm-image ng-src={{mycostablelist.m_cosimage}} ></div>-->
+              </md-card-title-media>
+              <md-card-title-text>
+                <span class="md-headline">{{mycostablelist.cos_brand}}</span>
+                <h5><span class="md-subhead">{{mycostablelist.cos_name}}</span></h5>
+              </md-card-title-text>
+            </md-card-title>
+            <div class="md-menu-demo"  ng-cloak>
+              <div class="menu-demo-container" layout-align="right right" layout="column">
+                <md-menu>
+                  <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
+                    <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                  </md-button>
+                  <md-menu-content width="2">
+                    <md-menu-item>
+                      <md-button ng-click="ctrl.detailOfMycosTable(mycostablelist.m_index)">
+                        <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                        상세보기
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click="ctrl.deleteReview(mycostablelist)">
+                        <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                        삭제
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </div>
+            </div>
+
+          </md-card>
+        </div>
+      </div>
     </div>
-    <br>
-     <br><br>
-     <!--<div class="card effect__EFFECT">-->
-
-       <!--<div class="card__front">-->
-     <!--<h1>Card Flipping Test</h1>-->
-
-     <div ng-app="gulpAngular" ng-controller="MyCosTableController as ctrl" class="row-header-row-related"   style="background-color:white">
-       <div class="row-header-row-related" ng-repeat="mycostablelist in mycostable.mycosmeticsList" style="background-color:white">
-         <!--<div class="flipper" ng-click="ctrl.flipCard()" ng-class="{'flipToFront':isCardRevealed, 'flipToBack':!isCardRevealed}">-->
-           <!--<div class="back" ng-class="{'face-hidden':hideBackFace}"></div>-->
-             <!--<div class="front" ng-class="{'face-hidden':!hideBackFace}" >-->
-               <!--<h1>{{currentCard.title | uppercase}}</h1>-->
-               <!--<p ng-if="currentCard.icon">{{currentCard.icon}}</p>-->
-               <!--<br ng-if="currentCard.icon" />-->
-               <!--<img ng-if="currentCard.imageUrl" src="{{currentCard.imageUrl}}" alt="currentCard.imageAlt" />-->
-               <!--<p>{{currentCard.description}}</p>-->
-
-               <md-card align="center" style="background-color: whitesmoke">
-
-                 <md-card-title>
-                   <md-card-title-media>
-                     <div class="md-media-lg card-media"><img width="20" md-card-sm-image ng-src={{mycostablelist.cos_pic}} ></div>
-                   </md-card-title-media>
-                   <md-card-title-text>
-                     <span class="md-headline">{{mycostablelist.cos_brand}}</span>
-                     <h5><span class="md-subhead">{{mycostablelist.cos_name}}</span></h5>
-                   </md-card-title-text>
-                 </md-card-title>
-                 <div class="md-menu-demo"  ng-cloak>
-                   <div class="menu-demo-container" layout-align="right right" layout="column">
-                     <md-menu>
-                       <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
-                         <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                       </md-button>
-                       <md-menu-content width="4">
-                         <md-menu-item>
-                           <md-button ng-click="ctrl.redial($event)">
-                             <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                             수정
-                           </md-button>
-                         </md-menu-item>
-                         <md-menu-item>
-                           <md-button ng-click="ctrl.delete($event)">
-                             <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                             삭제
-                           </md-button>
-                         </md-menu-item>
-                       </md-menu-content>
-                     </md-menu>
-                   </div>
-                 </div>
-
-                 </md-card>
-             </div>
-     </div>
-       </div>
-    </md-content>
+  </md-content>
 </div>
-
-     <footer>
-       <div ng-if="currentCard && currentCard.source">
-         <a ng-href="{{currentCard.source}}" target="_blank">Source</a>
-       </div>
-     </footer>
-     <!--</div>-->
-    <!--</md-content>-->
-  <!--</div>-->
-
-
-         <!--<div class="col" ng-repeat="mycostablelist in mycostable.mycosmeticsList">-->
-           <!--<md-card align="center" style="background-color: whitesmoke">-->
-             <!--<md-card-title>-->
-               <!--<md-card-title-media>-->
-                 <!--<div class="md-media-lg card-media"><img width="20" md-card-sm-image ng-src={{mycostablelist.cos_pic}} ></div>-->
-               <!--</md-card-title-media>-->
-               <!--<md-card-title-text>-->
-                 <!--<span class="md-headline">{{mycostablelist.cos_brand}}</span>-->
-                 <!--<h5><span class="md-subhead">{{mycostablelist.cos_name}}</span></h5>-->
-               <!--</md-card-title-text>-->
-             <!--</md-card-title>-->
-
-
-        <!--<div class="md-menu-demo" ng-controller="MyCosTableController as ctrl" ng-cloak>-->
-          <!--<div class="menu-demo-container" layout-align="right right" layout="column">-->
-        <!--<md-menu>-->
-          <!--<md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)">-->
-            <!--<md-icon md-svg-src="assets/images/menu.svg"></md-icon>-->
-          <!--</md-button>-->
-          <!--<md-menu-content width="4">-->
-            <!--<md-menu-item>-->
-            <!--<md-button ng-click="ctrl.redial($event)">-->
-              <!--<md-icon md-svg-src="assets/images/menu.svg"></md-icon>-->
-              <!--수정-->
-            <!--</md-button>-->
-          <!--</md-menu-item>-->
-            <!--<md-menu-item>-->
-              <!--<md-button ng-click="ctrl.delete($event)">-->
-                <!--<md-icon md-svg-src="assets/images/menu.svg"></md-icon>-->
-                <!--삭제-->
-              <!--</md-button>-->
-            <!--</md-menu-item>-->
-          <!--</md-menu-content>-->
-          <!--</md-menu>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</md-card>-->
-          <!--<md-button ng-click="mycostable.detailOfMycosTable(mycostablelist.m_index)">detail</md-button>-->
-          <!--<md-button>delete</md-button>-->
-      <!--</md-card-actions>-->
-
-      <!--</md-card>-->
-<!--         </div>-->
-       <!--</div> &lt;!&ndash; 카드 앞쪽면 div &ndash;&gt;-->
-       <!--<div class="card__back">-->
-         <!--<span class="card__text">back</span>-->
-       <!--</div> &lt;!&ndash; 카드 뒷쪽면 div &ndash;&gt;-->
-     <!--</div> &lt;!&ndash; 카드 끝 &ndash;&gt;-->
-   <!--</div>-->
-  <!--</md-content>-->
-<!--</div>-->

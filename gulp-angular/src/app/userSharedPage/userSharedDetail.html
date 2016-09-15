@@ -1,9 +1,12 @@
 <style>
 
-  img {
+  .list_img {
     border-radius: 50%;
   }
-
+ .image_img {
+ width:100%;
+   height:100%;
+ }
   h5 {
     color: dimgrey;
     font-size:10px;
@@ -112,16 +115,22 @@
         </div>
       </div>
       <br>
-      <br><br>
-      <div class="row-header-row-related"   style="background-color:white">
+      <div>
+        <md-radio-group ng-model="select" layout="row">
+          <md-radio-button value="list" class="md-primary">목록보기</md-radio-button>
+          <md-radio-button value="image"> 이미지보기 </md-radio-button>
+        </md-radio-group>
+      </div>
+      <br>
+      <div ng-if="select == 'list'" class="row-header-row-related">
         <div class="row-header-row-related" ng-repeat="result in userSharedDetail.cosmeticsInfoList" style="background-color:white">
 
           <md-card align="center" style="background-color: whitesmoke">
 
             <md-card-title>
               <md-card-title-media>
-                <div ng-if="result.m_cosimage.substring(0,4) != 'http'" class="md-media-lg card-media"><img width="20" md-card-sm-image ng-src={{userSharedDetail.host}}{{result.m_cosimage}} ></div>
-                <div ng-if="result.m_cosimage.substring(0,4) == 'http'" class="md-media-lg card-media"><img width="20" md-card-sm-image ng-src={{result.cos_pic}} ></div>
+                <div ng-if="result.m_cosimage.substring(0,4) != 'http'" class="md-media-lg card-media"><img class="list_img" width="20" md-card-sm-image ng-src={{userSharedDetail.host}}{{result.m_cosimage}} ></div>
+                <div ng-if="result.m_cosimage.substring(0,4) == 'http'" class="md-media-lg card-media"><img class="list_img" width="20" md-card-sm-image ng-src={{result.cos_pic}} ></div>
               </md-card-title-media>
               <md-card-title-text>
                 <span class="md-headline">{{ result.cos_name}}</span>
@@ -155,6 +164,24 @@
           </md-card>
         </div>
       </div>
-    </div>
+      <div ng-if="select == 'image'" class="row-header-row-related" >
+        <div flex ng-cloak>
+          <md-grid-list
+            md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
+            md-row-height-gt-md="1:1" md-row-height="1:1"
+            md-gutter="8px" md-gutter-gt-sm="4px">
+            <md-grid-tile ng-repeat="result in userSharedDetail.cosmeticsInfoList">
+<img ng-if="result.m_cosimage.substring(0,4) != 'http'" class="image_img" ng-src={{userSharedDetail.host}}{{result.m_cosimage}} >
+<img ng-if="result.m_cosimage.substring(0,4) == 'http'"  class="image_img" ng-src={{result.cos_pic}} >
+     </md-grid-tile>
+            </md-grid-list>
+        </div>
+      </div>
+
+
+
+
+
+      </div>
   </md-content>
 </div>
