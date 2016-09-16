@@ -4,34 +4,35 @@
     header {
       display: none !important;
     }
-    html {
-      text-align: center;
-    }
-    button {
-      width: 222px;
-      height: 49px;
-      border-radius: 20px;
-      -webkit-border-radius: 20px;
-    }
     input {
       align-content: center;
       align-items: center;
     }
-    .item-input {
-      margin: 20px;
-      width: 222px;
-      height: 49px;
+    md-content {
+      text-align: center;
+      padding-top: 50%;
+      padding-bottom: 50%;
+      background-color: #FFDDDD;
+    }
+    .inputbox{
+      width: 30%;
+      height: 30px;
+    }
+
+    .btn {
+      width: 30%;
+      height: 30px;
+      font-size: inherit;
     }
   </style>
-
-  <md-content class="padding">
+  <md-content flex ui-view>
     <div class="list list-inset">
-      <label class="item item-input">
-        <input class="inputbox" type="text" name="id" ng-model="data.id" placeholder="ID"> </label>
-      <label class="item item-input">
-        <input class="inputbox" type="password" name="password" ng-model="data.password" placeholder="PASSWORD"></label>
-
-      <p><button class="button button-stable " ng-click="login.login(data)">Login</button></p>
-      <p><button class="button button-stable " type="button" ng-click="login.signIn()">Sign in</button></p>
+      <p><label class="item item-input">
+        <input class="inputbox" type="text" name="id" ng-model="data.id" placeholder="ID"> </label></p>
+    <p> <label class="item item-input">
+        <input class="inputbox" type="password" name="password" ng-model="data.password" placeholder="PASSWORD"></label></p>
     </div>
+      <p><md-button class="md-raised btn" ng-click="login.login(data)">Login</md-button></p>
+      <p><md-button class="md-raised btn" ng-click="login.signIn()">Sign in</md-button></p>
+
   </md-content>

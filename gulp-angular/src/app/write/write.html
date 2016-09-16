@@ -20,9 +20,7 @@
     margin-left: 40px;
   }
 </style>
-<html>
-
-  <md-content class="padding">
+  <md-content flex ui-view>
     <form method="post" name="myCosmeticsForm">
       <div class="container" ng-class="{ 'has-error' : myCosmeticsForm.name.$invalid && !myCosmeticsForm.name.$pristine }">
 
@@ -112,5 +110,3 @@
       </div>
     </form>
   </md-content>
-
-</html>

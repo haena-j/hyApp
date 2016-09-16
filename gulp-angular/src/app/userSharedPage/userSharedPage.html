@@ -106,15 +106,14 @@
        transform: scale(1.5);
      }
 </style>
-  <div layout="vertical" layout-fill>
-  <md-content >
+  <md-content flex ui-view>
     <div class="row header row-related">
       <p class="related-title">나와 취향이 비슷한 이웃님의 화장대를 확인해 보세요
         <md-icon md-svg-src="assets/images/correct.svg"></md-icon>
       </p>
       <br>
       <div class="md-padding" layout-xs="column" layout="row">
-        <div flex-xs flex-gt-xs="50" layout="column">
+        <div flex-xs flex-gt-xs="100" layout="column">
           <md-card ng-repeat="result in userSharedPage.RelationList" ng-hide="!userSharedPage.isCurrentSlideIndex($index)"
                    md-swipe-left="userSharedPage.nextSlide()" md-swipe-right="userSharedPage.prevSlide()">
             <md-card-header>
@@ -200,5 +199,4 @@
       </div>
     </div>
     </md-content>
-</div>
 

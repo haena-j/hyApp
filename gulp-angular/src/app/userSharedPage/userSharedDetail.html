@@ -93,8 +93,7 @@
 </style>
 
 
-<div layout="vertical">
-  <md-content class="md-padding" layout-xs="column" layout="row" style="background-color: #f2dede">
+  <md-content flex ui-view class="md-padding" layout-xs="column" layout="row" style="background-color: #f2dede">
     <br>
     <div class="row-header-row-related" >
       <div class="row-header-row-related" align="center" >
@@ -104,25 +103,17 @@
             <img class="redheart-related" ng-src="assets/images/redheart.png"></b>
           <div class="center">{{userSharedDetail.memberInfo.count}}</div>
 
-          <div class="row-header-row-related" >
-            <div class="row-header-row-related" align="center" >
-              <md-button class="md-icon-button">
-                <md-icon style="width: 20px;" md-svg-src="assets/images/plusicon.svg" ng-click="userSharedDetail.submit()"></md-icon>
-              </md-button>
-
-            </div>
-          </div>
         </div>
       </div>
       <br>
       <div>
         <md-radio-group ng-model="select" layout="row">
-          <md-radio-button value="list" class="md-primary">목록보기</md-radio-button>
-          <md-radio-button value="image"> 이미지보기 </md-radio-button>
-        </md-radio-group>
+          <md-radio-button ng-value="list" value="list" aria-label="label1" class="md-primary">목록보기</md-radio-button>
+          <md-radio-button value="image" aria-label="label2"> 이미지보기 </md-radio-button>
+          </md-radio-group>
       </div>
       <br>
-      <div ng-if="select == 'list'" class="row-header-row-related">
+      <div ng-if="select == 'list' || select == null" class="row-header-row-related">
         <div class="row-header-row-related" ng-repeat="result in userSharedDetail.cosmeticsInfoList" style="background-color:white">
 
           <md-card align="center" style="background-color: whitesmoke">
@@ -184,4 +175,3 @@
 
       </div>
   </md-content>
-</div>

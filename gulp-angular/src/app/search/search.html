@@ -2,9 +2,8 @@
 <!--<button class="button button-icon ion-android-search" id="searchButton"-->
         <!--ng-click="searchCosmetics(cos_name)"></button>-->
 
-<div layout="vertical" layout-fill>
 
-  <md-content>
+  <md-content flex ui-view>
     <h3 class="md-title"><span md-highlight-text="searchText">"{{search.searchText}}</span>  " 검색결과</h3>
     <hr>
     <div ng-repeat="cosmetics in search.cosmeticsList">
@@ -23,4 +22,3 @@
       </div>
     </div>
     <md-content>
-</div>

@@ -478,7 +478,7 @@ public class ApiController {
             getInterest.setCos_type(cosmetics.getCos_type());
 
             allList.add(getInterest);
-            System.out.println("cosmetics name" + allList.get(0).getCos_name());
+            System.out.println("send list : " + allList);
         }
         return allList;
     }

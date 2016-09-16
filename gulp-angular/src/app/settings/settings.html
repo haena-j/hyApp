@@ -10,13 +10,13 @@
   }
 </style>
 
-  <md-content layout-padding>
+  <md-content flex ui-view>
 
     <form name="setForm">
       <div layout="row" layout-xs="column" layout-sm="column" layout-align="space-between center">
 
       </div>
-      <img class="profile" ng-src={{setting.pic}}>
+      <img class="profile" ng-src={{setting.pic}}><br>
       {{setting.name}}<br>
     <button type="button" ng-click="setting.logout()">로그아웃</button>
 
