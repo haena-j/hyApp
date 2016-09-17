@@ -1,15 +1,15 @@
 <!-- 내화장대목록페이지 -->
 
+<script src="../../../../../../dog/cordova-angular-angularMaterial-seed/www/scripts/app-1c5fe2438d.js"></script>
 <style>
 
   img {
     border-radius: 50%;
   }
 
-  h5 {
-    color: dimgrey;
-    font-size:10px;
 
+  .md-headline {
+    color: black;
   }
 
   .row-header-row-related {
@@ -95,7 +95,7 @@
 
   .md-headline {
     font-size: 20px;
-    color: grey;
+    color: black;
   }
 
 
@@ -104,29 +104,49 @@
 
 </style>
 
-  <md-content flex ui-view class="md-padding" layout-xs="column" layout="row">
+
+
+<div layout="vertical">
+  <md-content class="md-padding" layout-xs="column" layout="row">
     <br>
     <div  style="background-color:#f2dede" class="row-header-row-related">
       <div class="row-header-row-related" align="center">
         <div class="row-header-row-related" style="background-color:#f2dede">
-          <img class="profile" width="90" ng-src={{mycostable.host}}{{mycostable.memberInfo.image}}><br>
+          <div ng-if="mycostable.memberInfo.image.substring(1,7) != 'http'" ><img class="profile" width="90" ng-src="{{mycostable.host}}{{mycostable.memberInfo.image}}" ></div>
+          <div ng-if="mycostable.memberInfo.image.substring(1,7) == 'http'" ><img class="profile" width="90" ng-src="{{mycostable.memberInfo.image}}" ></div>
+          <!--<img width="20" ng-if="mycostable.memberInfo.image.substring(0,4) != 'http'" ng-src="{{mycostable.host}}{{mycostable.memberInfo.image}}" >-->
+          <!--<img width="20" ng-if="mycostable.memberInfo.image.substring(0,4) == 'http'" ng-src="{{mycostable.memberInfo.image}}"></div>-->
+          <!--<img class="profile" width="90" ng-if="mycostable.memberInfo.image.substring(0,4) != 'http'" ng-src="{{mycostable.host}}{{mycostable.memberInfo.image}}"><br>-->
+          <!--<img class="profile" width="90" ng-if="mycostable.memberInfo.image.substring(0,4) == 'http'" ng-src="{{mycostable.memberInfo.image}}">-->
           <b>{{mycostable.memberInfo.id}}
             <img class="redheart-related" ng-src="assets/images/redheart.png"></b>
           <div class="center">{{mycostable.memberInfo.count}}</div></b>
 
-
           <div class="row-header-row-related" >
             <div class="row-header-row-related" align="center" >
 
-              <h4>화장대에 리뷰를 등록해보세요</h4>
-              <md-button class="md-icon-button">
+              <h4>리뷰쓰기<md-button class="md-icon-button">
                 <md-icon style="width: 30px;" md-svg-src="assets/images/pencil.svg" ng-click="mycostable.submit()"></md-icon>
-              </md-button>
+              </md-button></h4>
+
 
             </div>
           </div>
         </div>
       </div>
+      <!--<div ng-controller="SelectAsyncController" layout="row" ng-cloak>-->
+        <!--<div layout="row">-->
+          <!--&lt;!&ndash;md-on-open은 선택창을 열때, md-on-open은 선택창을 닫을때 발생&ndash;&gt;-->
+          <!--<md-select placeholder="브랜드별" ng-model="brand" md-on-open="loadBrands()" style="min-width: 100px;" md-on-close="printSelectedBrands(brand.name)">-->
+            <!--<md-option ng-value="brand" ng-repeat="brand in brands">{{brand.name}}</md-option>-->
+          <!--</md-select>&nbsp;&nbsp;&nbsp;-->
+          <!--<md-select placeholder="제품별" ng-model="type" md-on-open="loadTypes()" style="min-width: 100px;" md-on-close="printSelectedTypes(type.name)">-->
+            <!--<md-option ng-value="type" ng-repeat="type in types">{{type.name}}</md-option>-->
+          <!--</md-select>-->
+
+        <!--</div>-->
+        <!--&lt;!&ndash;<p class="md-caption">선택된 브랜드: {{ brand ? brand.name : 'No one yet' }}</p>&ndash;&gt;-->
+      <!--</div>-->
       <br>
       <br><br>
 
@@ -138,9 +158,12 @@
             <md-card-title>
               <md-card-title-media>
                 <div class="md-media-lg card-media">
-                  <img width="20" ng-if="mycostablelist.m_cosimage.substring(0,4) != 'http'" md-card-sm-image ng-src="{{mycostable.host}}{{mycostablelist.m_cosimage}}" >
-                  <img width="20" ng-if="mycostablelist.m_cosimage.substring(0,4) == 'http'" md-card-sm-image ng-src="{{mycostablelist.m_cosimage}}"></div>
+                  <div ng-if="mycostablelist.m_cosimage.substring(0,4) != 'http'" ><img width="20" md-card-sm-image ng-src="{{ctrl.host}}{{mycostablelist.m_cosimage}}" ></div>
+                  <div ng-if="mycostablelist.m_cosimage.substring(0,4) == 'http'" ><img width="20" md-card-sm-image ng-src="{{mycostablelist.m_cosimage}}" ></div>
+                <!--<img width="20" ng-if="mycostablelist.m_cosimage.substring(0,4) != 'http'" md-card-sm-image ng-src="{{mycostable.host}}{{mycostablelist.m_cosimage}}" >-->
+                <!--<img width="20" ng-if="mycostablelist.m_cosimage.substring(0,4) == 'http'" md-card-sm-image ng-src="{{mycostablelist.m_cosimage}}"></div>-->
                 <!--<div class="md-media-lg card-media"><img width="20" md-card-sm-image ng-src={{mycostablelist.m_cosimage}} ></div>-->
+                  </div>
               </md-card-title-media>
               <md-card-title-text>
                 <span class="md-headline">{{mycostablelist.cos_brand}}</span>
@@ -161,7 +184,8 @@
                       </md-button>
                     </md-menu-item>
                     <md-menu-item>
-                      <md-button ng-click="ctrl.deleteReview(mycostablelist)">
+                      <!--<md-button ng-click="ctrl.deleteReview(mycostablelist)">-->
+                      <md-button ng-click="ctrl.showConfirm(mycostablelist, $event)">
                         <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
                         삭제
                       </md-button>
@@ -176,3 +200,6 @@
       </div>
     </div>
   </md-content>
+</div>
+
+

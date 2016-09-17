@@ -26,13 +26,16 @@
   your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<header>
+<header flex>
   <div class="navbar navbar-default" role="navigation">
     <div class="container" style="text-align: center;width: 100%;display:table; max-width: none;">
       <div class="navbar-header">
         <div layout="column" ng-cloak>
           <md-content>
             <div layout-padding layout="row">
+              <md-button class="md-icon-button" ng-click="navigation.goToMain()">
+                <md-icon  md-svg-icon="assets/images/homeIcon.svg"></md-icon>
+              </md-button>
               <input type="text" id="searchBox" placeholder="제품명 / 브랜드를 입력해주세요." name="cos_name" ng-model="cos_name" style="width: 100%">
               <md-button class="md-icon-button" ng-click="navigation.searchCosmetics(cos_name)">
                 <md-icon md-svg-icon="assets/images/searchIcon.svg"></md-icon>
@@ -48,34 +51,12 @@
 
 <div flex ui-view></div>
 
-<footer>
-  <div class="lock-size" layout="row" layout-align="center center">
-    <md-fab-speed-dial md-open="demo.isOpen"  md-direction="left" class="md-scale md-fab-bottom-right">
-      <md-fab-trigger>
-        <md-button aria-label="menu" class="md-fab md-warn">
-          <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-        </md-button>
-      </md-fab-trigger>
-      <md-fab-actions>
-        <md-button  class="md-fab md-raised md-mini" ng-click="navigation.goToSettings()">
-          <md-icon md-svg-src="assets/images/settingsIcon.svg"></md-icon>
-        </md-button>
-        <md-button  class="md-fab md-raised md-mini" ng-click="navigation.goToMain()">
-          <md-icon  md-svg-src="assets/images/homeIcon.svg">
-          </md-icon>
-        </md-button>
-      </md-fab-actions>
-    </md-fab-speed-dial>
-  </div>
-
-
-</footer>
 <!-- build:js(src) scripts/vendor.js -->
 <!-- bower:js -->
 <!-- run `gulp inject` to automatically populate bower script dependencies -->
 <!-- endbower -->
 <!-- endbuild -->
-
+<script src="cordova.js"></script>
 <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
 <!-- inject:js -->
 <!-- js files will be automatically insert here -->

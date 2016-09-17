@@ -89,7 +89,8 @@
         controllerAs: 'mycostableEdit'
       })
 
-    //예은부분
+
+      //예은부분
       .state('interest', {
         url: '/interest',
         templateUrl: 'app/interest/interest.html',

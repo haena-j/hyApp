@@ -65,14 +65,6 @@ memo : service는 HttpSvc 로 통일
     /****************************혜윤부분끝****************************/
     /****************************정민부분*****************************/
 
-    this.getCosInformation2 = function(cos_index) {
-      return $http({
-        url: HOST + '/api/cosmeticsinformations2',
-        method: 'POST',
-        data: cos_index,
-        headers: {'Content-Type': 'application/json'}
-      });
-    };
     this.getCosInformation = function(data) {  //cos_index에 따른 화장품 정보 가져오기
       return $http({
         url: HOST + '/api/cosmeticsinformations',
@@ -81,6 +73,8 @@ memo : service는 HttpSvc 로 통일
         headers: {'Content-Type': 'application/json'}
       });
     };
+
+
 
     this.findByMemIndex = function(param) {
       return $http({
@@ -119,6 +113,21 @@ memo : service는 HttpSvc 로 통일
       });
     };
 
+    this.getCosBrandName = function() {
+      return $http({
+        url: HOST + '/api/cosmeticBrandNameList',
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.getCosByBrandAndType = function() {
+      return $http({
+        url: HOST + '/api/getCosByBrandAndType',
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
 
 
     /****************************정민부분끝****************************/

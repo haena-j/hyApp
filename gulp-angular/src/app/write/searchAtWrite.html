@@ -1,8 +1,5 @@
 <!-- 내 화장대 이후 검색페이지 -->
 <style>
-  /*img {*/
-  /*width: 40%;*/
-  /*}*/
 
   #searchInputBox {
     width: 80%;
@@ -25,7 +22,6 @@
           <input type="text" id="searchInputBox" size="40" placeholder="제품명 / 브랜드명" name="cos_name" ng-model="cos_name">
         </td>
         <td>
-          <!--<md-button class="md-raised md-cornered" ng-click="searchAtWrite.searchAtWriteSubmit(cos_name)"> 찾기 </md-button>-->
           <img width="30" src="assets/images/searchicon.png" ng-click="searchAtWrite.searchAtWriteSubmit(cos_name)">
         </td>
       </tr>
@@ -49,14 +45,11 @@
     </thead>
     <tbody>
     <div ng-repeat="cosmetics in searchAtWrite.list">
-      <!--{{cosmetics.cos_index}}<br>-->
       {{cosmetics.cos_name}}<br>
       {{cosmetics.cos_brand}}<br>
       {{cosmetics.cos_price}}<br>
       <img src={{cosmetics.cos_pic}}>
       <md-button class="md-raised md-cornered" ng-click="searchAtWrite.selectToWriteReview(cosmetics.cos_index)"> WRITE </md-button>
-      <!--<img width="10%" src="assets/images/writeicon.png" ng-click="searchAtWrite.selectToWriteReview(cosmetics.cos_index)"></button>-->
-      <!--<button class="button button-positive" type="button" ng-click="selectToWriteReview(cosmetics.cos_index)">선택</button>-->
 
     </div>
 

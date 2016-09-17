@@ -8,7 +8,7 @@
     .module('gulpAngular')
     .controller('SettingsController', SettingsController);
 
-  function SettingsController(AuthService, $location,HOST, Upload, $timeout) {
+  function SettingsController(AuthService, $location,HOST, Upload, $timeout, toastr) {
     var vm = this;
     vm.pic = HOST.toString() + AuthService.image();
     vm.name = AuthService.name();
@@ -31,7 +31,9 @@
         location.reload();
       }, function (response) {
         if (response.status > 0)
-          vm.errorMsg = response.status + ': ' + response.data;
+          vm.errorMsg = "사진을 선택해주세요!";
+       toastr.info(vm.errorMsg);
+
       }, function (evt) {
         file.progress = Math.min(100, parseInt(100.0 *
           evt.loaded / evt.total));

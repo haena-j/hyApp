@@ -13,6 +13,7 @@
         .iconSet("social", 'img/icons/sets/social-icons.svg', 24);
     })
     .controller('MyCosTableController', MyCosTableController)
+    .controller('MyCosTableEditController', MyCosTableEditController)
     .controller('MyCosTableDetailController', MyCosTableDetailController);
 
   /** @ngInject */
@@ -23,6 +24,7 @@
     var originatorEv;
     vm.host = HOST;
     var member_index = AuthService.index();
+
 
     //내 화장대 접근했을 때 바로 실행되는 함수 Test 정의
     vm.Test = function () {
@@ -99,6 +101,41 @@
       vm.notificationsEnabled = !vm.notificationsEnabled;
     };
 
+    vm.showConfirm = function(values, ev) {
+      var confirm = $mdDialog.confirm()
+        .title('삭제')
+        .textContent('정말로 삭제하시겠습니까?')
+        .targetEvent(ev)
+        .ok('네')
+        .cancel('아니오');
+
+      $mdDialog.show(confirm).then(function() {
+        HttpSvc.deleteReview(values)
+          .success(function() {
+              var alert = $mdDialog.alert()
+                  .clickOutsideToClose(true)
+                  .title('삭제성공')
+                  .textContent('삭제되었습니다')
+                  .ok('확인');
+
+            $mdDialog.show(alert).then(function() {
+              location.reload();
+
+            })
+
+
+
+
+          })
+          .error(function(values) {
+            alert("error" + values);
+          })
+
+
+      })
+
+    }
+
     // vm.redial = function() {
     //   $mdDialog.show(
     //     $mdDialog.alert()
@@ -117,34 +154,23 @@
     vm.detailOfMycosTable = function(query) {
       $location.path('/mycostable-detail').search({param: query});
       //여기서 누른 리뷰의 번호를 가지고 detail 페이지로 이동함
-      location.reload();
     };
 
     //그 리뷰를 삭제
-    vm.deleteReview = function(query) {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .clickOutsideToClose(true)
-          .parent('body')
-          .title('정말 삭제하시겠습니까?')
-          .textContent('You just called a friend; who told you the most amazing story. Have a cookie!')
-          .ok('네')
-          .cancel('아니요')
-          .targetEvent(originatorEv)
-      );
-
-      HttpSvc.deleteReview(query)
-
-        .success(function() {
-          alert("삭제되었습니다");
-          location.reload();
+    // vm.deleteReview = function(query) {
+      // $mdDialog.show(
+      //   $mdDialog.alert()
+      //     .clickOutsideToClose(true)
+      //     .parent('body')
+      //     .title('정말 삭제하시겠습니까?')
+      //     .textContent('You just called a friend; who told you the most amazing story. Have a cookie!')
+      //     .ok('네')
+      //     .cancel('아니요')
+      //     .targetEvent(originatorEv)
+      // );
 
 
-        })
-        .error(function(values) {
-          alert("error" + values);
-        })
-    };
+    // };
 
 
     //plusIcon을 누르면 리뷰쓰기 페이지로 이동
@@ -154,44 +180,51 @@
     };
 
     //내 화장대 각 리뷰 상세페이지로 이동
-    vm.detailOfMycosTable = function(query) {
-      $location.path('/mycostable-detail').search({param: query});
-      //여기서 누른 리뷰의 번호를 가지고 detail 페이지로 이동함
-      location.reload();
-    };
+    // vm.detailOfMycosTable = function(query) {
+    //   $location.path('/mycostable-detail').search({param: query});
+    //   //여기서 누른 리뷰의 번호를 가지고 detail 페이지로 이동함
+    //   location.reload();
+    // };
 
 
   }
 
-
   //리뷰 상세 페이지 Controller
-  function MyCosTableDetailController($location, HttpSvc, HOST) {
+  function MyCosTableDetailController($location, HttpSvc, HOST, $rootScope) {
     var vm = this;
     var m_index = $location.search().param;
     vm.host = HOST;
+    var cos_index = null;
 
-    HttpSvc.findByMIndex(m_index)
-      .success(function (values) {
-        vm.mycostabledetail = values;
-      });
+    vm.Test1 = function() {
+      HttpSvc.findByMIndex(m_index)
+        .success(function (values) {
+          vm.mycostabledetail = values;
+          cos_index = vm.mycostabledetail.cos_index;
+          $rootScope.cos_index = cos_index;
+          vm.Test2();
+        });
+    };
+    vm.Test1();
 
-    //그 리뷰의 수정페이지로 이동
+
+    vm.Test2 = function() {
+
+      HttpSvc.getCosInformation($rootScope.cos_index)
+
+        .success(function (values) {
+          vm.cosmeticInfomation = values;
+
+
+        });
+    };
+
     // vm.editDetail = function() {
-    //   $location.path('/mycostable-edit').search({param: m_index});
+    //   $location.path('/mycostable-edit');
+    //
     // };
 
-    //그 리뷰를 삭제
-    // vm.deleteDetail = function(query) {
-    //   HttpSvc.deleteReview(query)
-    //     .success(function() {
-    //       alert("삭제되었습니다");
-    //       $location.path('/mycostable');
-    //       location.reload();
-    //     })
-    //     .error(function(values) {
-    //       alert("error" + values);
-    //     })
-    // };
+
 
 
 
@@ -199,4 +232,8 @@
   }
 
 
+  //리뷰 수정 페이지 Controller
+  function MyCosTableEditController($location, HttpSvc, HOST, $rootScope, Upload) {
+
+  }
 })();

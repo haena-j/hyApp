@@ -8,24 +8,30 @@
     max-width: 200px;
     max-height: 200px;
   }
+  form {
+    text-align: center;
+  }
+
 </style>
 
   <md-content flex ui-view>
 
     <form name="setForm">
-      <div layout="row" layout-xs="column" layout-sm="column" layout-align="space-between center">
-
+      <div >
+        <img class="profile" ng-src={{setting.pic}}><br>
+        {{setting.name}}<br>
       </div>
-      <img class="profile" ng-src={{setting.pic}}><br>
-      {{setting.name}}<br>
-    <button type="button" ng-click="setting.logout()">로그아웃</button>
 
+      <md-input-container >
       <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="5MB" ngf-resize="{width:500, height: 500, quality:1.0,  centerCrop: true}" ngf-resize-if="{width > 5000 || height > 5000}">
+
       <i ng-show="myForm.file.$error.maxSize">파일 사이즈 초과
         {{myFile.size / 1000000|number:1}}MB: max 5MB</i>
       <img ng-show="setForm.file.$valid" ngf-thumbnail="picFile" class="thumb"><br>
-      <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+      <md-button ng-click="picFile = null" ng-show="picFile">Remove</md-button><br>
+</md-input-container>
+      <md-button ng-click="setting.changePhoto(picFile)">사진변경</md-button>
+      <md-button ng-click="setting.logout()">로그아웃</md-button>
 
-      <button type="button" ng-click="setting.changePhoto(picFile)">사진변경</button>
     </form>
   </md-content>

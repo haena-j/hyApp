@@ -1,19 +1,22 @@
 <style>
 
   .list_img {
-    border-radius: 50%;
-  }
- .image_img {
- width:100%;
-   height:100%;
- }
-  h5 {
-    color: dimgrey;
-    font-size:10px;
 
   }
+
+  .image_img {
+    width: 100%;
+    height: 100%;
+  }
+
+  h5 {
+    color: dimgrey;
+    font-size: 10px;
+
+  }
+
   .flip-container {
-    background-color:white;
+    background-color: white;
 
   }
 
@@ -45,7 +48,7 @@
     font-size: 14px;
     text-align: center;
     text-transform: uppercase;
-    text-decoration:none;
+    text-decoration: none;
     border: none;
     outline: none;
   }
@@ -80,98 +83,102 @@
     top: 1%;
     left: 75%;
   }
+
   h5.thick {
     font-weight: bold;
   }
 
   h4 {
-    font-size:14px;
-    text-align:center;
+    font-size: 14px;
+    text-align: center;
     color: grey;
     margin-left: 40px;
   }
 </style>
 
 
-  <md-content flex ui-view class="md-padding" layout-xs="column" layout="row" style="background-color: #f2dede">
+<md-content flex ui-view class="md-padding" layout-xs="column" layout="row" style="background-color: #f2dede">
+  <br>
+  <div class="row-header-row-related">
+    <div class="row-header-row-related" align="center">
+      <div class="row-header-row-related">
+        <img class="profile" width="90" ng-src={{userSharedDetail.host}}{{userSharedDetail.memberInfo.image}}><br>
+        <b>{{userSharedDetail.memberInfo.id}}
+          <img class="redheart-related" ng-src="assets/images/redheart.png"></b>
+        <div class="center">{{userSharedDetail.memberInfo.count}}</div>
+
+      </div>
+    </div>
     <br>
-    <div class="row-header-row-related" >
-      <div class="row-header-row-related" align="center" >
-        <div class="row-header-row-related">
-          <img class="profile" width="90" ng-src={{userSharedDetail.host}}{{userSharedDetail.memberInfo.image}}><br>
-          <b>{{userSharedDetail.memberInfo.id}}
-            <img class="redheart-related" ng-src="assets/images/redheart.png"></b>
-          <div class="center">{{userSharedDetail.memberInfo.count}}</div>
+    <div>
+      <md-radio-group ng-model="select" layout="row">
+        <md-radio-button ng-value="list" value="list" aria-label="label1" class="md-primary">목록보기</md-radio-button>
+        <md-radio-button value="image" aria-label="label2"> 이미지보기</md-radio-button>
+      </md-radio-group>
+    </div>
+    <br>
+    <div ng-if="select == 'list' || select == null" class="row-header-row-related">
+      <div class="row-header-row-related" ng-repeat="result in userSharedDetail.cosmeticsInfoList"
+           style="background-color:white">
 
-        </div>
-      </div>
-      <br>
-      <div>
-        <md-radio-group ng-model="select" layout="row">
-          <md-radio-button ng-value="list" value="list" aria-label="label1" class="md-primary">목록보기</md-radio-button>
-          <md-radio-button value="image" aria-label="label2"> 이미지보기 </md-radio-button>
-          </md-radio-group>
-      </div>
-      <br>
-      <div ng-if="select == 'list' || select == null" class="row-header-row-related">
-        <div class="row-header-row-related" ng-repeat="result in userSharedDetail.cosmeticsInfoList" style="background-color:white">
+        <md-card align="center" style="background-color: whitesmoke">
 
-          <md-card align="center" style="background-color: whitesmoke">
-
-            <md-card-title>
-              <md-card-title-media>
-                <div ng-if="result.m_cosimage.substring(0,4) != 'http'" class="md-media-lg card-media"><img class="list_img" width="20" md-card-sm-image ng-src={{userSharedDetail.host}}{{result.m_cosimage}} ></div>
-                <div ng-if="result.m_cosimage.substring(0,4) == 'http'" class="md-media-lg card-media"><img class="list_img" width="20" md-card-sm-image ng-src={{result.cos_pic}} ></div>
-              </md-card-title-media>
-              <md-card-title-text>
-                <span class="md-headline">{{ result.cos_name}}</span>
-                <h5><span class="md-subhead">{{result.m_review}}</span></h5>
-              </md-card-title-text>
-            </md-card-title>
-            <div class="md-menu-demo"  ng-cloak>
-              <div class="menu-demo-container" layout-align="right right" layout="column">
-                <md-menu>
-                  <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
-                    <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                  </md-button>
-                  <md-menu-content width="4">
-                    <md-menu-item>
-                      <md-button ng-click="ctrl.redial($event)">
-                        <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                        수정
-                      </md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                      <md-button ng-click="ctrl.delete($event)">
-                        <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                        삭제
-                      </md-button>
-                    </md-menu-item>
-                  </md-menu-content>
-                </md-menu>
+          <md-card-title>
+            <md-card-title-media>
+              <div ng-if="result.m_cosimage.substring(0,4) != 'http'" class="md-media-lg card-media"><img
+                class="list_img" width="20" md-card-sm-image ng-src={{userSharedDetail.host}}{{result.m_cosimage}}>
               </div>
+              <div ng-if="result.m_cosimage.substring(0,4) == 'http'" class="md-media-lg card-media"><img
+                class="list_img" width="20" md-card-sm-image ng-src={{result.cos_pic}}></div>
+            </md-card-title-media>
+            <md-card-title-text>
+              <span class="md-headline">{{ result.cos_name}}</span>
+              <h5><span class="md-subhead">{{result.m_review}}</span></h5>
+            </md-card-title-text>
+          </md-card-title>
+          <div class="md-menu-demo" ng-cloak>
+            <div class="menu-demo-container" layout-align="right right" layout="column">
+              <md-menu>
+                <md-button aria-label="Open phone interactions menu" class="md-icon-button"
+                           ng-click="ctrl.openMenu($mdOpenMenu, $event)">
+                  <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                  <md-menu-item>
+                    <md-button ng-click="ctrl.redial($event)">
+                      <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                      수정
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button ng-click="ctrl.delete($event)">
+                      <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                      삭제
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
             </div>
+          </div>
 
-          </md-card>
-        </div>
+        </md-card>
       </div>
-      <div ng-if="select == 'image'" class="row-header-row-related" >
-        <div flex ng-cloak>
-          <md-grid-list
-            md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
-            md-row-height-gt-md="1:1" md-row-height="1:1"
-            md-gutter="8px" md-gutter-gt-sm="4px">
-            <md-grid-tile ng-repeat="result in userSharedDetail.cosmeticsInfoList">
-<img ng-if="result.m_cosimage.substring(0,4) != 'http'" class="image_img" ng-src={{userSharedDetail.host}}{{result.m_cosimage}} >
-<img ng-if="result.m_cosimage.substring(0,4) == 'http'"  class="image_img" ng-src={{result.cos_pic}} >
-     </md-grid-tile>
-            </md-grid-list>
-        </div>
+    </div>
+
+    <div ng-if="select == 'image'" class="row-header-row-related">
+      <div flex ng-cloak>
+        <md-grid-list
+          md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
+          md-row-height-gt-md="1:1" md-row-height="1:1"
+          md-gutter="8px" md-gutter-gt-sm="4px">
+          <md-grid-tile ng-repeat="result in userSharedDetail.cosmeticsInfoList">
+            <img ng-if="result.m_cosimage.substring(0,4) != 'http'" class="image_img"
+                 ng-src={{userSharedDetail.host}}{{result.m_cosimage}}>
+            <img ng-if="result.m_cosimage.substring(0,4) == 'http'" class="image_img" ng-src={{result.cos_pic}}>
+          </md-grid-tile>
+        </md-grid-list>
       </div>
+    </div>
 
-
-
-
-
-      </div>
-  </md-content>
+  </div>
+</md-content>

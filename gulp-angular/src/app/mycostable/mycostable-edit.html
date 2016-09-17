@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!--정민/ 내화장품리뷰수정페이지
+20160804 최종수정 -->
 
-</body>
-</html>
+  <md-content class="padding" style="background-color:#f2dede">
+    <form method="post" name="mycostableeditForm">
+      <div class="list" ng-class="{ 'has-error' : mycostableeditForm.name.$invalid && !mycostableeditForm.name.$pristine }" ng-controller="MyCosTableEditCtrl">
+        <label class="item item-input item-stacked-label">
+          <p>
+            <input type="file" ngf-select ng-model="editForm.picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+            <i ng-show="mycostableeditForm.file.$error.required">
+            </i>
+            <i ng-show="mycostableeditForm.file.$error.maxSize">File too large
+              {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+            <br><br>
+
+            <img ng-show="mycostableeditForm.file.$valid" ngf-thumbnail="editForm.picFile" class="thumb" width="70">
+            <br>
+            <button ng-click="editForm.picFile = null" ng-show="editForm.picFile">Remove</button>
+          </p>
+        </label>
+
+        <div>
+
+
+          <span class="input-label">개봉날짜</span>
+          <input type="date" name="m_open_date" ng-model="editForm.m_open_date" required>
+          <span ng-show="mycostableeditForm.m_open_date.$error.required"> 수정 전 개봉날짜 {{editmycostable.m_open_date}}</span>
+        </div>
+
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label" >리뷰</span>
+          <input type="text" placeholder="리뷰를 수정해주세요" name="m_review" ng-model="editForm.m_review" required>
+          <span ng-show="mycostableeditForm.m_review.$error.required">{{editmycostable.m_review}}</span>
+        </label>
+
+        <div align="center">
+          <button class="button button-positive" type="button" ng-click="submit3(editForm)">수정</button>
+          <button class="button button-positive" type="reset">취소</button>
+        </div>
+
+      </div>
+    </form>
+  </md-content>
