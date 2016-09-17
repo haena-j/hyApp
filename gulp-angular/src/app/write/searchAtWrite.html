@@ -1,9 +1,7 @@
 <!-- 내 화장대 이후 검색페이지 -->
-<script
-  src="../../../../../../../Users/HYEYOON/Documents/카카오톡 받은 파일/20160907 정민수정/20160907 _뚡뀯_솽꼩_듄넫_됣뀸_뚡뀯__hyApp/hyApp/gulp-angular/src/app/index.services.js"></script>
 <style>
   /*img {*/
-    /*width: 40%;*/
+  /*width: 40%;*/
   /*}*/
 
   #searchInputBox {
@@ -27,6 +25,7 @@
           <input type="text" id="searchInputBox" size="40" placeholder="제품명 / 브랜드명" name="cos_name" ng-model="cos_name">
         </td>
         <td>
+          <!--<md-button class="md-raised md-cornered" ng-click="searchAtWrite.searchAtWriteSubmit(cos_name)"> 찾기 </md-button>-->
           <img width="30" src="assets/images/searchicon.png" ng-click="searchAtWrite.searchAtWriteSubmit(cos_name)">
         </td>
       </tr>
@@ -34,6 +33,16 @@
 
     </table>
   </div>
+
+  <br><br>
+  <div ng-controller="SelectAsyncController" layout="row" ng-cloak>
+    <div layout="row">
+  <md-select placeholder="제품별" ng-model="type" md-on-open="loadTypes()" style="min-width: 50px;" md-on-close="printSelectedBrands(type.name)">
+    <md-option ng-value="type" ng-repeat="type in types">{{type.name}}</md-option>
+  </md-select>
+      </div>
+    </div>
+  <br><br>
 
   <table class="table table-striped .table-bordered .table-condensed">
     <thead>
@@ -49,6 +58,13 @@
       <!--<img width="10%" src="assets/images/writeicon.png" ng-click="searchAtWrite.selectToWriteReview(cosmetics.cos_index)"></button>-->
       <!--<button class="button button-positive" type="button" ng-click="selectToWriteReview(cosmetics.cos_index)">선택</button>-->
 
+    </div>
+
+    <div ng-repeat="cosByBrandAndType in searchAtWrite.CosListByBrandAndType">
+      {{cosByBrandAndType.cos_name}}<br>
+      {{cosByBrandAndType.cos_brand}}<br>
+      {{cosByBrandAndType.cos_price}}<br>
+      <img src={{cosByBrandAndType.cos_pic}}>
     </div>
     </tbody>
   </table>

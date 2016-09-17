@@ -331,8 +331,6 @@ public class ApiController {
 
 
             allList.add(allInfoOfMyCosmetic);
-//            System.out.println("cosmetics name" + allList.get(0).getCos_name());
-//            System.out.println("review index" + allList.get(0).getM_index());
         }
         return allList;
     }
@@ -340,34 +338,23 @@ public class ApiController {
     //화장품 인덱스로 화장품 정보 불러오기
     @RequestMapping(method = RequestMethod.POST, value = "/api/cosmeticsinformations")
     public CosmeticsVO getCosInformation(@RequestBody int cos_index) {
-//        System.out.println("cos_index: " + cos_index);
 
-        CosmeticsVO cosmeticsInformation = cosmeticsMapper.writeReviewByCosIndex(cos_index);
-//        System.out.println("리뷰쓸 화장품 전송값 확인: " + cosmeticsInformation.toString());
+        System.out.println("진입" + cos_index );
+
+        CosmeticsVO cosmeticsInformation = cosmeticsMapper.findByCosIndex(cos_index);
+        System.out.println("상세보기에서 가져온 화장품정보" + cosmeticsInformation);
         return cosmeticsInformation;
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/api/cosmeticsinformations2")
-    public CosmeticsVO getCosInformation2(@RequestBody int cos_index) {
-//        System.out.println("cos_index2: " + cos_index);
-
-        CosmeticsVO cosmeticsInformation2 = cosmeticsMapper.writeReviewByCosIndex(cos_index);
-//        System.out.println("리뷰쓸 화장품 전송값 확인2: " + cosmeticsInformation2.toString());
-        return cosmeticsInformation2;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/mCosdetailByMIndex")
     public My_CosmeticsVO findByMIndex(@RequestBody int m_index) {
-        System.out.println("리뷰 번호 : " + m_index);
 
         My_CosmeticsVO my_cosmetics = my_CosmeticsMapper.findByMIndex(m_index);
-        System.out.println("수정하려는 리뷰번호에 담긴 my_cosmetics정보 :" + my_cosmetics.getCos_index() +", cosimage : " + my_cosmetics.getM_cosimage());
 
         return my_cosmetics;
     }
 
 
-    // 회원 리뷰수정 혜윤이꺼참고로 코딩중!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 오류해결해야해
     @RequestMapping(method = RequestMethod.POST, value = "/api/mCosdetailEdit")
     public void updateReview(@ModelAttribute My_CosmeticsVO my_cosmetics) {
         System.out.println("edit My_cosmetics's m_index: " + my_cosmetics);
@@ -403,12 +390,23 @@ public class ApiController {
     //내 화장대에서 회원 정보 불러오기
     @RequestMapping(method = RequestMethod.POST, value="/api/UserInformation")
     public MemberVO findUserByMIndex(@RequestBody int member_index) {
-        System.out.println("가져 오려는 member_index: " + member_index);
 
         MemberVO memberInformation = memberMapper.findByIndex(member_index);
-        System.out.println("멤버 잘 가져왔나 확인:" + memberInformation.getName());
 
         return memberInformation;
+    }
+
+    //화장품의 브랜드 이름만 가져오기
+    @RequestMapping(method = RequestMethod.GET, value="/api/cosmeticBrandNameList")
+    public List<String> getCosBrandName() {
+
+        return cosmeticsMapper.getCosBrandName();
+    }
+
+    //화장품 브랜드, 타입으로 화장품 찾기
+    @RequestMapping(method = RequestMethod.GET, value="/api/getCosByBrandAndType")
+    public List<CosmeticsVO> getCosByBrandAndType(String type, String brand) {
+        return cosmeticsMapper.getCosByBrandAndType(type, brand);
     }
 
 

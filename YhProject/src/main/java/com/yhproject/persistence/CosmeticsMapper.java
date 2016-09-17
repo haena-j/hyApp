@@ -28,6 +28,8 @@ public interface CosmeticsMapper {
     CosmeticsVO writeReviewByCosIndex(@Param("cos_index") int cos_index);
 
     @Select("select * from COSMETICS WHERE cos_type = #{cos_type} and cos_brand = #{cos_brand}")
-    List<CosmeticsVO> findByType(@Param("cos_type, cos_brand") String cos_type, String cos_brand);
+    List<CosmeticsVO> getCosByBrandAndType(@Param("cos_type, cos_brand") String cos_type, String cos_brand);
 
+    @Select("select distinct COS_BRAND FROM COSMETICS ")
+    List<String> getCosBrandName();
 }
