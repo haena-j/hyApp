@@ -1,11 +1,31 @@
-
+<style>
+.main{
+  margin-bottom: 30px;
+  padding: 1px 30px;
+  background-image: url("assets/images/image.jpg");
+  background-size: 250%;
+  text-align: center;
+  color: white;
+}
+.profile {
+  max-width: 100%;
+  width: 100px;
+  height: 100px;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 50%;
+}
+  h1 {
+    color: #3A3A3A;
+  }
+</style>
   <md-content flex ui-view>
 
-    <section class="jumbotron">
-      <h1>'Allo, 'Allo!</h1>
+    <section class="main">
+      <h1>파우치체커</h1>
       <p class="lead">
-        <img src="assets/images/yeoman.png" alt="I'm Yeoman"><br>
-        Always a pleasure scaffolding your apps.
+        <img class="profile" src="{{main.host}}{{main.userImage}}"><br>
+        {{main.username}}
       </p>
       <md-button class="md-raised animated infinite" ng-class="main.classAnimation" ng-click="main.showToastr()">Splendid Toastr</md-button>
       <p>

@@ -6,9 +6,12 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController($timeout, webDevTec, toastr) {
+  function MainController($timeout, webDevTec, AuthService,HOST, toastr) {
     var vm = this;
 
+    vm.userImage = AuthService.image();
+    vm.host = HOST;
+    vm.username = AuthService.name();
     vm.awesomeThings = [];
     vm.classAnimation = '';
     vm.creationDate = 1472374677463;
