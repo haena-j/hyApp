@@ -15,7 +15,7 @@
   }
 
   .row-related {
-    background-color: #f2dede;
+    background: rgba(135, 156, 191, 0.18);
     width: 100%;
   }
 
@@ -37,7 +37,7 @@
 
   .container.review-img {
     position: relative;
-    height: 45%;
+    height: 55%;
   }
 
   .related-review-img {
@@ -53,7 +53,7 @@
   }
 
   md-card {
-    height: 340px;
+    height: 300px;
   }
 
   .md-headline {
@@ -94,11 +94,6 @@
     width: 100%;
     position: relative;
   }
-
-  .td-padding {
-    width: 30%;
-  }
-
   .icon-nav {
     width: 10px;
     height: 10px;
@@ -131,7 +126,15 @@
             <md-card-header-text>
               <span class="md-title">{{result.id}}</span>
               <span class="md-subhead"> Lv.{{result.level}} {{result.level_name}}</span>
+
             </md-card-header-text>
+
+              <md-button class="md-icon-button"
+                         ng-click="userSharedPage.giveStar(result)" flex style="text-align: end">
+                {{result.count}}
+                <md-icon md-svg-icon="assets/images/like.svg" ></md-icon>
+              </md-button>
+
           </md-card-header>
           <div class="container review-img">
             <img class="related-review-img" ng-src="{{userSharedPage.host}}{{result.recent_review_img}}"
@@ -148,23 +151,6 @@
           <md-card-title>
             <md-card-title-text>
               <span class="md-headline">최근리뷰) {{result.recent_review_name}}</span>
-              <span class="md-subhead">
-                   <table>
-                  <tr>
-                    <td>회원님과 {{result.same_count}}개의 화장품 일치</td>
-                    <td class="td-padding"></td>
-                    <td> {{result.count}}</td>
-                    <td>
-                      <md-button class="md-icon-button"
-                                 ng-click="userSharedPage.giveStar(result)">
-                        <md-icon md-svg-icon="assets/images/like.svg"></md-icon>
-                      </md-button>
-                    </td>
-                  </tr>
-                </table>
-
-                  </span>
-
             </md-card-title-text>
           </md-card-title>
         </md-card>
@@ -193,7 +179,7 @@
           <img ng-if="tile.recent_review_img.substring(0,4) == 'http'" ng-src="{{tile.recent_review_img}}"
                style="width:100%; height:100%;">
           <div ng-init="tile.show = false" ng-show="tile.show">
-            <md-grid-tile-footer style="height: auto; font-size: 110%; padding: 0;">
+            <md-grid-tile-footer style="height: auto; font-size: 90%; padding: 0;">
               <table style="width: 100%;">
                 <tr>
                   <td ng-click="userSharedPage.goToDetail(tile)">

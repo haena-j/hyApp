@@ -72,6 +72,7 @@
     min-width: 20px;
     min-height: 20px;
     border-radius: 50%;
+    box-shadow: 0 0 0 4px #fff;
   }
 
   .md-padding {
@@ -94,20 +95,22 @@
     color: grey;
     margin-left: 40px;
   }
+
+  .profile_div {
+    padding-top: 15px;
+    background-size: 100%;
+  }
 </style>
 
 
-<md-content flex ui-view class="md-padding" layout-xs="column" layout="row" style="background-color: #f2dede">
+<md-content flex ui-view class="md-padding" layout-xs="column" layout="row" >
   <br>
-  <div class="row-header-row-related">
     <div class="row-header-row-related" align="center">
-      <div class="row-header-row-related">
+      <div class="profile_div" style="background-image: url({{userSharedDetail.background}});">
         <img class="profile" width="90" ng-src={{userSharedDetail.host}}{{userSharedDetail.memberInfo.image}}><br>
         <b>{{userSharedDetail.memberInfo.id}}
           <img class="redheart-related" ng-src="assets/images/redheart.png"></b>
         <div class="center">{{userSharedDetail.memberInfo.count}}</div>
-
-      </div>
     </div>
     <br>
     <div>
@@ -121,7 +124,7 @@
       <div class="row-header-row-related" ng-repeat="result in userSharedDetail.cosmeticsInfoList"
            style="background-color:white">
 
-        <md-card align="center" style="background-color: whitesmoke">
+        <md-card align="center" style="background-color: whitesmoke;">
 
           <md-card-title>
             <md-card-title-media>
@@ -172,10 +175,21 @@
           md-row-height-gt-md="1:1" md-row-height="1:1"
           md-gutter="8px" md-gutter-gt-sm="4px">
           <md-grid-tile ng-repeat="result in userSharedDetail.cosmeticsInfoList">
-            <img ng-if="result.m_cosimage.substring(0,4) != 'http'" class="image_img"
-                 ng-src={{userSharedDetail.host}}{{result.m_cosimage}}>
-            <img ng-if="result.m_cosimage.substring(0,4) == 'http'" class="image_img" ng-src={{result.cos_pic}}>
-          </md-grid-tile>
+           <div ng-if="result.m_cosimage.substring(0,4) != 'http'" style="width: 100%; height: inherit;">
+             <img class="image_img" ng-src={{userSharedDetail.host}}{{result.m_cosimage}}>
+               </div>
+           <div  ng-if="result.m_cosimage.substring(0,4) == 'http'" style="width: 100%;">
+             <img class="image_img" ng-src={{result.cos_pic}}>
+           </div>
+
+            <div ng-show="true">
+              <md-grid-tile-footer style="height: auto; font-size: 70%; padding: 0;">
+                <md-list-item>
+                  {{result.cos_name}}
+                </md-list-item>
+              </md-grid-tile-footer>
+            </div>
+      </md-grid-tile>
         </md-grid-list>
       </div>
     </div>

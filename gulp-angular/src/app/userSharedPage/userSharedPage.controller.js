@@ -105,6 +105,7 @@
   function UserSharedDetailController( $location, HttpSvc, HOST) {
     var vm = this;
     vm.host = HOST;
+    vm.background = "";
     var member_index = $location.search().param;
     HttpSvc.getMyCosmeticsByMemberIndex(member_index)
       .success(function (values) {
@@ -117,6 +118,15 @@
     HttpSvc.findUserByMIndex(member_index)
       .success(function (values) {
         vm.memberInfo = values;
+        if(vm.memberInfo.count >= 10){
+          vm.background = "assets/images/cosmetics.jpg";
+        }
+        else if(vm.memberInfo.count < 10 && vm.memberInfo.count >5){
+          vm.background = "assets/images/cosmetics0.jpg";
+        }
+        else {
+          vm.background = "assets/images/image.jpg";
+        }
       })
       .error(function () {
       })
