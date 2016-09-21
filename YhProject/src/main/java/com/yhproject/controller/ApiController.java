@@ -3,13 +3,14 @@ package com.yhproject.controller;
 import com.yhproject.Constant;
 import com.yhproject.domian.*;
 import com.yhproject.persistence.*;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
@@ -106,7 +107,7 @@ public class ApiController {
 
     //회원 사진 업데이트 -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/updateMemberImage")
-    public void updateMemberImage(@ModelAttribute MemberVO member) {
+    public void updateMemberImage(@ModelAttribute MemberVO member,HttpServletRequest request) {
         System.out.println("update Image : " + member);
         File rootFolder = new File(Constant.ROOT_FOLDER + Constant.UPLOAD_FOLDER);
         AttachVO attach;
@@ -122,13 +123,12 @@ public class ApiController {
 
     //신규 member 데이터 db에 저장 -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/main")
-    public String addMember(@ModelAttribute MemberVO member) {
+    public String addMember(@ModelAttribute MemberVO member ) {
         System.out.println(member.toString());
         if (member.getFiles() == null) {
             member.setImage(Constant.UPLOAD_FOLDER + "/no_image.jpg");
         } else {
             File rootFolder = new File(Constant.ROOT_FOLDER + Constant.UPLOAD_FOLDER);
-
             AttachVO attach = null;
             try {
                 attach = FileUtil.fileUpload(member.getFiles(), rootFolder.getAbsolutePath());
@@ -259,7 +259,6 @@ public class ApiController {
     //화장품 선택 후 등록이 된다! 혜윤이가 병합 후 내가 수정한 부분
     @RequestMapping(method = RequestMethod.POST, value = "/api/myCosmetics")
     public void addMyCosmetics2(@ModelAttribute My_CosmeticsVO myCosmetics) {
-        System.out.println("add 진입");
         System.out.println("m_open_date :" + myCosmetics);
         File rootFolder = new File(Constant.ROOT_FOLDER + Constant.UPLOAD_FOLDER);
         if (myCosmetics.getFiles() == null) {             //사진등록을 안해서 File 정보가 없을경우
@@ -322,12 +321,14 @@ public class ApiController {
             allInfoOfMyCosmetic.setM_open_date(mycostable.get(i).getM_open_date());
             allInfoOfMyCosmetic.setM_expire_date(mycostable.get(i).getM_expire_date());
             allInfoOfMyCosmetic.setM_review(mycostable.get(i).getM_review());
+            allInfoOfMyCosmetic.setM_starrate(mycostable.get(i).getM_starrate());
             allInfoOfMyCosmetic.setM_cosimage(mycostable.get(i).getM_cosimage());
             allInfoOfMyCosmetic.setCos_brand(cosmetics.getCos_brand());
             allInfoOfMyCosmetic.setCos_name(cosmetics.getCos_name());
             allInfoOfMyCosmetic.setCos_pic(cosmetics.getCos_pic());
             allInfoOfMyCosmetic.setCos_price(cosmetics.getCos_price());
             allInfoOfMyCosmetic.setCos_type(cosmetics.getCos_type());
+            allInfoOfMyCosmetic.setCos_starrateAvg(cosmetics.getCos_starrateAvg());
 
 
             allList.add(allInfoOfMyCosmetic);
@@ -338,8 +339,6 @@ public class ApiController {
     //화장품 인덱스로 화장품 정보 불러오기
     @RequestMapping(method = RequestMethod.POST, value = "/api/cosmeticsinformations")
     public CosmeticsVO getCosInformation(@RequestBody int cos_index) {
-
-        System.out.println("진입" + cos_index );
 
         CosmeticsVO cosmeticsInformation = cosmeticsMapper.findByCosIndex(cos_index);
         System.out.println("상세보기에서 가져온 화장품정보" + cosmeticsInformation);
@@ -408,6 +407,51 @@ public class ApiController {
     public List<CosmeticsVO> getCosByBrandAndType(String type, String brand) {
         return cosmeticsMapper.getCosByBrandAndType(type, brand);
     }
+
+    private int getSumCosStarRates;
+    private int getCountCosStarRates;
+    private int cosIndex;
+    //cos_index에 따른 등록된 리뷰들의 개수, cos_index에 따른 화장품의 평균정보 가져오기
+    @RequestMapping(method = RequestMethod.POST, value = "/api/getCountCosStarRates" )
+    public int getCountCosStarRates(@RequestBody int cos_index) {
+
+        cosIndex = cos_index;
+
+        getCountCosStarRates = my_CosmeticsMapper.getCountCosStarRates(cos_index);
+        System.out.println(cos_index + "로 등록된 리뷰개수 " + getCountCosStarRates);
+
+        return getCountCosStarRates;
+
+
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/getSumCosStarRates" )
+    public int getSumCosStarRates(@RequestBody int cos_index) {
+
+        getSumCosStarRates = my_CosmeticsMapper.getSumCosStarRates(cos_index);
+        System.out.println(cos_index + "로 등록된 별점 합 " + getSumCosStarRates);
+
+        return getSumCosStarRates;
+
+
+
+    }
+
+    //    //cos_index에 따른 리뷰 별점구하기, cos_index에 따른 화장품의 평균정보 가져오기
+    @RequestMapping(method = RequestMethod.POST, value = "/api/calToGetCosAvg")
+    public void calToGetCosAvg(@RequestBody int plusstarrate) {
+        System.out.println("더하려는 별점" + plusstarrate);
+        int a = getSumCosStarRates + plusstarrate;
+        System.out.println("별점합합합 " + getSumCosStarRates);
+        int result = a / getCountCosStarRates;
+        System.out.println("리뷰평균 결과: " + result);
+        cosmeticsMapper.UpdateStarRate(result, cosIndex);
+
+    }
+
+
+
 
 
     /***************************************정민 부분끝***************************************/

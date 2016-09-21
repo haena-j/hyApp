@@ -16,6 +16,7 @@ public class My_CosmeticsVO {
     private int member_index;
     private String m_review;
     private String m_cosimage;
+    private int m_starrate;
     private String cos_name;
     private MultipartFile files;
 }

@@ -9,13 +9,39 @@
     .controller('WriteController', WriteController)
     .controller('SearchAtWriteController', SearchAtWriteController)
     .controller('DemoController', DemoController)
-    .controller('SelectAsyncController,',  SelectAsyncController);
+    .controller('SelectTypeController', SelectTypeController);
   /** @ngInject */
-  function WriteController(HOST, HttpSvc, $location, AuthService, Upload, $timeout, $mdDialog) {
+  function WriteController(HOST, HttpSvc, $location, AuthService, Upload, $timeout, $mdDialog, $mdToast) {
     var cos_index = $location.search().param;
     var member_index = AuthService.index();
+    var last = {
+      bottom: false,
+      top: true,
+      left: false,
+      right: true
+    };
+
     var vm = this;
     vm.host = HOST;
+    vm.toastPosition = angular.extend({},last);
+    vm.getToastPosition = function() {
+      sanitizePosition();
+
+      return Object.keys(vm.toastPosition)
+        .filter(function(pos) { return vm.toastPosition[pos]; })
+        .join(' ');
+    };
+
+    function sanitizePosition() {
+      var current = vm.toastPosition;
+
+      if ( current.bottom && last.top ) current.top = false;
+      if ( current.top && last.bottom ) current.bottom = false;
+      if ( current.right && last.left ) current.left = false;
+      if ( current.left && last.right ) current.right = false;
+
+      last = angular.extend({},current);
+    }
 
     vm.searchCosByBrand = function () {
       $location.path('/searchAtWrite');
@@ -34,7 +60,40 @@
     }
 
     vm.submitAtWrite = function (write, cos_type, ev) {
-      if (cos_index == null || write.m_open_date == null || write.m_review == null || write.picFile == null)
+
+      var starrateAvg1 = write.m_starrate; // 새로 더해지는 별점
+      var countReviewWithCos;
+      var getSumCosStarRates;
+
+      HttpSvc.getCountCosStarRates(cos_index)
+          .success(function(values) {
+            //화장품 번호에 등록된 별점들의 개수
+            countReviewWithCos = values;
+            vm.Test2();
+
+          });
+
+      vm.Test2 = function() {
+        HttpSvc.getSumCosStarRates(cos_index)
+          .success(function (values) {
+            getSumCosStarRates = values;
+            vm.calToGetCosAvg();
+          });
+      };
+
+      vm.calToGetCosAvg = function() {
+        HttpSvc.calToGetCosAvg(starrateAvg1)
+          .success(function(values) {
+            HttpSvc.getCosInformation(cos_index)
+              .success(function(values) {
+                vm.starAvg = values;
+                var result = vm.starAvg.cos_starrate;
+              })
+          })
+
+      };
+
+      if (cos_index == null || write.m_open_date == null || write.m_review == null || write.m_starrate == null)
         $mdDialog.show(
           $mdDialog.alert()
             .parent(angular.element(document.querySelector('#writeContainer')))
@@ -45,6 +104,15 @@
             .ok('확인')
             .targetEvent(ev)
         );
+
+      else if (cos_index != null || write.m_open_date != null || write.m_review != null || write.m_starrate != null)
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('저장 완료!')
+            .position('center')
+            .hideDelay(5000)
+        );
+
 
       var cos_type = cos_type;
       var m_open_date_toString = write.m_open_date.toString();
@@ -131,10 +199,6 @@
 
       }
 
-
-      // var expireDate2 = expireDateforMaskara.toString();
-      // resultExpireDate = expireDate2 + monthString + DateString;
-
       var file = Upload.upload({
         url: HOST + '/api/myCosmetics',
         method: 'POST',
@@ -145,6 +209,7 @@
           cos_index: cos_index,
           member_index: member_index,
           m_review: write.m_review,
+          m_starrate: write.m_starrate,
           files: write.picFile
         }
       });
@@ -200,13 +265,14 @@
     starRating();
   }
 
-  function SelectAsyncController(HOST, $timeout, $location) {
+  function SelectTypeController(HOST, $timeout, $location) {
     var vm = this;
     vm.host = HOST;
 
     vm.type = null;
     vm.types = null;
     vm.loadTypes = function() {
+      alert("진입");
       return $timeout(function() {
         vm.types = vm.types || [
             { id: 1, name: '마스카라' },
@@ -220,9 +286,9 @@
 
     vm.printSelectedTypes = function printSelectedTypes(query) {
       alert(query);
-      $location.path('/searchAtWrite').search({param2: query}); ///////////////////////////////이거해야함!!!!
+      $location.path('/searchAtWrite').search({param2: query});
       location.reload();
-    }
+    };
   }
 
 
@@ -246,7 +312,6 @@
     };
     vm.getCosBrandName(); // 브랜드이름가져오는함수 실행
 
-
     self.openDialog = function ($event) {
       $mdDialog.show({
         controller: DialogCtrl,
@@ -260,9 +325,6 @@
       })
     }
   }
-
-
-
 
   // 다이얼로그 창을 제어하는 컨트롤러
   function DialogCtrl($timeout, $q, $mdDialog, $rootScope, $location) {
@@ -346,13 +408,13 @@
     // 화장품 검색에서 찾은 쿼리
     vm.Test = function() {
       HttpSvc.getSearch(selectedBrand)
-          .success(function (values) {
-            vm.list = values;
-          })
-          .error(function (values) {
-            alert("error" + values);
-          });
-      };
+        .success(function (values) {
+          vm.list = values;
+        })
+        .error(function (values) {
+          alert("error" + values);
+        });
+    };
     vm.Test();
 
     // 다시 검색할때 작동하는 메소드
@@ -371,7 +433,7 @@
         .success(function (values) {
           vm.list2 = values;
           //클릭한 화장품의 cos_index를 가지고 검색 후 화장품등록 페이지로 이동
-          $location.path('/write').search({param: values.cos_index });
+          $location.path('/write').search({param: cos_index});
           location.reload();
         })
         .error(function (values) {

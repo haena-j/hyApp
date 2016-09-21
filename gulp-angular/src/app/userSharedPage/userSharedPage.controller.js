@@ -56,7 +56,7 @@
 
           function buildGridModel(tileTmpl){
             var it, results = [ ];
-            for (var i=0; i<10; i++) {
+            for (var i=0; i<vm.highRankList.length; i++) {
               it = angular.extend({},tileTmpl);
               it.img = vm.host + vm.highRankList[i].image;
               it.id = vm.highRankList[i].id;

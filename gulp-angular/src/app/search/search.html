@@ -1,24 +1,55 @@
+<style>
+  div{
+    font-family:"맑은고딕";
+  }
+</style>
 
-<!--<button class="button button-icon ion-android-search" id="searchButton"-->
-        <!--ng-click="searchCosmetics(cos_name)"></button>-->
-
+<div layout="vertical" layout-fill>
 
   <md-content flex ui-view>
-    <h3 class="md-title"><span md-highlight-text="searchText">"{{search.searchText}}</span>  " 검색결과</h3>
-    <hr>
-    <div ng-repeat="cosmetics in search.cosmeticsList">
-      <div layout="row">
-        <div flex="30"><img id="cos_pic" ng-src={{cosmetics.cos_pic}}></div>
-        <div flex="60">
-          <div layout="column" layout-align="center start">
-            <div><p>{{ cosmetics.cos_brand}}</p></div>
-            <div><b>{{ cosmetics.cos_name}}</b></div>
-            <div>{{ cosmetics.cos_price}}원</div></div></div>
-        <div flex="10">
+    <!--<h5>"{{search.searchText}} " 검색결과</h5>-->
+<br>
+
+    <md-grid-list
+      md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="2"
+      md-row-height-gt-md="2:1" md-row-height="280px"
+      md-gutter="10px" md-gutter-gt-sm="50px" >
+
+      <md-grid-tile ng-repeat="tile in search.tiles"
+                    md-rowspan="{{tile.span.row}}"
+                    md-colspan="{{tile.span.col}}"
+                    md-colspan-sm="1"
+                    md-colspan-xs="1"
+                    ng-class="tile.background">
+
+        <md-card >
+          <md-card-title md-row-height="300px">
+            <div layout="column" >
+
+              <br>
+              <div align="center">
+                <md-card-title-media>
+                  <div class="md-media-sm card-media" ><img ng-src={{tile.cos_pic}}></div>
+                </md-card-title-media>
+              </div>
+              <div>
+                <md-card-title-text >
+                  <br>
+                  {{ tile.cos_name}}
+                </md-card-title-text>
+              </div>
+            </div>
+          </md-card-title>
+
+          <md-card-actions layout="row">
+            <md-button align="left" disabled="disabled">{{ tile.cos_price}}원</md-button>
+            <md-icon align="end right" md-svg-icon="assets/images/addFavorite.svg" ng-click="search.save(tile)"></md-icon>
+          </md-card-actions>
+        </md-card>
+
+      </md-grid-tile>
+    </md-grid-list>
 
 
-          <img src="assets/images/addInterest.png" ng-click="search.save(cosmetics)" width="45" height="45" align="center"></div>
-
-      </div>
-    </div>
     <md-content>
+</div>

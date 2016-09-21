@@ -129,8 +129,80 @@ memo : service는 HttpSvc 로 통일
       });
     };
 
+    this.calToGetCosAvg = function(plusstarrate) { //새로 더해지는 별점을 파라미터로 옮김
+      return $http({
+        url: HOST + '/api/calToGetCosAvg',
+        method: 'POST',
+        data: plusstarrate,
+        headers:  {'Content-Type': 'application/json'}
+
+      });
+    };
+
+    this.getCountCosStarRates = function(cos_index) {
+      return $http({
+        url: HOST + '/api/getCountCosStarRates',
+        method: 'POST',
+        data : cos_index,
+        headers:  {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.getSumCosStarRates = function(cos_index) {
+      return $http({
+        url: HOST + '/api/getSumCosStarRates',
+        method : 'POST',
+        data: cos_index,
+        headers:  {'Content-Type': 'application/json'}
+      });
+    };
+
 
     /****************************정민부분끝****************************/
+    /****************************예은부분****************************/
+    this.getCosmeticsList = function () {
+      return $http({
+        url: HOST + '/api/cosmeticsList',
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.getSearch = function (query) { //화장품 검색하기,
+      return $http({
+        url: HOST + '/api/search',
+        method: 'POST',
+        data: query,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.addInterest = function (interest) { //관심리스트등록
+      return $http({
+        url: HOST + '/api/interest',
+        method: 'POST',
+        data: interest,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.getInterestList = function (query) {  //관심리스트 불러오기
+      return $http({
+        url: HOST + '/api/interestList',
+        method: 'POST',
+        data: query,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.deleteInterestCos = function (query) {
+      return $http({
+        url: HOST + '/api/deleteInterest',
+        method: 'POST',
+        data : query,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
     /****************************예은부분****************************/
     this.getCosmeticsList = function () {
       return $http({

@@ -12,9 +12,9 @@
 
 </style>
 
-  <md-content flex ui-view>
+  <md-content flex ui-view >
 
-    <div ng-controller="SelectAsyncController" layout="row"  ng-cloak >
+    <div ng-controller="SelectAsyncController" layout="row"  ng-cloak>
         <!--md-on-open은 선택창을 열때, md-on-open은 선택창을 닫을때 발생-->
         <md-select placeholder="브랜드별" ng-model="brand" md-on-open="loadBrands()" style="min-width: 100px;" md-on-close="printSelectedBrands(brand.name)">
           <md-option ng-value="brand" ng-repeat="brand in brands">{{brand.name}}</md-option>

@@ -19,6 +19,11 @@
   <!-- css files will be automatically insert here -->
   <!-- endinject -->
   <!-- endbuild -->
+  <script language = "JavaScript">
+    function userIndex(arg) {
+      window.android.userIndex(AuthService.index());
+    }
+  </script>
 </head>
 <body ng-controller="NavigationController as navigation">
 <!--[if lt IE 10]>

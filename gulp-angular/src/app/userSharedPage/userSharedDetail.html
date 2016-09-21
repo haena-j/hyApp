@@ -100,6 +100,19 @@
     padding-top: 15px;
     background-size: 100%;
   }
+  .list_img {
+    width: 120px;
+  }
+
+  .md-headline {
+    font-size: 11px;
+  }
+  .show_review {
+    font-size:10px;
+    padding:2px 2px 2px 2px;
+
+  }
+
 </style>
 
 
@@ -124,46 +137,21 @@
       <div class="row-header-row-related" ng-repeat="result in userSharedDetail.cosmeticsInfoList"
            style="background-color:white">
 
-        <md-card align="center" style="background-color: whitesmoke;">
-
+        <md-card align="center" style="background-color: transparent">
           <md-card-title>
-            <md-card-title-media>
               <div ng-if="result.m_cosimage.substring(0,4) != 'http'" class="md-media-lg card-media"><img
                 class="list_img" width="20" md-card-sm-image ng-src={{userSharedDetail.host}}{{result.m_cosimage}}>
               </div>
               <div ng-if="result.m_cosimage.substring(0,4) == 'http'" class="md-media-lg card-media"><img
                 class="list_img" width="20" md-card-sm-image ng-src={{result.cos_pic}}></div>
-            </md-card-title-media>
             <md-card-title-text>
               <span class="md-headline">{{ result.cos_name}}</span>
-              <h5><span class="md-subhead">{{result.m_review}}</span></h5>
             </md-card-title-text>
           </md-card-title>
-          <div class="md-menu-demo" ng-cloak>
-            <div class="menu-demo-container" layout-align="right right" layout="column">
-              <md-menu>
-                <md-button aria-label="Open phone interactions menu" class="md-icon-button"
-                           ng-click="ctrl.openMenu($mdOpenMenu, $event)">
-                  <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                </md-button>
-                <md-menu-content width="4">
-                  <md-menu-item>
-                    <md-button ng-click="ctrl.redial($event)">
-                      <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                      수정
-                    </md-button>
-                  </md-menu-item>
-                  <md-menu-item>
-                    <md-button ng-click="ctrl.delete($event)">
-                      <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                      삭제
-                    </md-button>
-                  </md-menu-item>
-                </md-menu-content>
-              </md-menu>
-            </div>
+          <span class="show_review" ng-click="review.show = !review.show">리뷰보기</span>
+          <div class="show_review" ng-init="review.show = false" ng-show="review.show">
+            {{result.m_review}}
           </div>
-
         </md-card>
       </div>
     </div>
@@ -174,15 +162,15 @@
           md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
           md-row-height-gt-md="1:1" md-row-height="1:1"
           md-gutter="8px" md-gutter-gt-sm="4px">
-          <md-grid-tile ng-repeat="result in userSharedDetail.cosmeticsInfoList">
-           <div ng-if="result.m_cosimage.substring(0,4) != 'http'" style="width: 100%; height: inherit;">
-             <img class="image_img" ng-src={{userSharedDetail.host}}{{result.m_cosimage}}>
+          <md-grid-tile ng-repeat="result in userSharedDetail.cosmeticsInfoList" >
+           <div ng-if="result.m_cosimage.substring(0,4) != 'http'" style="width: 100%; height: inherit;"  ng-click="name.show = !name.show">
+             <img class="image_img" ng-src={{userSharedDetail.host}}{{result.m_cosimage}d}>
                </div>
-           <div  ng-if="result.m_cosimage.substring(0,4) == 'http'" style="width: 100%;">
+           <div  ng-if="result.m_cosimage.substring(0,4) == 'http'" style="width: 100%;"  ng-click="name.show = !name.show">
              <img class="image_img" ng-src={{result.cos_pic}}>
            </div>
 
-            <div ng-show="true">
+            <div  ng-init="name.show = false" ng-show="name.show">
               <md-grid-tile-footer style="height: auto; font-size: 70%; padding: 0;">
                 <md-list-item>
                   {{result.cos_name}}

@@ -49,14 +49,14 @@
     };
 
     $scope.printSelectedBrands = function printSelectedBrands(query) {
-      alert(query);
+      // alert(query);
       $location.path('/interestBrand').search({param: query});
       location.reload();
 
     }
 
     $scope.printSelectedTypes = function printSelectedTypes(query) {
-      alert(query);
+      // alert(query);
       $location.path('/interestType').search({param: query});
       location.reload();
 
@@ -203,7 +203,7 @@
           })
       })
     };
-    
+
   }
 
 })();

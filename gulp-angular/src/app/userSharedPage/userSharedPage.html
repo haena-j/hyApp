@@ -47,7 +47,7 @@
   .test {
     position: absolute;
     left: 0;
-    top: 80%;
+    top: 75%;
     width: 100%;
     text-align: center;
   }
@@ -140,11 +140,15 @@
             <img class="related-review-img" ng-src="{{userSharedPage.host}}{{result.recent_review_img}}"
                  ng-click="userSharedPage.goToDetail(result)">
             <div class="test">
-              <md-button>
-                <md-icon class="icon-nav" md-svg-src="assets/images/like.svg"
-                         ng-repeat="result in userSharedPage.RelationList"
-                         ng-click="userSharedPage.setCurrentSlideIndex($index);">
-              </md-button>
+              <table><tr><td>
+                  <md-icon md-svg-src="assets/images/back.svg" ng-click="userSharedPage.prevSlide()"></md-icon>
+                </td>
+                <td width="100%"></td>
+                <td>
+                    <md-icon md-svg-src="assets/images/front.svg" ng-click="userSharedPage.prevSlide()"></md-icon>
+                </td></tr></table>
+
+
             </div>
 
           </div>

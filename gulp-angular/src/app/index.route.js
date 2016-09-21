@@ -103,6 +103,19 @@
         controller: 'SearchController',
         controllerAs: 'search'
       })
+
+      .state('interestBrand', {
+        url: '/interestBrand',
+        templateUrl: 'app/interest/interestBrand.html',
+        controller: 'InterestBrandController',
+        controllerAs: 'interestBrand'
+      })
+      .state('interestType', {
+        url: '/interestType',
+        templateUrl: 'app/interest/interestType.html',
+        controller: 'InterestTypeController',
+        controllerAs: 'interestType'
+      })
     ;
 
     $urlRouterProvider.otherwise('/login');

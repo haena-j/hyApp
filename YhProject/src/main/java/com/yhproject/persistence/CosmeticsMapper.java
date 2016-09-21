@@ -2,6 +2,7 @@ package com.yhproject.persistence;
 import com.yhproject.domian.CosmeticsVO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -32,4 +33,10 @@ public interface CosmeticsMapper {
 
     @Select("select distinct COS_BRAND FROM COSMETICS ")
     List<String> getCosBrandName();
+
+    @Select("select cos_starrateAvg FROM COSMETICS WHERE cos_index = #{cos_index}")
+    int getCosStarAvg(@Param("cos_index") int cos_index);
+
+    @Update("UPDATE COSMETICS SET cos_starrateAvg = #{result} WHERE COS_INDEX = #{cos_index}")
+    void UpdateStarRate(@Param("result") int result, @Param("cos_index") int cos_index);
 }

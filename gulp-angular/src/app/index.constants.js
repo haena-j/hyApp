@@ -6,7 +6,7 @@
     .module('gulpAngular')
     .constant('malarkey', malarkey)
     .constant('moment', moment)
-    .constant('HOST', 'http://localhost:8080')
+    .constant('HOST', 'http://52.79.133.27:8080')
     .constant('AUTH_EVENTS', {
       notAuthenticated: 'auth-not-authenticated',
       notAuthorized: 'auth-not-authorized'

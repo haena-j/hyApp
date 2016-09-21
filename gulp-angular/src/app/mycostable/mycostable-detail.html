@@ -1,7 +1,56 @@
 <style>
   img {
     max-width: 100%;
-    height: auto;
+
+  }
+
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+  }
+
+  .star-related {
+    width: 60px;
+    align-content: left;
+    margin-left: 0px;
+    margin-right: 0;
+
+  }
+
+  .row {
+    background-color: white;
+
+  }
+  .image {
+    background-color: #EAEAEA;
+    background-size: 100px 80px;
+    background-repeat: no-repeat;
+    padding:10px;
+    border: 3px white;
+    border-radius: 20px;
+
+  }
+
+  .image .text {
+    position:absolute;
+    top:100px; /* in conjunction with left property, decides the text position */
+    left:25px;
+    width:300px; /* optional, though better have one */
+  }
+
+  .expand-related {
+    width: 20px;
+    position: relative;
+    left: 48%;
+  }
+
+  .fold-related {
+    width: 20px;
+    position: relative;
+    left: 35%;
 
   }
   h5 {
@@ -9,10 +58,16 @@
     font-size:12px;
 
   }
+
   .td-img {
     width: 20%;
     padding-top: 5px;
     padding-bottom: 5px;
+  }
+  .facebook-related-image {
+    position: relative;
+    left: 300%;
+    width: 20px;
   }
 
   h4.thick {
@@ -36,133 +91,98 @@
   }
 
   .padding {
-    background-color: #f2dede;
+    background-color:  white;
   }
 
   center {
-    background-color: #f2dede;
+    background-color: white;
   }
 
 
 
 </style>
-<md-content style="background-color:#f2dede">
-
+<script>
+  function sharing() {
+    window.open('http://www.facebook.com/sharer/sharer.php?u=PAGE_URL')
+  }
+</script>
+<md-content style="background-color: white">
   <md-card>
     <div class="row" ng-click="detail.show = !detail.show">
-    <img style="width:100%; height:100%;" ng-if="mycostableDetail.mycostabledetail.m_cosimage.substring(0,4) != 'http'" ng-src="{{mycostableDetail.host}}{{mycostableDetail.mycostabledetail.m_cosimage}}" >
-    <img style="width:100%; height:100%;" ng-if="mycostableDetail.mycostabledetail.m_cosimage.substring(0,4) == 'http'" ng-src="{{mycostableDetail.mycostabledetail.m_cosimage}}">
+      <img style="width:100%; height:100%;" ng-if="mycostableDetail.mycostabledetail.m_cosimage.substring(0,4) != 'http'" ng-src="{{mycostableDetail.host}}{{mycostableDetail.mycostabledetail.m_cosimage}}" >
+      <img style="width:100%; height:100%;" ng-if="mycostableDetail.mycostabledetail.m_cosimage.substring(0,4) == 'http'" ng-src="{{mycostableDetail.mycostabledetail.m_cosimage}}">
+
       <div ng-init="detail.show = false" ng-show="detail.show">
-      <md-card-footer style="height: 20px">
         <table>
           <tr>
             <td class="td-img" rowspan="2">
               <img ng-src="{{mycostableDetail.cosmeticInfomation.cos_pic}}">
             </td>
-            <td>
-              <span class="md-headline">{{mycostableDetail.cosmeticInfomation.cos_name}}</span>
 
-            </td>
-          </tr>
-          <tr>
+
             <td>
-              <span class="md-subhead">{{mycostableDetail.cosmeticInfomation.cos_price}}원</span>
-            </td>
+              <span class="md-headline">{{mycostableDetail.cosmeticInfomation.cos_name}}</span><br><br>
+              <span class="md-subhead">{{mycostableDetail.cosmeticInfomation.cos_price}}원</span><br>
+              <div ng-if="mycostableDetail.cosmeticInfomation.cos_starrateAvg == 0"><br><img class="star-related" ng-src="assets/images/rating-star0.svg"></div>
+              <div ng-if="mycostableDetail.cosmeticInfomation.cos_starrateAvg == 1"><br><img class="star-related" ng-src="assets/images/rating-star1.svg"></div>
+              <div ng-if="mycostableDetail.cosmeticInfomation.cos_starrateAvg == 2"><br><img class="star-related" ng-src="assets/images/rating-star2.svg"></div>
+              <div ng-if="mycostableDetail.cosmeticInfomation.cos_starrateAvg == 3"><br><img class="star-related" ng-src="assets/images/rating-star3.svg"></div>
+              <div ng-if="mycostableDetail.cosmeticInfomation.cos_starrateAvg == 4"><br><img class="star-related" ng-src="assets/images/rating-star4.svg"></div>
+              <div ng-if="mycostableDetail.cosmeticInfomation.cos_starrateAvg == 5"><br><img class="star-related" ng-src="assets/images/rating-star5.svg"></div>
+
+              <img class="fold-related" ng-src="assets/images/expand-arrow.svg">
+
+          </td>
           </tr>
+
+
+
         </table>
-
-      </md-card-footer>
       </div>
+      <md-card-content align="center">
+        <img class="expand-related "width="20%" ng-if="detail.show != true" ng-src="assets/images/expand-button.svg">
+      </md-card-content>
     </div>
-    <!--<md-card-content align="center">-->
-      <!--<img align="center" width="20%" ng-if="detail.show != true" ng-src="assets/images/expand-button.svg">-->
-
-      <!--&lt;!&ndash;<p>Card content</p>&ndash;&gt;-->
-    <!--</md-card-content>-->
-
   </md-card>
 
-    <div align="center">
-      <!--<div class="row" ng-click="detail.show = !detail.show">-->
-        <!--<img style="width:100%; height:100%;" ng-if="mycostableDetail.mycostabledetail.m_cosimage.substring(0,4) != 'http'" ng-src="{{mycostableDetail.host}}{{mycostableDetail.mycostabledetail.m_cosimage}}" >-->
-        <!--<img style="width:100%; height:100%;" ng-if="mycostableDetail.mycostabledetail.m_cosimage.substring(0,4) == 'http'" ng-src="{{mycostableDetail.mycostabledetail.m_cosimage}}">-->
-        <!--<div ng-init="detail.show = false" ng-show="detail.show">-->
-          <!--<md-grid-tile-footer style="height: 70px">-->
-            <!--<table>-->
-              <!--<tr>-->
-                <!--<td class="td-img" rowspan="2">-->
-                  <!--<img ng-src="{{mycostableDetail.cosmeticInfomation.cos_pic}}">-->
-                <!--</td>-->
-                <!--<td>-->
-                  <!--{{mycostableDetail.mycostabledetail.m_open_date}}-->
-                <!--</td>-->
-              <!--</tr>-->
-              <!--<tr>-->
-                <!--<td>-->
-                  <!--Lv. {{mycostableDetail.mycostabledetail.m_open_date}} {{mycostableDetail.mycostabledetail.m_open_date}}-->
-                <!--</td>-->
-              <!--</tr>-->
-            <!--</table>-->
-          <!--</md-grid-tile-footer>-->
-        <!--</div>-->
-        <!--<img ng-src={{mycostableDetail.mycostabledetail.m_cosimage}} width="100" height="300"/><br>-->
-      <!--</div>-->
-      <tr align="center">
-        <td align="center"><h4>개봉날짜</h4></td><td align="center"><h5>{{mycostableDetail.mycostabledetail.m_open_date}}</h5></td></tr><br>
-      <tr align="center">
-        <td align="center"><h4>사용기한</h4></td><td align="center"><h5>{{mycostableDetail.mycostabledetail.m_expire_date}}</h5></td></tr><br>
-      <tr align="center">
-        <td align="center"><h4>후기내용</h4></td><td align="center"><h5>{{mycostableDetail.mycostabledetail.m_review}}</h5></td></tr><br>
+
+
+  <div align="center">
+
+
+    <div class="image" >
+      "{{mycostableDetail.mycostabledetail.m_review}}"
+
+
     </div>
-
-  <!--<md-card align="center" style="background-color: whitesmoke">-->
-    <!--<div class="row" align="center">-->
-      <!--제품설명-->
-    <!--</div>-->
-    <!--<md-card-title>-->
-      <!--<md-card-title-media>-->
-
-       <!--<div class="md-media-lg card-media" align="center">-->
-          <!--<img ng-src="{{mycostableDetail.cosmeticInfomation.cos_pic}}">-->
-        <!--</div>-->
-      <!--</md-card-title-media>-->
-        <!--<md-card-title-text>-->
-          <!--<span class="md-headline">{{mycostableDetail.cosmeticInfomation.cos_name}}</span>-->
-          <!--<h5><span class="md-subhead">{{mycostableDetail.cosmeticInfomation.cos_price}}원</span></h5>-->
-        <!--</md-card-title-text>-->
+    </div>
+    <ul style="list-style-type:none">
+      <li>
+        <h4>OPEN &nbsp;&nbsp;'{{mycostableDetail.mycostabledetail.m_open_date}}'</h4>
+      </li>
+      <li>
+        <h4>EXPIRE &nbsp;&nbsp;'{{mycostableDetail.mycostabledetail.m_expire_date}}'</h4>
+      </li>
+    </ul>
 
 
-    <!--</md-card-title>-->
+  <br><br><br><br>
 
-  <!--</md-card>-->
+
 </md-content>
 
 
-    <!--<center>-->
-    <!--<img src="assets/images/pencil.png" ng-click="mycostableDetail.editDetail()">수정하기</button>-->
-    <!--&lt;!&ndash;<img src="assets/images/eraser.png" ng-click="mycostableDetail.deleteDetail(mycostable)">삭제</button>&ndash;&gt;-->
-  <!--</center>-->
-
-<!--<div style="background-color: white; position: fixed; bottom: 0px; width: 100%;">-->
-  <!--<ul class="nav navbar-nav " style=" text-align: center;width: 100%;display:table;margin-bottom: -7px;margin-top: -2px;margin-left:0px;">-->
-    <!--<li style=" float:none;display:table-cell; text-align:center;"><a ng-href="#/mycostable"><img src="assets/images/settingsicon.svg" style="width: 30px"><div class="hidden-lg"><br/></div>뒤로</a></li>-->
-    <!--<li style=" float:none;display:table-cell; text-align:center;"><a ng-href="#/"><div class="hidden-lg"><br/></div></a></li>-->
-    <!--<li style=" float:none;display:table-cell; text-align:center;"><img src="assets/images/pencil.png" ng-click="mycostableDetail.editDetail()" style="width: 30px"><div class="hidden-lg"><br/></div> 수정</li>-->
-  <!--</ul>-->
-<!--</div>-->
 
 <div style="background-color: white; position: fixed; bottom: 0px; width: 100%;">
 
   <section flex layout="row" layout-align="center">
     <md-button href="#/mycostable">
-      <md-icon md-svg-src="assets/images/restart.svg"></md-icon>
       뒤로가기</md-button>
     <div class="col" style="background-color:white">
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
     </div>
-    <md-button href="#/mycostable-edit">
-      <md-icon md-svg-src="assets/images/writing.svg"></md-icon>
-      수정하기</md-button>
+    <md-button ng-click="mycostableEdit.editDetail()" href="#/mycostable-edit">
+      수정</md-button>
   </section>
 </div>
 
