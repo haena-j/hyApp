@@ -4,11 +4,11 @@
   }
 </style>
 
-<div layout="vertical" layout-fill>
+<div class="background" layout="vertical" layout-fill>
 
   <md-content flex ui-view>
     <!--<h5>"{{search.searchText}} " 검색결과</h5>-->
-<br>
+    <br>
 
     <md-grid-list
       md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="2"
@@ -22,18 +22,35 @@
                     md-colspan-xs="1"
                     ng-class="tile.background">
 
+        <!--<table style="width: 100%;" border="1">-->
+          <!--<tr>-->
+<!--<td>-->
+              <!--<md-list-item>-->
+                <!--<img width ="100" height="100" ng-src="{{tile.cos_pic}}" style="margin-right: 0">-->
+              <!--</md-list-item>-->
+<!--</td></tr>-->
+            <!--<tr><td>{{tile.cos_name}}<br>-->
+              <!--<div style="font-size: 90%"> Lv.{{tile.cos_brand}}</div></td>-->
+            <!--</tr>-->
+            <!--<tr width="100%"><td>-->
+             <!--{{tile.cos_price}}</td>-->
+            <!--</tr>-->
+          <!--<tr><td>-->
+              <!--<md-icon md-svg-icon="assets/images/addFavorite.svg" ng-click="search.save(tile)"></md-icon></td>-->
+          <!--</tr>-->
+        <!--</table>-->
+
         <md-card >
           <md-card-title md-row-height="300px">
             <div layout="column" >
-
               <br>
               <div align="center">
                 <md-card-title-media>
-                  <div class="md-media-sm card-media" ><img ng-src={{tile.cos_pic}}></div>
+                  <div class="md-media-sm card-media" ><img ng-src={{tile.cos_pic}} ></div>
                 </md-card-title-media>
               </div>
               <div>
-                <md-card-title-text >
+                <md-card-title-text>
                   <br>
                   {{ tile.cos_name}}
                 </md-card-title-text>

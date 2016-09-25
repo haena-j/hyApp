@@ -23,13 +23,13 @@
       </div>
 
       <md-input-container >
-      <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="5MB" ngf-resize="{width:500, height: 500, quality:1.0,  centerCrop: true}" ngf-resize-if="{width > 5000 || height > 5000}">
+      <input type="file" ngf-select ng-model="picFile" name="file" accept="image/*" capture="gallery" ngf-max-size="5MB" ngf-resize="{width:500, height: 500, quality:1.0,  centerCrop: true}" ngf-resize-if="{width > 5000 || height > 5000}">
 
       <i ng-show="myForm.file.$error.maxSize">파일 사이즈 초과
         {{myFile.size / 1000000|number:1}}MB: max 5MB</i>
       <img ng-show="setForm.file.$valid" ngf-thumbnail="picFile" class="thumb"><br>
       <md-button ng-click="picFile = null" ng-show="picFile">Remove</md-button><br>
-</md-input-container>
+</md-input-container><br>
       <md-button ng-click="setting.changePhoto(picFile)">사진변경</md-button>
       <md-button ng-click="setting.logout()">로그아웃</md-button>
 

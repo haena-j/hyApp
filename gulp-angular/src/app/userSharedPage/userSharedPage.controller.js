@@ -7,9 +7,11 @@
   angular
     .module('gulpAngular')
     .controller('UserSharedPageController',UserSharedPageController)
-    .controller('UserSharedDetailController', UserSharedDetailController);
+    .controller('UserSharedDetailController', UserSharedDetailController)
+    .controller('DialogController', DialogController)
+  ;
 
-  function UserSharedPageController(HttpSvc, HOST, $location, AuthService) {
+  function UserSharedPageController(HttpSvc, HOST, $location, AuthService, $mdDialog, $timeout) {
     var vm = this;
     vm.host = HOST;
     //추천 버튼 누를 경우 추천수 증가해주는 함수
@@ -17,8 +19,16 @@
       var member_id = result.id;
       HttpSvc.updateMemberStar(member_id)
         .success(function () {
-          alert("★");
-          location.reload();     //화면 refresh 해줌 -> 추천수 증가시킨 것이 바로 반영되도록!
+          $mdDialog.show({
+            templateUrl: 'app/userSharedPage/dialog.heart.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose:true,
+            controller: DialogController,
+            controllerAs: 'ctrl',
+            locals : {
+              message : 'heart'
+            }
+          });
         })
         .error(function () {
         })
@@ -100,19 +110,33 @@
     vm.nextSlide = function () {
       vm.currentIndex = (vm.currentIndex > 0) ? --vm.currentIndex : vm.RelationList.length - 1;
     };
-    }
 
-  function UserSharedDetailController( $location, HttpSvc, HOST) {
+    var timer;
+    var sliderFunc=function () {
+      timer = $timeout(function () {
+        vm.nextSlide();
+        timer = $timeout(sliderFunc, 3000);
+      }, 3000);
+    };
+    sliderFunc();
+
+
+  }
+
+  function UserSharedDetailController( $location, HttpSvc, HOST, $mdDialog) {
     var vm = this;
     vm.host = HOST;
     vm.background = "";
+    vm.listType = "list";
+   vm.changeListType = function (type) {
+      vm.listType = type;
+    };
     var member_index = $location.search().param;
     HttpSvc.getMyCosmeticsByMemberIndex(member_index)
       .success(function (values) {
         vm.cosmeticsInfoList = values;
       })
-      .error(function (values) {
-        alert("error" + values);
+      .error(function () {
       });
 
     HttpSvc.findUserByMIndex(member_index)
@@ -129,6 +153,42 @@
         }
       })
       .error(function () {
+      });
+
+    vm.showDialog = function(result) {
+      $mdDialog.show({
+        controller: DialogController,
+        controllerAs: 'ctrl',
+        templateUrl: 'app/userSharedPage/dialog.userSharedDetail.html',
+        parent: angular.element(document.body),
+        clickOutsideToClose:true,
+        locals : {
+          message : result
+        }
+
       })
+        .then(function(answer) {
+        });
+    };
   }
+
+
+  function DialogController($mdDialog, message, $location) {
+    var vm = this;
+    vm.result = message;
+    vm.hide = function() {
+      $mdDialog.hide();
+    };
+
+    vm.cancel = function() {
+      $mdDialog.cancel();
+    };
+    vm.cancelAndReload = function () {
+      location.reload();
+      $mdDialog.cancel();
+
+    };
+
+  }
+
     })();

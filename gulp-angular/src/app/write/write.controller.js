@@ -9,7 +9,8 @@
     .controller('WriteController', WriteController)
     .controller('SearchAtWriteController', SearchAtWriteController)
     .controller('DemoController', DemoController)
-    .controller('SelectTypeController', SelectTypeController);
+    .controller('SelectTypeAtWriteController', SelectTypeAtWriteController);
+
   /** @ngInject */
   function WriteController(HOST, HttpSvc, $location, AuthService, Upload, $timeout, $mdDialog, $mdToast) {
     var cos_index = $location.search().param;
@@ -93,7 +94,7 @@
 
       };
 
-      if (cos_index == null || write.m_open_date == null || write.m_review == null || write.m_starrate == null)
+      if (cos_index == null || write.m_open_date == 'null' || write.m_review == null || write.m_starrate == null)
         $mdDialog.show(
           $mdDialog.alert()
             .parent(angular.element(document.querySelector('#writeContainer')))
@@ -265,16 +266,15 @@
     starRating();
   }
 
-  function SelectTypeController(HOST, $timeout, $location) {
+
+  function SelectTypeAtWriteController(HOST, $timeout, $location, $scope, HttpSvc) {
     var vm = this;
     vm.host = HOST;
-
-    vm.type = null;
-    vm.types = null;
-    vm.loadTypes = function() {
-      alert("진입");
+    $scope.type = null;
+    $scope.types = null;
+    $scope.loadTypes = function() {
       return $timeout(function() {
-        vm.types = vm.types || [
+        $scope.types = $scope.types || [
             { id: 1, name: '마스카라' },
             { id: 2, name: '아이섀도우' },
             { id: 3, name: '립스틱' },
@@ -284,10 +284,26 @@
       }, 650);
     };
 
-    vm.printSelectedTypes = function printSelectedTypes(query) {
-      alert(query);
-      $location.path('/searchAtWrite').search({param2: query});
-      location.reload();
+    $scope.printSelectedTypes = function printSelectedTypes(cos_type) {
+      vm.TypeAndBrand = ({
+        cos_type: "",
+        cos_brand : ""
+      });
+
+      vm.TypeAndBrand.cos_type = null;
+      vm.TypeAndBrand.cos_brand = null;
+
+      vm.TypeAndBrand.cos_type = cos_type;
+      vm.TypeAndBrand.cos_brand = selectedBrand;
+
+      var TypeAndBrandVO = vm.TypeAndBrand;
+
+      HttpSvc.getCosByBrandAndType(TypeAndBrandVO)
+        .success(function(values) {
+          vm.cosListByBrandAndType = values;
+          $location.path('/searchAtWrite');
+        });
+
     };
   }
 
@@ -343,7 +359,7 @@
 
     self.finish = function ($event, selectedBrand) {
       $mdDialog.hide();
-      $location.path('/searchAtWrite').search({param1: selectedBrand});
+      $location.path('/searchAtWrite').search({param: selectedBrand});
 
     };
 
@@ -382,28 +398,11 @@
 
   //다이얼로그 관련 컨트롤러 끝
 
-  function SearchAtWriteController(HOST, HttpSvc, $location) {
+  var selectedBrand;
+  function SearchAtWriteController(HOST, HttpSvc, $location, $rootScope) {
     var vm = this;
     vm.host = HOST;
-    var selectedBrand = $location.search().param1;
-    var selectedType = $location.search().param2;
-
-    if (selectedType != null) {
-      alert("Type이 있음");
-      vm.Test3 = function() {
-        HttpSvc.getCosByBrandAndType(selectedType, selectedBrand)
-          .success(function(values) {
-            vm.CosListByBrandAndType = values;
-            alert("CosListByBrandAndType" + vm.CosListByBrandAndType);
-          })
-          .error(function() {
-
-          });
-
-      };
-      vm.Test3();
-    }
-
+    selectedBrand = $location.search().param;
 
     // 화장품 검색에서 찾은 쿼리
     vm.Test = function() {
@@ -434,13 +433,11 @@
           vm.list2 = values;
           //클릭한 화장품의 cos_index를 가지고 검색 후 화장품등록 페이지로 이동
           $location.path('/write').search({param: cos_index});
-          location.reload();
         })
         .error(function (values) {
           alert("error" + values);
         });
     };
   }
-
 
 })();

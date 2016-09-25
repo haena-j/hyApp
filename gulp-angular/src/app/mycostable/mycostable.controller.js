@@ -14,16 +14,23 @@
       })
       .controller('MyCosTableController', MyCosTableController)
       .controller('MyCosTableEditController', MyCosTableEditController)
-      .controller('MyCosTableDetailController', MyCosTableDetailController);
+      .controller('MyCosTableDetailController', MyCosTableDetailController)
+      .controller('SelectTypeController', SelectTypeController);
 
   /** @ngInject */
 
   //내 리뷰 목록 페이지 Controller
-  function MyCosTableController (HttpSvc, $location, HOST, AuthService, $mdDialog) {
+  function MyCosTableController (HttpSvc, $location, HOST, AuthService, $mdDialog, $rootScope) {
     var vm = this;
     var originatorEv;
     vm.host = HOST;
     var member_index = AuthService.index();
+    vm.listType = "list";
+
+    vm.changeListType = function(type) {
+      vm.listType = type;
+    };
+
 
     //내 화장대 접근했을 때 바로 실행되는 함수 Test 정의
     vm.Test = function () {
@@ -32,14 +39,9 @@
             vm.mycosmeticsList = values;
 
           })
-          .error(function () {
 
-          })
-      
-
-    }; vm.Test(); //함수 Test 실행
-
-
+    };
+    vm.Test(); //함수 Test 실행
 
     vm.Test2 = function() {
       HttpSvc.findUserByMIndex(member_index)
@@ -52,46 +54,6 @@
     };
     vm.Test2(); //함수 Test2 실행
 
-    vm.cards = [
-      {
-        title: "escheresque-dark",
-        icon:"",
-        imageUrl:"http://subtlepatterns.com/patterns/escheresque_ste.png",
-        description:"Sublte Pattern Source image below...",
-        source: "http://subtlepatterns.com/escheresque-dark/"
-      },
-      {
-        title: "dark sharp edges",
-        icon:"",
-        imageUrl:"http://subtlepatterns.com/patterns/footer_lodyas.png",
-        description:"Sublte Pattern Source image below...",
-        source: "http://subtlepatterns.com/dark-sharp-edges/"
-      },
-      {
-        title: "Grey Washed Wall",
-        icon:"",
-        imageUrl:"http://subtlepatterns.com/patterns/grey_wash_wall.png",
-        description:"Sublte Pattern Source image below...",
-        source: "http://subtlepatterns.com/grey-washed-wall/"
-      }
-    ];
-
-    vm.currentCard = {};
-    vm.isCardRevealed = false;
-    vm.flipCard = function () {
-      vm.isCardRevealed = !vm.isCardRevealed;
-      if (vm.isCardRevealed) {
-        vm.generateCard();
-      } else {
-        vm.currentCard = {};
-      }
-    };
-
-    vm.generateCard = function () {
-      vm.currentCard = {};
-      var index = Math.floor((Math.random()*vm.cards.length));
-      vm.currentCard = vm.cards[index];
-    };
 
     vm.openMenu = function($mdOpenMenu, ev) {
       originatorEv = ev;
@@ -125,36 +87,17 @@
 
               })
             })
-            .error(function(values) {
-              alert("error" + values);
-            })
 
 
       })
 
-    }
+    };
 
     //리뷰 상세보기
     vm.detailOfMycosTable = function(query) {
       $location.path('/mycostable-detail').search({param: query});
       //여기서 누른 리뷰의 번호를 가지고 detail 페이지로 이동함
     };
-
-    //그 리뷰를 삭제
-    // vm.deleteReview = function(query) {
-    // $mdDialog.show(
-    //   $mdDialog.alert()
-    //     .clickOutsideToClose(true)
-    //     .parent('body')
-    //     .title('정말 삭제하시겠습니까?')
-    //     .textContent('You just called a friend; who told you the most amazing story. Have a cookie!')
-    //     .ok('네')
-    //     .cancel('아니요')
-    //     .targetEvent(originatorEv)
-    // );
-
-
-    // };
 
 
     //plusIcon을 누르면 리뷰쓰기 페이지로 이동
@@ -163,14 +106,55 @@
 
     };
 
-    //내 화장대 각 리뷰 상세페이지로 이동
-    // vm.detailOfMycosTable = function(query) {
-    //   $location.path('/mycostable-detail').search({param: query});
-    //   //여기서 누른 리뷰의 번호를 가지고 detail 페이지로 이동함
-    //   location.reload();
-    // };
+  }
+
+  function SelectTypeController(HttpSvc, HOST, $timeout, $location, $scope, AuthService) {
+    var vm = this;
+    vm.host = HOST;
+    var member_index = AuthService.index();
 
 
+    $scope.type = null;
+    $scope.types = null;
+    $scope.loadTypes = function() {
+      // Use timeout to simulate a 650ms request.
+      return $timeout(function() {
+        $scope.types =  $scope.types  || [
+            { id: 1, name: '마스카라' },
+            { id: 2, name: '아이섀도우' },
+            { id: 3, name: '립스틱' },
+            { id: 4, name: '블러셔' },
+            { id: 5, name: '아이브로우' }
+          ];
+      }, 650);
+    };
+
+    $scope.printSelectedTypes = function printSelectedTypes(cos_type) {
+      //query 에는 선택된 화장품 타입이 담겨옴
+
+      vm.MemAndType = ({
+        cos_type: "",
+        member_index : ""
+
+      });
+      vm.MemAndType.cos_type = null;
+      vm.MemAndType.member_index = null;
+
+
+      vm.MemAndType.cos_type = cos_type;
+      vm.MemAndType.member_index = member_index;
+
+      var MemAndTypeVO = vm.MemAndType;
+
+      HttpSvc.getCosInfoByType(MemAndTypeVO)
+        .success(function(values) {
+          vm.getCosInfoByTypeList = values;
+        });
+
+      $location.path('/mycostable').search({param: cos_type});
+
+
+    };
   }
 
   //리뷰 상세 페이지 Controller
@@ -179,19 +163,26 @@
     var m_index = $location.search().param;
     vm.host = HOST;
     var cos_index = null;
+    $rootScope.DetailM_open_date = null;
+    $rootScope.DetailM_review = null;
+    $rootScope.DetailM_starrate = null;
+
 
     vm.Test1 = function() {
       HttpSvc.findByMIndex(m_index)
           .success(function (values) {
             vm.mycostabledetail = values;
-            var openDate = vm.mycostabledetail.m_open_date;
+            $rootScope.DetailM_review = vm.mycostabledetail.m_review;
+            $rootScope.DetailM_open_date = vm.mycostabledetail.m_open_date;
+            $rootScope.DetailM_starrate = vm.mycostabledetail.m_starrate;
+
             var expireDate = vm.mycostabledetail.m_expire_date;
 
             var expireYear = expireDate.substring(0,4) + '년 ';
-            var openYear = openDate.substring(0,4) + '년 ';
+            var openYear = $rootScope.DetailM_open_date.substring(0,4) + '년 ';
 
             var expireMonth = expireDate.substring(4,6) + '월  ';
-            var openMonth = openDate.substring(4,6) + '월 ';
+            var openMonth = $rootScope.DetailM_open_date.substring(4,6) + '월 ';
 
             var expireDay = expireDate.substring(6,8) + '일';
             var openDay = expireDate.substring(6,8) + '일';
@@ -235,55 +226,66 @@
 
 
   //리뷰 수정 페이지 Controller
-  function MyCosTableEditController($location, HttpSvc, $mdDialog, HOST, $rootScope, Upload, $timeout) {
+  function MyCosTableEditController(HttpSvc, $location, HOST, $rootScope, Upload, $timeout, $mdDialog) {
     var vm = this;
     vm.host = HOST;
-
     var m_index = $location.search().param;
-    var cos_index;
-    var member_index;
-    alert("수정할 리뷰번호 : " + m_index);
+    var selectedOpenDate;
+
+
     $rootScope.m_index = m_index;
-    HttpSvc.findByMIndex(m_index)
+    var cos_indexAtEdit;
+    var member_indexAtEdit;
+    var cos_type;
+
+    vm.Test = function() {
+      HttpSvc.findByMIndex(m_index)
         .success(function (values) {
           vm.editMyCosTable = values;
-          alert("editmycostable" + values.cos_index);
-          cos_index = values.cos_index;
-          member_index = values.member_index;
+          cos_indexAtEdit = values.cos_index;
+          member_indexAtEdit = values.member_index;
+
+          selectedOpenDate = vm.editMyCosTable.m_open_date.substring(0,4) + vm.editMyCosTable.m_open_date.substring(4,6) + vm.editMyCosTable.m_open_date.substring(6.8);
+
+          vm.Test2();
+
+
         })
+        .error(function () {
 
-    vm.submit3 = function(editForm) {
-      var m_open_date_toString = editForm.m_open_date.toString();
-      alert("수정하기 전 개봉일자" + m_open_date_toString);
-      var yearString = m_open_date_toString.substring(11,15);
-      var monthString = m_open_date_toString.substring(4,7);
+        });
 
-      if (monthString == 'Jan')
-        monthString = '01';
-      else if (monthString == 'Feb')
-        monthString = '02';
-      else if (monthString == 'Mar')
-        monthString = '03';
-      else if (monthString == 'Apr')
-        monthString = '04';
-      else if (monthString == 'May')
-        monthString = '05';
-      else if (monthString == 'Jun')
-        monthString = '06';
-      else if (monthString == 'Jul')
-        monthString = '07';
-      else if (monthString == 'Aug')
-        monthString = '08';
-      else if (monthString == 'Sep')
-        monthString = '09';
-      else if (monthString == 'Oct')
-        monthString = '10';
-      else if (monthString == 'Nov')
-        monthString = '11';
-      else if (monthString == 'Dec')
-        monthString = '12';
-      var DateString = m_open_date_toString.substring(8, 10);
-      var selectedOpenDate = yearString + monthString + DateString;
+    };
+
+    vm.Test();
+
+
+    vm.Test2 = function() {
+        HttpSvc.getCosInformation(cos_indexAtEdit)
+          .success(function(values) {
+            vm.cosTypeByCosIndex = values;
+            cos_type = values.cos_type;
+
+          })
+      };
+
+    vm.Test2();
+
+
+
+
+
+
+    vm.submit = function (editForm, ev) {
+      var yearString;
+      var monthString;
+      var DateString;
+
+
+        yearString = vm.editMyCosTable.m_open_date.substring(0,4);
+        monthString = vm.editMyCosTable.m_open_date.substring(4,6);
+        DateString = vm.editMyCosTable.m_open_date.substring(6.8);
+        // selectedOpenDate = yearString + monthString + DateString;
 
 
       // cos_type 별로 사용기한 차별두어 저장
@@ -338,42 +340,44 @@
 
       }
 
-      var file = Upload.upload({
-        url: HOST + '/api/mCosdetailEdit',
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        data: {
-          m_index: $rootScope.m_index,
-          m_open_date: selectedOpenDate,
-          m_expire_date: resultExpireDate,
-          cos_index: cos_index,
-          member_index:member_index,
-          m_review: editForm.m_review,
-          files: editForm.picFile
-        }
-      });
-      file.then(function(response) {
-        $timeout(function() {
-          alert(response.data);
-        })}, function (response) {
-        if (response.status > 0)
-          vm.errorMsg = response.status + ': ' + response.data;
-      }, function(evt) {
-        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-      });
 
-      var alert = $mdDialog.alert()
-          .clickOutsideToClose(true)
-          .title('수정성공')
-          .textContent('수정되었습니다')
-          .ok('확인');
+        var file = Upload.upload({
+          url: HOST + "/api/mCosdetailEdit",
+          method: "POST",
+          data: {
+            m_index: $rootScope.m_index,
+            m_open_date: selectedOpenDate,
+            m_expire_date: resultExpireDate,
+            cos_index: cos_indexAtEdit,
+            member_index: member_indexAtEdit,
+            m_review: editForm.m_review,
+            m_starrate: editForm.m_starrate,
+            files: editForm.picFile
+          }
+        }).then(function (response) {
+          $timeout(function () {
+            alert(response.data);
+          })
+        }, function (response) {
+          if (response.status > 0)
+            vm.errorMsg = response.status + ': ' + response.data;
+        }, function (evt) {
+          file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+        });
 
-      $mdDialog.show(alert).then(function() {
+        var alert = $mdDialog.alert()
+            .clickOutsideToClose(true)
+            .title('수정성공')
+            .textContent('수정되었습니다')
+            .ok('확인');
+
+        $mdDialog.show(alert).then(function() {
         $location.path('/mycostable');
         location.reload();
 
       })
     };
+
 
   }
 })();

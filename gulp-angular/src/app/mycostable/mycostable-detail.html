@@ -4,6 +4,22 @@
 
   }
 
+  .type_btn {
+    width: 100%;
+    background-color:#FFEAEA;
+    padding: 0;
+    color: darkgray;
+    margin: 0;
+  }
+
+  .bottom-related {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    color: darkgray;
+    margin: 0;
+  }
+
   ul {
     display: block;
     list-style-type: disc;
@@ -25,7 +41,7 @@
 
   }
   .image {
-    background-color: #EAEAEA;
+    background-color:#FFEAEA;
     background-size: 100px 80px;
     background-repeat: no-repeat;
     padding:10px;
@@ -64,11 +80,6 @@
     padding-top: 5px;
     padding-bottom: 5px;
   }
-  .facebook-related-image {
-    position: relative;
-    left: 300%;
-    width: 20px;
-  }
 
   h4.thick {
     font-weight: bold;
@@ -90,10 +101,6 @@
 
   }
 
-  .padding {
-    background-color:  white;
-  }
-
   center {
     background-color: white;
   }
@@ -101,12 +108,7 @@
 
 
 </style>
-<script>
-  function sharing() {
-    window.open('http://www.facebook.com/sharer/sharer.php?u=PAGE_URL')
-  }
-</script>
-<md-content style="background-color: white">
+<md-content style="background-color: whitesmoke">
   <md-card>
     <div class="row" ng-click="detail.show = !detail.show">
       <img style="width:100%; height:100%;" ng-if="mycostableDetail.mycostabledetail.m_cosimage.substring(0,4) != 'http'" ng-src="{{mycostableDetail.host}}{{mycostableDetail.mycostabledetail.m_cosimage}}" >
@@ -150,40 +152,36 @@
   <div align="center">
 
 
-    <div class="image" >
+    <div class="image">
       "{{mycostableDetail.mycostabledetail.m_review}}"
 
 
     </div>
     </div>
+  <br>
     <ul style="list-style-type:none">
       <li>
-        <h4>OPEN &nbsp;&nbsp;'{{mycostableDetail.mycostabledetail.m_open_date}}'</h4>
+        <h4>개봉날짜 &nbsp;&nbsp;'{{mycostableDetail.mycostabledetail.m_open_date}}'</h4>
       </li>
       <li>
-        <h4>EXPIRE &nbsp;&nbsp;'{{mycostableDetail.mycostabledetail.m_expire_date}}'</h4>
+        <h4>사용기한 &nbsp;&nbsp;'{{mycostableDetail.mycostabledetail.m_expire_date}}'</h4>
       </li>
+
     </ul>
 
 
-  <br><br><br><br>
+
+  <br><br><br><br><br>
+  <div layout="row" class="bottom-related" style="background-color: #FFEAEA; position: fixed; bottom: 0px;" ng-controller="MyCosTableDetailController as ctrl">
+    <md-button class="type_btn" href="#/mycostable">뒤로</md-button>
+    <md-button class="type_btn" ng-click="ctrl.editDetail()">수정</md-button>
+  </div>
 
 
 </md-content>
 
 
 
-<div style="background-color: white; position: fixed; bottom: 0px; width: 100%;">
 
-  <section flex layout="row" layout-align="center">
-    <md-button href="#/mycostable">
-      뒤로가기</md-button>
-    <div class="col" style="background-color:white">
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    </div>
-    <md-button ng-click="mycostableEdit.editDetail()" href="#/mycostable-edit">
-      수정</md-button>
-  </section>
-</div>
 
 

@@ -8,6 +8,7 @@ public class AllInfoOfMyCosmeticsVO {
     private String m_expire_date;
     private String m_review;
     private String m_cosimage;
+    private int member_index;
     private int m_starrate;
     private String cos_name;
     private String cos_brand;

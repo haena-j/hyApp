@@ -1,4 +1,6 @@
 package com.yhproject.persistence;
+
+import com.yhproject.domian.AllInfoOfMyCosmeticsVO;
 import com.yhproject.domian.CosmeticsVO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -28,9 +30,9 @@ public interface CosmeticsMapper {
     @Select("SELECT * FROM COSMETICS WHERE cos_index = #{cos_index}")
     CosmeticsVO writeReviewByCosIndex(@Param("cos_index") int cos_index);
 
-    @Select("select * from COSMETICS WHERE cos_type = #{cos_type} and cos_brand = #{cos_brand}")
-    List<CosmeticsVO> getCosByBrandAndType(@Param("cos_type, cos_brand") String cos_type, String cos_brand);
-
+    @Select("SELECT cos_index, cos_name, cos_brand, cos_price, cos_pic, cos_type, cos_starrateAvg FROM COSMETICS WHERE cos_type = #{cos_type} AND cos_brand = #{cos_brand}")
+    List<CosmeticsVO> getCosByBrandAndType(@Param("cos_type") String cos_type, @Param("cos_brand") String cos_brand);
+    
     @Select("select distinct COS_BRAND FROM COSMETICS ")
     List<String> getCosBrandName();
 
@@ -39,4 +41,12 @@ public interface CosmeticsMapper {
 
     @Update("UPDATE COSMETICS SET cos_starrateAvg = #{result} WHERE COS_INDEX = #{cos_index}")
     void UpdateStarRate(@Param("result") int result, @Param("cos_index") int cos_index);
+
+    @Select("SELECT * FROM COSMETICS where cos_type = #{cos_type} ORDER BY cos_starrateAvg DESC limit 3") //타입별 별점 불러오기
+    List<CosmeticsVO> getCosTypeStarAvg(@Param("cos_type") String cos_type);
+
+    @Select("select m_index, m_open_date, m_expire_date, m_review, m_cosimage, member_index, m_starrate, cos_name, cos_brand, cos_price, cos_pic, cos_type, cos_starrateAvg from COSMETICS JOIN MY_COSMETICS on COSMETICS.COS_INDEX = MY_COSMETICS.COS_INDEX where MY_COSMETICS.MEMBER_INDEX = #{member_index} and COSMETICS.COS_TYPE = #{cos_type}")
+    List<AllInfoOfMyCosmeticsVO> getCosByType(@Param("member_index") int member_index, @Param("cos_type") String cos_type);
+
+
 }

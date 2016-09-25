@@ -1,7 +1,8 @@
-<style>
+<style xmlns="http://www.w3.org/1999/html">
 
-  img {
-    border-radius: 50%;
+  .img-grid-related {
+    width:100%;
+    height: 100%;
   }
 
   .star-related {
@@ -22,24 +23,27 @@
     background-size: 100%;
   }
 
+  md-card-title-media{
+    width: 30%;
+    margin: 0;
+    padding: 0;
+  }
 
-  .md-headline {
-    color: black;
+  .logorelated-1 {
+    width: 100%;
+    border-radius: 50%;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+  }
+  .logorelated-2 {
+    width: 100%;
+    border-radius: 40%;
   }
 
   .row-header-row-related {
     background-color: whitesmoke;
     width: 100%;
     background-size: 100px 80px;
-
-  }
-
-  .div-chat-related {
-    position: relative;
-    left: 40%;
-    transform: translate(50%, -120%);
-    font-size: 12px;
-    color: black;
 
   }
 
@@ -67,17 +71,27 @@
     font-size: 18px;
   }
 
-  .chat-related {
-    position: relative;
-    top: 20%;
-    left: 1%;
-    width:25px;
-  }
 
   b {
     font-size: 9pt;
     color: darkgray;
   }
+
+  .type {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    color: darkgray;
+    margin: 0;
+  }
+  .type_btn {
+    width: 100%;
+    background-color:#FFEAEA;
+    padding: 0;
+    color: darkgray;
+    margin: 0;
+  }
+
 
   .profile {
     max-width: 100%;
@@ -108,50 +122,63 @@
     color: grey;
   }
 
-  .md-headline {
-    font-size: 20px;
-    color: black;
-  }
-
-
-
-
-
 </style>
 
 
-<md-content flex ui-view class="md-padding" layout-xs="column">
+<md-content flex ui-view class="md-padding" layout-xs="column" style="height: 800px;" md-theme="altTheme">
+
   <div ng-controller="MyCosTableController as ctrl">
-  <br>
-  <div class="row-header-row-related" align="center">
-    <div class="profile_div" >
-      <img ng-if="mycostable.memberInfo.image.substring(1,7) != 'http'" class="profile" width="90" ng-src="{{mycostable.host}}{{mycostable.memberInfo.image}}" ><br>
-      <img ng-if="mycostable.memberInfo.image.substring(1,7) == 'http'" class="profile" width="90" ng-src="{{mycostable.memberInfo.image}}" ><br>
-      <b>{{mycostable.memberInfo.id}}
-        <img class="redheart-related" ng-src="assets/images/redheart.png">
-      <br>Lv.{{mycostable.memberInfo.level}}&nbsp;{{mycostable.memberInfo.level_name}}<img class="medal-related" ng-src="assets/images/medal.svg"></b>
-      <div class="center">{{mycostable.memberInfo.count}}</div>
-    </div>
-   <div style="background-color:#DCDCDC">
-    <md-button class="md-icon-button">
-      <md-icon md-svg-src="assets/images/add.svg" ng-click="mycostable.submit()"></md-icon>
-    </md-button>
-     </div>
+    <br>
+    <div class="row-header-row-related" align="center">
+      <div class="profile_div" >
+        <img ng-if="mycostable.memberInfo.image.substring(1,7) != 'http'" class="profile" width="90" ng-src="{{mycostable.host}}{{mycostable.memberInfo.image}}" ><br>
+        <img ng-if="mycostable.memberInfo.image.substring(1,7) == 'http'" class="profile" width="90" ng-src="{{mycostable.memberInfo.image}}" ><br>
+        <b>{{mycostable.memberInfo.id}}
+          <img class="redheart-related" ng-src="assets/images/redheart.png">
+          <br>Lv.{{mycostable.memberInfo.level}}&nbsp;{{mycostable.memberInfo.level_name}}<img class="medal-related" ng-src="assets/images/medal.svg"></b>
+        <div class="center">{{mycostable.memberInfo.count}}</div>
+      </div>
 
 
-    <div class="row-header-row-related" ng-repeat="mycostablelist in mycostable.mycosmeticsList"  style="background-color:whitesmoke">
+      <div style="background-color:#FFEAEA">
+        <md-button class="md-icon-button">
+          <md-icon md-svg-src="assets/images/add.svg" ng-click="mycostable.submit()"></md-icon>
+        </md-button>
+      </div>
+
+      <div class="type" layout="row">
+        <md-button class="type_btn" ng-click="ctrl.changeListType('list')">목록보기</md-button>
+        <md-button class="type_btn" ng-click="ctrl.changeListType('image')"> 이미지보기</md-button>
+      </div>
+
       <br>
-          <md-card align="center">
-            <div ng-if="mycostablelist.m_cosimage.substring(0,4) != 'http'" ><img width="10" class="md-card-image" ng-src="{{ctrl.host}}{{mycostablelist.m_cosimage}}" ></div>
-            <div ng-if="mycostablelist.m_cosimage.substring(0,4) == 'http'" ><img width="10" class="md-card-image" ng-src="{{mycostablelist.m_cosimage}}" ></div>
-            <md-card-title>
 
-              <md-card-title-text>
-                    <span class="md-headline">
-                      {{mycostablelist.cos_brand}}
-                    </span>
-                <h5><span class="md-subhead">{{mycostablelist.cos_name}}</span></h5>
-                <div layout="row" layout-align="center" align="center">
+      {{ctrl.cos_type}}
+      <div ng-if="ctrl.listType == 'list'" class="row-header-row-related" ng-repeat="mycostablelist in mycostable.mycosmeticsList"  style="background-color:white smoke">
+        <md-card align="center">
+          <div ng-if="mycostablelist.m_cosimage.substring(0,4) != 'http'" ><img width="10" class="md-card-image" ng-src="{{ctrl.host}}{{mycostablelist.m_cosimage}}" ></div>
+          <div ng-if="mycostablelist.m_cosimage.substring(0,4) == 'http'" ><img width="10" class="md-card-image" ng-src="{{mycostablelist.m_cosimage}}" ></div>
+          <md-card-title style="background-color: #FFEAEA" width="100%">
+
+            <md-card-title-media>
+              <img class="logorelated-1" ng-if="mycostablelist.cos_brand == '이니스프리'" ng-src="assets/images/cosBrandLogo/innisfreeSVG.png" />
+              <img class="logorelated-1" ng-if="mycostablelist.cos_brand == '아리따움'" ng-src="assets/images/cosBrandLogo/aritaumSVG.png" />
+              <img class="logorelated-1" ng-if="mycostablelist.cos_brand == '크리니크'" ng-src="assets/images/cosBrandLogo/cliniqueSVG.png" />
+              <img class="logorelated-1" ng-if="mycostablelist.cos_brand == '에뛰드하우스'" ng-src="assets/images/cosBrandLogo/etudehouseSVG.png" />
+              <img class="logorelated-1" ng-if="mycostablelist.cos_brand == '로레알'" ng-src="assets/images/cosBrandLogo/lorealSVG.png" />
+              <img class="logorelated-1" ng-if="mycostablelist.cos_brand == '메이블린'" ng-src="assets/images/cosBrandLogo/maybellineSVG.jpg" />
+              <img class="logorelated-2" ng-if="mycostablelist.cos_brand == '미샤'" ng-src="assets/images/cosBrandLogo/misshaSVG.jpg" />
+              <img class="logorelated-1" ng-if="mycostablelist.cos_brand == '스킨푸드'" ng-src="assets/images/cosBrandLogo/skinfoodSVG.png" />
+              <img class="logorelated-1" ng-if="mycostablelist.cos_brand == '더페이스샵'" ng-src="assets/images/cosBrandLogo/thefaceshopSVG.png" />
+              <img class="logorelated-1" ng-if="mycostablelist.cos_brand == '토니모리'" ng-src="assets/images/cosBrandLogo/tonymolySVG.png" />
+
+            </md-card-title-media>
+
+
+            <md-card-title-text style="background-color: #FFEAEA;" width="100%">
+
+              <h5><span class="md-subhead">{{mycostablelist.cos_name}}</span></h5>
+              <div layout="row" layout-align="center" align="center">
                 <div layout="column" >
                   <div align="center" ng-if="mycostablelist.m_starrate == 0"><br><img class="star-related" ng-src="assets/images/rating0.svg"></div>
                   <div align="center" ng-if="mycostablelist.m_starrate == 1"><br><img class="star-related" ng-src="assets/images/rating1.svg"></div>
@@ -159,12 +186,10 @@
                   <div align="center" ng-if="mycostablelist.m_starrate == 3"><br><img class="star-related" ng-src="assets/images/rating3.svg"></div>
                   <div align="center" ng-if="mycostablelist.m_starrate == 4"><br><img class="star-related" ng-src="assets/images/rating4.svg"></div>
                   <div align="center" ng-if="mycostablelist.m_starrate == 5"><br><img class="star-related" ng-src="assets/images/rating5.svg"></div>
-                  <div layout="column"><h4>내 별점</h4></div>
+                  <div><h4>내 별점</h4></div>
                 </div>
-                  <div layout="column">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  </div>
+                <div style="padding: 0 3px;">
+                </div>
                 <div layout="column" >
                   <div align="center" ng-if="mycostablelist.cos_starrateAvg == 0"><br><img class="star-related" ng-src="assets/images/rating0.svg"></div>
                   <div align="center" ng-if="mycostablelist.cos_starrateAvg == 1"><br><img class="star-related" ng-src="assets/images/rating1.svg"></div>
@@ -172,42 +197,103 @@
                   <div align="center" ng-if="mycostablelist.cos_starrateAvg == 3"><br><img class="star-related" ng-src="assets/images/rating3.svg"></div>
                   <div align="center" ng-if="mycostablelist.cos_starrateAvg == 4"><br><img class="star-related" ng-src="assets/images/rating4.svg"></div>
                   <div align="center" ng-if="mycostablelist.cos_starrateAvg == 5"><br><img class="star-related" ng-src="assets/images/rating5.svg"></div>
-                  <div layout="column"><h4>전체 평균</h4></div>
+                  <div><h4>전체 평균</h4></div>
                 </div>
-                  </div>
-
-              </md-card-title-text>
-            </md-card-title>
-
-            <div class="md-menu-demo"  ng-cloak>
-              <div class="menu-demo-container" layout-align="center" layout="row" width="100%">
-                <md-menu>
-                  <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
-                    <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                  </md-button>
-                  <md-menu-content width="6">
-                    <md-menu-item>
-                      <md-button ng-click="ctrl.detailOfMycosTable(mycostablelist.m_index)">
-                        <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                        상세보기
-                      </md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                      <md-button ng-click="ctrl.showConfirm(mycostablelist, $event)">
-                        <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
-                        삭제
-                      </md-button>
-                    </md-menu-item>
-                  </md-menu-content>
-                </md-menu>
               </div>
+
+            </md-card-title-text>
+
+          </md-card-title>
+          <div class="md-menu-demo"  ng-cloak>
+            <div class="menu-demo-container" layout-align="center" layout="row" width="100%">
+              <md-menu>
+                <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
+                  <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                </md-button>
+                <md-menu-content width="6">
+                  <md-menu-item>
+                    <md-button ng-click="ctrl.detailOfMycosTable(mycostablelist.m_index)">
+                      <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                      상세보기
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button ng-click="ctrl.showConfirm(mycostablelist, $event)">
+                      <md-icon md-svg-src="assets/images/menu.svg"></md-icon>
+                      삭제
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
             </div>
-          </md-card>
+          </div>
+        </md-card>
+        <br>
+
+      </div>
+    </div>
+
+    <div ng-if="ctrl.listType == 'image'" class="row-header-row-related">
+      <div ng-controller="SelectTypeController as ctrl2">
+
+        <div  layout="row"  ng-cloak>
+          <md-select placeholder="타입별 보기" ng-model="type" md-on-open="loadTypes()" style="width: 100%;" md-on-close="printSelectedTypes(type.name)">
+            <md-option ng-value="type" ng-repeat="type in types">{{type.name}}</md-option>
+          </md-select>
+          <br><br>
+        </div>
+
+        <section>
+
+
+
+          <md-grid-list md-cols="3" md-cols-sm="3" md-cols-md="3" md-cols-gt-md="6"
+                        md-row-height-gt-md="1:1" md-row-height="1:1"
+                        md-gutter="8px" md-gutter-gt-sm="10px">
+            <md-subheader ng-if="type.name != null" class="md-accent" width="100%">타입별 보기 / {{type.name}}</md-subheader>
+
+            <md-grid-tile ng-repeat="cosInfoByType in ctrl2.getCosInfoByTypeList" md-rowspan="1" md-colspan="1" md-colspan-sm="1" md-colspan-xs="1">
+              <div ng-if="cosInfoByType.cos_type == null" style="background-color: #2f96b4"><b>비어있음scscsdcsdc</b></div>
+              <img class="img-grid-related" ng-if="cosInfoByType.cos_type != null && cosInfoByType.m_cosimage.substring(0,4) != 'http'" ng-src="{{ctrl2.host}}{{cosInfoByType.m_cosimage}}"><br><br>
+              <img class="img-grid-related" ng-if="cosInfoByType.cos_type != null && cosInfoByType.m_cosimage.substring(0,4) == 'http'" ng-src="{{ctrl2.m_cosimage}}"><br><br>
+              <img class="img-grid-related" ng-if="cosInfoByType.m_cosimage.substring(0,4) == 'http'" ng-src="{{cosInfoByType.m_cosimage}}"><br><br>
+              <img class="img-grid-related" ng-if="cosInfoByType.m_cosimage.substring(0,4) != 'http'" ng-src="{{ctrl2.host}}{{ctrl2.m_cosimage}}"><br><br>
+
+            </md-grid-tile>
+            </md-grid-list>
+        </section>
+
+      </div>
+
+
+      <section>
+        <div>
+        <div>
+        <md-subheader class="md-accent" width="100%"> 전체보기 </md-subheader>
+
+        <md-grid-list md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
+                      md-row-height-gt-md="1:1" md-row-height="1:1"
+                      md-gutter="8px" md-gutter-gt-sm="10px">
+
+          <md-grid-tile ng-repeat="mycostablelist in mycostable.mycosmeticsList" md-rowspan="1" md-colspan="1" md-colspan-sm="1" md-colspan-xs="1"  ng-click="tile.show = !tile.show">
+            <img ng-if="mycostablelist.m_cosimage.substring(0,4) != 'http'" ng-src="{{ctrl.host}}{{mycostablelist.m_cosimage}}" class="img-grid-related">
+            <img ng-if="mycostablelist.m_cosimage.substring(0,4) == 'http'" ng-src="{{mycostablelist.m_cosimage}}"  class="img-grid-related">
+            <div ng-show="true">
+              <md-grid-tile-footer style="height: auto; font-size: 70%; padding: 0;">
+                <md-list-item>
+                  {{mycostablelist.cos_brand}} / {{mycostablelist.cos_type}}
+                </md-list-item>
+              </md-grid-tile-footer>
+            </div>
+          </md-grid-tile>
+        </md-grid-list>
+          </div>
+          </div>
+      </section>
+
 
     </div>
   </div>
 
-  </div>
+
 </md-content>
-
-

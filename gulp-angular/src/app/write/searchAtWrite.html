@@ -1,68 +1,64 @@
-
 <style>
   img {
     border-radius: 50%;
   }
 
-  .cos-img-related {
-    width: 80px;
-  }
-  .select-related {
-    width: 30%;
+  b {
+    font-size: 9pt;
+    color: darkgray;
   }
 
-  #searchInputBox {
-    width: 80%;
-    font-size: 8pt;
-    background-color: whitesmoke;
-    text-align: center;
-  }
-
-  .md-button.md-cornered {
-    border-radius: 0;
-  }
-
+.md-avatar {
+  width: 40px;
+  height: 40px;
+}
 </style>
 
 <md-content style="background-color: whitesmoke">
-
-    <div ng-controller="SelectTypeController" layout="row"  ng-cloak >
-      <md-select placeholder="제품별" ng-model="type" md-on-open="loadTypes()" style="min-width: 100px;" md-on-close="printSelectedTypes(type.name)">
+<div ng-controller="SelectTypeAtWriteController as ctrl2">
+    <div  layout="row"  ng-cloak >
+      <md-select placeholder="제품별 검색" ng-model="type" md-on-open="loadTypes()" style="width : 100%" md-on-close="printSelectedTypes(type.name)">
         <md-option ng-value="type" ng-repeat="type in types">{{type.name}}</md-option>
       </md-select>
     </div>
-<br><br>
-<md-list>
 
-  <md-list-item class="md-3-line" ng-repeat="cosmetics in searchAtWrite.list" ng-click="searchAtWrite.selectToWriteReview(cosmetics.cos_index)">
-
-    <img ng-src="{{cosmetics.cos_pic}}" class="md-avatar">
+  <b>{{type.name}}</b>
+  <div ng-repeat="cosByBrandAndType in ctrl2.cosListByBrandAndType" >
+  <md-list>
+  <md-list-item class="md-3-line" ng-click="searchAtWrite.selectToWriteReview(cosByBrandAndType.cos_index)">
+    <img ng-src="{{cosByBrandAndType.cos_pic}}" class="md-avatar">
     <div class="md-list-item-text" md-swipe-left="onSwipeLeft(cosmetics)">
-      <h3>{{ cosmetics.cos_brand}}</h3>
-      <h4>{{ cosmetics.cos_name}}</h4>
-      <p>{{ cosmetics.cos_price}}원</p>
+      <h3>{{ cosByBrandAndType.cos_brand}}</h3>
+      <h4>{{ cosByBrandAndType.cos_name}}</h4>
+      <p>{{ cosByBrandAndType.cos_price}}원</p>
     </div>
     <md-divider md-inset ng-if="!$last"></md-divider>
-    </md-list-item>
+  </md-list-item>
 </md-list>
-
-  <div ng-repeat="cosByBrandAndType in searchAtWrite.CosListByBrandAndType">
-    {{cosByBrandAndType.cos_name}}<br>
-    {{cosByBrandAndType.cos_brand}}<br>
-    {{cosByBrandAndType.cos_price}}<br>
-    <img src={{cosByBrandAndType.cos_pic}}>
+    </div>
   </div>
+<br><br>
 
-<br><br><br><br><br><br><br><br><br><br><br>
+  <b>전체보기</b>
+  <md-list>
+    <md-list-item class="md-3-line" ng-repeat="cosmetics in searchAtWrite.list" ng-click="searchAtWrite.selectToWriteReview(cosmetics.cos_index)">
+      <img ng-src="{{cosmetics.cos_pic}}" class="md-avatar">
+      <div class="md-list-item-text" md-swipe-left="onSwipeLeft(cosmetics)">
+        <h3>{{ cosmetics.cos_brand}}</h3>
+        <h4>{{ cosmetics.cos_name}}</h4>
+        <p>{{ cosmetics.cos_price}}원</p>
+      </div>
+      <md-divider md-inset ng-if="!$last"></md-divider>
+    </md-list-item>
+  </md-list>
 
+  <br><br><br><br><br><br><br><br><br><br><br>
 </md-content>
 
-<div style="background-color: #DCDCDC; position: fixed; bottom: 0px; width: 100%;">
+<div style="background-color: #FFEAEA; position: fixed; bottom: 0px; width: 100%;">
   <div align="center">
     <md-button class="md-icon-button" href="#/write">
-      뒤로</md-button>
-
-
+      <b>뒤로</b></md-button>
   </div>
 </div>
 

@@ -3,7 +3,6 @@ package com.yhproject.controller;
 import com.yhproject.Constant;
 import com.yhproject.domian.*;
 import com.yhproject.persistence.*;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -107,7 +106,7 @@ public class ApiController {
 
     //회원 사진 업데이트 -혜윤
     @RequestMapping(method = RequestMethod.POST, value = "api/updateMemberImage")
-    public void updateMemberImage(@ModelAttribute MemberVO member,HttpServletRequest request) {
+    public void updateMemberImage(@ModelAttribute MemberVO member) {
         System.out.println("update Image : " + member);
         File rootFolder = new File(Constant.ROOT_FOLDER + Constant.UPLOAD_FOLDER);
         AttachVO attach;
@@ -307,9 +306,10 @@ public class ApiController {
 
 
     //memeber_index에 따른 내 화장대 불러오기
+    private int memberIndex;
     @RequestMapping(method = RequestMethod.POST, value = "/api/mycostableList") //member_index, cos_index로 화장대 전체정보 찾기
     public List<AllInfoOfMyCosmeticsVO> findByMemIndex(@RequestBody int member_index) {
-//        System.out.println("memberIndex: " + member_index);
+        memberIndex = member_index;
 
         List<AllInfoOfMyCosmeticsVO> allList = new ArrayList<>();
         List<My_CosmeticsVO> mycostable = my_CosmeticsMapper.findByMemIndex(member_index);
@@ -320,6 +320,7 @@ public class ApiController {
             allInfoOfMyCosmetic.setM_index(mycostable.get(i).getM_index());
             allInfoOfMyCosmetic.setM_open_date(mycostable.get(i).getM_open_date());
             allInfoOfMyCosmetic.setM_expire_date(mycostable.get(i).getM_expire_date());
+            allInfoOfMyCosmetic.setMember_index(mycostable.get(i).getMember_index());
             allInfoOfMyCosmetic.setM_review(mycostable.get(i).getM_review());
             allInfoOfMyCosmetic.setM_starrate(mycostable.get(i).getM_starrate());
             allInfoOfMyCosmetic.setM_cosimage(mycostable.get(i).getM_cosimage());
@@ -373,6 +374,8 @@ public class ApiController {
             }
         }
 
+
+
         my_CosmeticsMapper.updateReview(my_cosmetics);
     }
 
@@ -385,6 +388,7 @@ public class ApiController {
         my_CosmeticsMapper.deleteReview(my_cosmetics);
 
     }
+
 
     //내 화장대에서 회원 정보 불러오기
     @RequestMapping(method = RequestMethod.POST, value="/api/UserInformation")
@@ -400,12 +404,6 @@ public class ApiController {
     public List<String> getCosBrandName() {
 
         return cosmeticsMapper.getCosBrandName();
-    }
-
-    //화장품 브랜드, 타입으로 화장품 찾기
-    @RequestMapping(method = RequestMethod.GET, value="/api/getCosByBrandAndType")
-    public List<CosmeticsVO> getCosByBrandAndType(String type, String brand) {
-        return cosmeticsMapper.getCosByBrandAndType(type, brand);
     }
 
     private int getSumCosStarRates;
@@ -450,8 +448,48 @@ public class ApiController {
 
     }
 
+    //cos_type에 따른 멤버인덱스에 저장된 MyCosmetics
+    @RequestMapping(method = RequestMethod.POST, value = "/api/getCosInfoByType")
+    public List<AllInfoOfMyCosmeticsVO> getCosInfoByType(@RequestBody AllInfoOfMyCosmeticsVO allInfoOfMyCosmetics) {
+        System.out.println("넘어온 멤버인덱스와 cos_type " + allInfoOfMyCosmetics);
+        int member_index = allInfoOfMyCosmetics.getMember_index();
+
+        List<AllInfoOfMyCosmeticsVO> allList2 = new ArrayList<>();
+        List<AllInfoOfMyCosmeticsVO> mycosInfo = cosmeticsMapper.getCosByType(member_index, allInfoOfMyCosmetics.getCos_type());
 
 
+        for(int i = 0; i < mycosInfo.size(); i++) {
+            AllInfoOfMyCosmeticsVO allInfoOfMyCosmetics2 = new AllInfoOfMyCosmeticsVO();
+            allInfoOfMyCosmetics2.setM_index(mycosInfo.get(i).getM_index());
+            allInfoOfMyCosmetics2.setM_open_date(mycosInfo.get(i).getM_open_date());
+            allInfoOfMyCosmetics2.setM_expire_date(mycosInfo.get(i).getM_expire_date());
+            allInfoOfMyCosmetics2.setMember_index(member_index);
+            allInfoOfMyCosmetics2.setM_review(mycosInfo.get(i).getM_review());
+            allInfoOfMyCosmetics2.setM_cosimage(mycosInfo.get(i).getM_cosimage());
+            allInfoOfMyCosmetics2.setM_starrate(mycosInfo.get(i).getM_starrate());
+            allInfoOfMyCosmetics2.setCos_brand(mycosInfo.get(i).getCos_brand());
+            allInfoOfMyCosmetics2.setCos_name(mycosInfo.get(i).getCos_name());
+            allInfoOfMyCosmetics2.setCos_pic(mycosInfo.get(i).getCos_pic());
+            allInfoOfMyCosmetics2.setCos_price(mycosInfo.get(i).getCos_price());
+            allInfoOfMyCosmetics2.setCos_type(allInfoOfMyCosmetics.getCos_type());
+            allInfoOfMyCosmetics2.setCos_starrateAvg(mycosInfo.get(i).getCos_starrateAvg());
+
+            allList2.add(allInfoOfMyCosmetics2);
+        }
+
+        System.out.println(allList2);
+        return allList2;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/getCosByBrandAndType")
+    public List<CosmeticsVO> getCosByBrandAndType(@RequestBody CosmeticsVO cosmetics) {
+        System.out.println("찾으려는 브랜드와 타입" + cosmetics.getCos_type() + cosmetics.getCos_brand());
+        List<CosmeticsVO> cosInfoByTypeAndBrand = cosmeticsMapper.getCosByBrandAndType(cosmetics.getCos_type(), cosmetics.getCos_brand());
+
+        System.out.println(cosInfoByTypeAndBrand);
+        return cosInfoByTypeAndBrand;
+
+    }
 
 
     /***************************************정민 부분끝***************************************/
@@ -500,7 +538,7 @@ public class ApiController {
     }
 
 
-    ///관심리스트 가져오기
+    ///해당회원의 관심리스트 가져오기
     @RequestMapping(method = RequestMethod.POST, value = "/api/interestList") //member_index, cos_index로 관심리스트불러오기
     public List<GetInterestVO> getInterestList(@RequestBody int member_index) {
         System.out.println("memberIndex: " + member_index);
@@ -540,11 +578,36 @@ public class ApiController {
     @RequestMapping(method = RequestMethod.POST, value = "api/getBrandFromInterestList")
     public List<String> getBrandFromInterestList(@RequestBody int member_index) {
         List<String> result = interestMapper.getBrandFromInterestList(member_index);
-        System.out.println(member_index);
-        System.out.println("접속");
+        System.out.println("member_index : " + member_index + "에게 전송값 : " +result);
         return result;
     }
 
+    //메인부분_내가 등록한 화장품 갯수 가져오기
+    @RequestMapping(method = RequestMethod.POST, value = "/api/getCountReview" )
+    public int getCountReview(@RequestBody int member_index) {
+
+        int getCountReview = my_CosmeticsMapper.getCountReview(member_index);
+        System.out.println(member_index + "로 등록된 리뷰개수 " + getCountReview);
+
+        return getCountReview;
+    }
+
+
+    //메인부분_등록된 관심리스트 목록 가져오기
+    @RequestMapping(method = RequestMethod.GET, value = "/api/interestAllList")
+    public List<CosmeticsVO> interestFindAll() {
+        System.out.println("cosList: " + interestMapper.interestFindAll());
+
+        return interestMapper.interestFindAll();
+    }
+
+    //타입별 별점 불러오기
+    @RequestMapping(method = RequestMethod.POST, value = "/api/getTypeStarAvgList")
+    public List<CosmeticsVO> getCosTypeStarAvg(@RequestBody String cos_type) {
+        System.out.println("cosList: " + cosmeticsMapper.getCosTypeStarAvg(cos_type));
+
+        return cosmeticsMapper.getCosTypeStarAvg(cos_type);
+    }
     /***************************************예은 부분끝***************************************/
 }
 

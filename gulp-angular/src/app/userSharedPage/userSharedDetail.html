@@ -1,9 +1,5 @@
 <style>
 
-  .list_img {
-
-  }
-
   .image_img {
     width: 100%;
     height: 100%;
@@ -23,41 +19,6 @@
   .row-header-row-related {
     width: 100%;
 
-  }
-
-  .center {
-    position: relative;
-    top: -1%;
-    left: 57%;
-    transform: translate(-50%, -148%);
-    font-size: 12px;
-    color: white;
-  }
-
-  .col-related {
-    width: 100%;
-    height: 100%;
-
-  }
-
-  .md-button {
-    padding: 0 6px 0 6px;
-    margin: 6px 8px 6px 8px;
-    min-width: 88px;
-    border-radius: 3px;
-    font-size: 14px;
-    text-align: center;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: none;
-    outline: none;
-  }
-
-  .redheart-related {
-    position: relative;
-    top: 20%;
-    left: 1%;
-    font-size: 18px;
   }
 
   b {
@@ -80,15 +41,6 @@
     padding-top: 10px;
   }
 
-  .add-related {
-    top: 1%;
-    left: 75%;
-  }
-
-  h5.thick {
-    font-weight: bold;
-  }
-
   h4 {
     font-size: 14px;
     text-align: center;
@@ -99,41 +51,58 @@
   .profile_div {
     padding-top: 15px;
     background-size: 100%;
+    padding-bottom: 10px;
+    margin: 0;
   }
   .list_img {
     width: 120px;
   }
 
-  .md-headline {
+  .title-text {
     font-size: 11px;
+    padding: 2px;
   }
   .show_review {
     font-size:10px;
     padding:2px 2px 2px 2px;
+    background-color: #FFEAEA;
+  }
+  .show_review_content {
+    font-size:10px;
+    padding:15px;
+    background-color: #eaeaea;
+  }
 
+  .type {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+  .type_btn {
+    width: 100%;
+    background-color:#FFEAEA;
+    padding: 0;
+    margin: 0;
+  }
+  .star-related {
+    width: 50px;
   }
 
 </style>
 
 
 <md-content flex ui-view class="md-padding" layout-xs="column" layout="row" >
-  <br>
-    <div class="row-header-row-related" align="center">
+    <div align="center">
       <div class="profile_div" style="background-image: url({{userSharedDetail.background}});">
         <img class="profile" width="90" ng-src={{userSharedDetail.host}}{{userSharedDetail.memberInfo.image}}><br>
-        <b>{{userSharedDetail.memberInfo.id}}
-          <img class="redheart-related" ng-src="assets/images/redheart.png"></b>
-        <div class="center">{{userSharedDetail.memberInfo.count}}</div>
+        <b>{{userSharedDetail.memberInfo.id}}</b>
     </div>
-    <br>
-    <div>
-      <md-radio-group ng-model="select" layout="row">
-        <md-radio-button ng-value="list" value="list" aria-label="label1" class="md-primary">목록보기</md-radio-button>
-        <md-radio-button value="image" aria-label="label2"> 이미지보기</md-radio-button>
-      </md-radio-group>
-    </div>
-    <br>
-    <div ng-if="select == 'list' || select == null" class="row-header-row-related">
+      <div class="type" layout="row">
+        <md-button class="type_btn" ng-click="userSharedDetail.changeListType('list')">목록보기</md-button>
+        <md-button class="type_btn" ng-click="userSharedDetail.changeListType('image')"> 이미지보기</md-button>
+      </div>
+    <div ng-if="userSharedDetail.listType == 'list'" class="list_div">
       <div class="row-header-row-related" ng-repeat="result in userSharedDetail.cosmeticsInfoList"
            style="background-color:white">
 
@@ -145,38 +114,38 @@
               <div ng-if="result.m_cosimage.substring(0,4) == 'http'" class="md-media-lg card-media"><img
                 class="list_img" width="20" md-card-sm-image ng-src={{result.cos_pic}}></div>
             <md-card-title-text>
-              <span class="md-headline">{{ result.cos_name}}</span>
+              <span class="title-text">{{ result.cos_name}}</span>
+              <div layout="column" >
+                <div align="center" ng-if="result.m_starrate == 0"><br><img class="star-related" ng-src="assets/images/rating0.svg"></div>
+                <div align="center" ng-if="result.m_starrate == 1"><br><img class="star-related" ng-src="assets/images/rating1.svg"></div>
+                <div align="center" ng-if="result.m_starrate == 2"><br><img class="star-related" ng-src="assets/images/rating2.svg"></div>
+                <div align="center" ng-if="result.m_starrate == 3"><br><img class="star-related" ng-src="assets/images/rating3.svg"></div>
+                <div align="center" ng-if="result.m_starrate == 4"><br><img class="star-related" ng-src="assets/images/rating4.svg"></div>
+                <div align="center" ng-if="result.m_starrate == 5"><br><img class="star-related" ng-src="assets/images/rating5.svg"></div>
+              </div>
             </md-card-title-text>
           </md-card-title>
-          <span class="show_review" ng-click="review.show = !review.show">리뷰보기</span>
-          <div class="show_review" ng-init="review.show = false" ng-show="review.show">
+          <span class="show_review" ng-click="review.show = !review.show" >리뷰보기</span>
+          <div class="show_review_content" ng-init="review.show = false" ng-show="review.show" >
             {{result.m_review}}
           </div>
         </md-card>
       </div>
     </div>
 
-    <div ng-if="select == 'image'" class="row-header-row-related">
+    <div ng-if="userSharedDetail.listType == 'image'" class="list_div">
       <div flex ng-cloak>
         <md-grid-list
           md-cols="2" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
           md-row-height-gt-md="1:1" md-row-height="1:1"
           md-gutter="8px" md-gutter-gt-sm="4px">
           <md-grid-tile ng-repeat="result in userSharedDetail.cosmeticsInfoList" >
-           <div ng-if="result.m_cosimage.substring(0,4) != 'http'" style="width: 100%; height: inherit;"  ng-click="name.show = !name.show">
-             <img class="image_img" ng-src={{userSharedDetail.host}}{{result.m_cosimage}d}>
-               </div>
-           <div  ng-if="result.m_cosimage.substring(0,4) == 'http'" style="width: 100%;"  ng-click="name.show = !name.show">
+           <div ng-if="result.m_cosimage.substring(0,4) != 'http'" style="width: 100%; height: inherit;"  ng-click="userSharedDetail.showDialog(result)">
+             <img class="image_img" ng-src={{userSharedDetail.host}}{{result.m_cosimage}}>
+           </div>
+           <div  ng-if="result.m_cosimage.substring(0,4) == 'http'" style="width: 100%;"  ng-click="userSharedDetail.showDialog(result)">
              <img class="image_img" ng-src={{result.cos_pic}}>
            </div>
-
-            <div  ng-init="name.show = false" ng-show="name.show">
-              <md-grid-tile-footer style="height: auto; font-size: 70%; padding: 0;">
-                <md-list-item>
-                  {{result.cos_name}}
-                </md-list-item>
-              </md-grid-tile-footer>
-            </div>
       </md-grid-tile>
         </md-grid-list>
       </div>

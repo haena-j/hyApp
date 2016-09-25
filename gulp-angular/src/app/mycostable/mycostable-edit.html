@@ -1,7 +1,4 @@
 <style>
-  h5.thick {
-    font-weight: bold;
-  }
 
   h5 {
     font-size:12px;
@@ -9,14 +6,30 @@
     margin-left: 40px;
   }
 
-  h4.thick {
-    font-weight: bold;
+  h4 {
+    font-size: 11px;
+    color: black;
+    margin-left: 40px;
   }
 
-  h4 {
-    font-size:13px;
+  h3 {
+    font-size : 14px;
     color: grey;
-    margin-left: 40px;
+
+  }
+
+  .calendar-related {
+    align-content: center;
+    layout-align: center center;
+  }
+
+  .thumb {
+    width: 100%;
+    height: 100%;
+  }
+
+  .selected-cos-image-related {
+    border-radius: 50%;
   }
 
   .star-input>.input,
@@ -100,44 +113,104 @@
   }
 
 </style>
-<html>
 
-<md-content class="padding" style="background-color:#f2dede">
+<md-content class="padding" style="background-color:whitesmoke" flex ui-view style="align-items: center">
   <form method="post" name="mycostableeditForm">
-    <div class="container" ng-class="{ 'has-error' : mycostableeditForm.name.$invalid && !mycostableeditForm.name.$pristine }" ng-controller="mycostableEdit">
-      <div class="row">
-        <div class="col" align="center">
-          <p>
-            <input type="file" ngf-select ng-model="editForm.picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+    <div ng-cloak class="container" ng-class="{ 'has-error' : mycostableeditForm.name.$invalid && !mycostableeditForm.name.$pristine }">
+
+      <br><br><br><br>
+
+      <div layout="row" align="center">
+        <div max-width="30" layout="column">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+          <div layout="column" layout-align="center">
+            <img src="assets/images/folder.svg" width="28">
+          </div>
+        <div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div layout="column" align="center">
+            <input type="file" ngf-select ng-model="edit.picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
             <i ng-show="mycostableeditForm.file.$error.required"></i><br>
             <i ng-show="mycostableeditForm.file.$error.maxSize">File too large
               {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-            <img ng-show="mycostableeditForm.file.$valid" ngf-thumbnail="editForm.picFile" class="thumb" width="70">
-            <button ng-click="editForm.picFile = null" ng-show="editForm.picFile">Remove</button>
-          </p>
+            <img ng-show="mycostableeditForm.file.$valid" ngf-thumbnail="edit.picFile" class="thumb" width="70">
+            <img ng-if="mycostableEdit.editMyCosTable.m_cosimage.substring(1,7) != 'http'" width="90" ng-src="{{mycostableEdit.host}}{{mycostableEdit.editMyCosTable.m_cosimage}}"><br>
+            <img ng-if="mycostableEdit.editMyCosTable.m_cosimage.substring(1,7) == 'http'" width="90" ng-src="{{mycostableEdit.editMyCosTable.m_cosimage}}"><br>
+            <button ng-click="edit.picFile = null" ng-show="edit.picFile">Remove</button>
+        </div>
+      </div>
+      <br>
+
+      <div layout="row" class="calendar-related" layout-align="center">
+        <div layout="column" align="center"><img src="assets/images/calendar.svg" width="25">
+        </div>
+        <div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+
+        <div layout="column" align="center">
+          <h3>{{mycostableEdit.editMyCosTable.m_open_date.substring(0,4) + '-' + mycostableEdit.editMyCosTable.m_open_date.substring(4,6) + '-' + mycostableEdit.editMyCosTable.m_open_date.substring(6,8)}}</h3>
+
         </div>
       </div>
 
-      <div class="row">
-        <div class="col" align="center"><b>개봉날짜</b>
-          <input type="date" name="m_open_date" ng-model="editForm.m_open_date" required>
-          <span ng-show="mycostableeditForm.m_open_date.$error.required"> 수정 전 개봉날짜 {{editmycostable.m_open_date}}</span>
+      <br><br>
+
+      <div layout="row" layout-align="center">
+        <div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+
+        <div layout="column" align="center"><img src="assets/images/writing.svg" width="25">
+        </div>
+
+        <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+
+        <div layout="column" align="center">
+        <md-input-container class="md-block">
+          <label>리뷰</label>
+          <textarea ng-model="edit.m_review" md-maxlength="500" rows="7" md-select-on-focus placeholder="{{mycostableEdit.editMyCosTable.m_review}}"></textarea>
+        </md-input-container>
         </div>
       </div>
+      <br>
 
 
-      <label class="item item-input item-stacked-label">
-        <span class="input-label" >리뷰</span>
-        <input type="text" placeholder="리뷰를 수정해주세요" name="m_review" ng-model="editForm.m_review" required>
-        <span ng-show="mycostableeditForm.m_review.$error.required">{{editmycostable.m_review}}</span>
-      </label>
+      <div layout="row" layout-align="center">
+        <div layout="column">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
 
-      <div align="center">
-        <button class="button button-positive" type="button" ng-click="submit3(editForm)">수정</button>
-        <button class="button button-positive" type="reset">취소</button>
+        <div layout="column" align="center">
+          <span class="star-input" align="center">
+          <span class="input">
+            <input type="radio" ng-model="edit.m_starrate" name="star-input" id="p1" value="1"><label for="p1">1</label>
+            <input type="radio" ng-model="edit.m_starrate" name="star-input" id="p2" value="2"><label for="p2">2</label>
+            <input type="radio" ng-model="edit.m_starrate" name="star-input" id="p3" value="3"><label for="p3">3</label>
+            <input type="radio" ng-model="edit.m_starrate" name="star-input" id="p4" value="4"><label for="p4">4</label>
+            <input type="radio" ng-model="edit.m_starrate" name="star-input" id="p5" value="5"><label for="p5">5</label>
+          </span>
+          </span>
+          </div>
+        </div>
+
+
+
+      <br><br><br><br><br><br><br><br>
+      <div style="background-color: #FFEAEA; position: fixed; bottom: 0px; width: 100%;">
+        <div align="center">
+          <md-button class="md-icon-button" ng-click="mycostableEdit.submit(edit, $event)">
+            <md-icon md-svg-icon="assets/images/pencil.svg"></md-icon>
+          </md-button>
+        </div>
       </div>
-
     </div>
   </form>
 </md-content>
-</html>
+
+
+

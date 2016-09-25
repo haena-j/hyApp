@@ -43,6 +43,8 @@ public interface MyCosmeticsMapper {
 
     @Select("SELECT COUNT(M_REVIEW) FROM MY_COSMETICS WHERE cos_index = #{cos_index}")
     int getCountCosStarRates(@Param("cos_index") int cos_index);
-
+    //등록된 리뷰갯수 가져오기기
+    @Select("SELECT COUNT(M_REVIEW) FROM MY_COSMETICS WHERE member_index = #{member_index}")
+    int getCountReview(@Param("member_index") int member_index);
 
 }

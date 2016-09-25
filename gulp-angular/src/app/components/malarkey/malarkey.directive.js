@@ -63,8 +63,7 @@
 
       function getContributors() {
         return githubContributor.getContributors(10).then(function(data) {
-          vm.contributors = data;
-
+          vm.contributors = {};
           return vm.contributors;
         });
       }

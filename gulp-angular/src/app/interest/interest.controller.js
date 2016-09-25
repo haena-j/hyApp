@@ -49,14 +49,12 @@
     };
 
     $scope.printSelectedBrands = function printSelectedBrands(query) {
-      // alert(query);
       $location.path('/interestBrand').search({param: query});
       location.reload();
 
     }
 
     $scope.printSelectedTypes = function printSelectedTypes(query) {
-      // alert(query);
       $location.path('/interestType').search({param: query});
       location.reload();
 
@@ -64,7 +62,7 @@
   }
 
   /** @ngInject */
-  function InterestController(HttpSvc, HOST, $location, AuthService, $mdDialog, $scope) { //관심리스트
+  function InterestController(HttpSvc, HOST, $location, AuthService, $mdDialog, $scope,  $mdToast) { //관심리스트
 
     var vm = this;
     vm.host = HOST;
@@ -75,8 +73,7 @@
       HttpSvc.getInterestList(AuthService.index())
         .success(function (values) {
           vm.cosmeticsList = values;
-        }).error(function (values, status) {
-        alert('바보실패');
+        }).error(function () {
       });
     };
     vm.Test();
@@ -95,38 +92,18 @@
         HttpSvc.deleteInterestCos(query)
 
           .success(function() {
-            alert("삭제되었습니다");
+            $mdToast.showSimple('삭제되었습니다.');
             location.reload();
           })
-          .error(function(values) {
-            alert("삭제실패!!");
+          .error(function() {
+            $mdToast.showSimple('삭제실패.');
           })
       })
     };
-    // //관심리스트 삭제하기
-    // vm.delete = function(query, ev) {
-    //   var confirm = $mdDialog.confirm()
-    //     .title('삭제')
-    //     .textContent('정말로 삭제하시겠습니까?')
-    //     .targetEvent(ev)
-    //     .ok('네')
-    //     .cancel('아니오');
-    //
-    //   $mdDialog.show(confirm).then(function() {
-    //     HttpSvc.deleteInterestCos(query)
-    //
-    //       .success(function() {
-    //         alert("삭제되었습니다");
-    //         location.reload();
-    //       })
-    //       .error(function(values) {
-    //         alert("삭제실패!!");
-    //       })
-    //   })
-    // };
+
   }
 
-  function InterestBrandController( $location, HttpSvc, HOST, AuthService, $mdDialog, $scope) {
+  function InterestBrandController( $location, HttpSvc, HOST, AuthService, $mdDialog, $scope,  $mdToast) {
     var vm = this;
     vm.host = HOST;
 
@@ -135,7 +112,7 @@
         .success(function (values) {
           vm.cos_brand = $location.search().param;
           vm.cosmeticsList = values;
-        }).error(function (values, status) {
+        }).error(function () {
 
       });
     }
@@ -155,18 +132,18 @@
         HttpSvc.deleteInterestCos(query)
 
           .success(function() {
-            alert("삭제되었습니다");
+            $mdToast.showSimple('삭제되었습니다.');
             $location.path('/interest');
           })
-          .error(function(values) {
-            alert("삭제실패!!");
+          .error(function() {
+            $mdToast.showSimple('삭제실패.');
           })
       })
     };
 
   }
 
-  function InterestTypeController( $location, HttpSvc, HOST, AuthService, $mdDialog, $scope) {
+  function InterestTypeController( $location, HttpSvc, HOST, AuthService, $mdDialog, $scope,  $mdToast) {
     var vm = this;
     vm.host = HOST;
 
@@ -175,7 +152,7 @@
         .success(function (values) {
           vm.cos_type = $location.search().param;
           vm.cosmeticsList = values;
-        }).error(function (values, status) {
+        }).error(function () {
 
       });
     }
@@ -195,11 +172,11 @@
         HttpSvc.deleteInterestCos(query)
 
           .success(function() {
-            alert("삭제되었습니다");
+            $mdToast.showSimple('삭제되었습니다.');
             $location.path('/interest');
           })
-          .error(function(values) {
-            alert("삭제실패!!");
+          .error(function() {
+            $mdToast.showSimple('삭제실패.');
           })
       })
     };

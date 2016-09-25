@@ -74,11 +74,18 @@ memo : service는 HttpSvc 로 통일
       });
     };
 
-
+    this.getCosInfoByType = function(param) {
+      return $http({
+        url: HOST + '/api/getCosInfoByType',
+        method: 'POST',
+        data: param,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
 
     this.findByMemIndex = function(param) {
       return $http({
-        url: HOST + '/api/mycostableList', //이부분은 포스트맨에서 해준 것과 동일한 역할이라고볼 수 있음
+        url: HOST + '/api/mycostableList',
         method: 'POST',
         data: param, //데이터를 param
         headers: {'Content-Type': 'application/json'}
@@ -121,13 +128,7 @@ memo : service는 HttpSvc 로 통일
       });
     };
 
-    this.getCosByBrandAndType = function() {
-      return $http({
-        url: HOST + '/api/getCosByBrandAndType',
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'}
-      });
-    };
+
 
     this.calToGetCosAvg = function(plusstarrate) { //새로 더해지는 별점을 파라미터로 옮김
       return $http({
@@ -157,6 +158,14 @@ memo : service는 HttpSvc 로 통일
       });
     };
 
+    this.getCosByBrandAndType = function(param) {
+      return $http({
+        url: HOST + '/api/getCosByBrandAndType',
+        method : 'POST',
+        data: param,
+        headers:  {'Content-Type': 'application/json'}
+      });
+    };
 
     /****************************정민부분끝****************************/
     /****************************예은부분****************************/
@@ -247,8 +256,33 @@ memo : service는 HttpSvc 로 통일
         headers: {'Content-Type': 'application/json'}
       });
     };
-    /****************************예은부분끝****************************/
 
+    this.getCountReview = function (query) {   //내화장품 리뷰갯수 가져오기
+      return $http({
+        url: HOST + '/api/getCountReview',
+        method: 'POST',
+        data : query,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.interestFindAll = function () { //메인부분_등록된 관심리스트 목록 가져오기
+      return $http({
+        url: HOST + '/api/interestAllList',
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+
+    this.getCosTypeStarAvg = function (query) {   ///타입별 별점 불러오기
+      return $http({
+        url: HOST + '/api/getTypeStarAvgList',
+        method: 'POST',
+        data : query,
+        headers: {'Content-Type': 'application/json'}
+      });
+    };
+    /****************************예은부분끝****************************/
   })
 
   //Authentication 을 위한 부분. 로그인&로그아웃 처리 등 - 혜윤
@@ -325,8 +359,8 @@ memo : service는 HttpSvc 로 통일
           } else {
             reject('Login Failed.');
           }
-        }).error(function (value, status) {
-          alert(value + " , " +  status);
+        }).error(function () {
+          alert("아이디와 비밀번호를 확인해주세요");
         });
       });
     };

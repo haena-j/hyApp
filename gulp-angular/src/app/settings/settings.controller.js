@@ -28,7 +28,7 @@
         $timeout(function () {
           alert("프로필 사진 변경완료");
         });
-        location.reload();
+        $location.reload();
       }, function (response) {
         if (response.status > 0)
           vm.errorMsg = "사진을 선택해주세요!";

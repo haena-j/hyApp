@@ -1,5 +1,6 @@
 package com.yhproject.persistence;
 
+import com.yhproject.domian.CosmeticsVO;
 import com.yhproject.domian.InterestVO;
 import org.apache.ibatis.annotations.*;
 
@@ -23,4 +24,7 @@ public interface InterestMapper {
 
     @Select("SELECT distinct COS_BRAND FROM COSMETICS join INTEREST on COSMETICS.COS_INDEX=INTEREST.COS_INDEX where INTEREST.MEMBER_INDEX = #{member_index}")
     List<String> getBrandFromInterestList(@Param("member_index") int member_index);
+
+    @Select("SELECT COSMETICS.cos_index,cos_name,cos_brand,cos_price,cos_pic,cos_type,cos_starrateAvg FROM COSMETICS join INTEREST on COSMETICS.COS_INDEX=INTEREST.COS_INDEX ORDER BY interest_index DESC ") //메인에서 사용할 전체 관심리스트목록
+    List<CosmeticsVO> interestFindAll();
 }

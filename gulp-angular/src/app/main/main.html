@@ -1,48 +1,206 @@
 <style>
-.main{
-  margin-bottom: 30px;
-  padding: 1px 30px;
-  background-image: url("assets/images/image.jpg");
-  background-size: 250%;
-  text-align: center;
-  color: white;
-}
-.profile {
-  max-width: 100%;
-  width: 100px;
-  height: 100px;
-  min-width: 20px;
-  min-height: 20px;
-  border-radius: 50%;
-}
+  .main{
+    margin-bottom: 10px;
+    padding: 1px 10px;
+    background-image: url("assets/images/image.jpg");
+    background-size: 250%;
+    text-align: center;
+    color: white;
+  }
+  .grid{
+    margin-bottom: 30px;
+    padding: 20px 10px 20px 10px;
+    background-color: #FFEAEA;
+  }
+  .profile {
+    max-width: 100%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-image: url("assets/images/circle.svg");
+    color: black;
+  }
+  .mycos {
+    max-width: 100%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-image: url("assets/images/circle.svg");
+    color: black;
+    margin-right:20px;
+    margin-left: auto;
+  }
+  .mylist {
+    max-width: 100%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-image: url("assets/images/circle.svg");
+    color: black;
+    margin-left:20px;
+    margin-right: auto;
+  }
+  .rank {
+    max-width: 100%;
+    width: 120px;
+    min-width: 20px;
+    min-height: 20px;
+    border-radius: 50%;
+    color: black;
+    align-content:center;
+    margin-left: 2px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    height: 100%;
+    font-size: 90%;
+  }
   h1 {
-    color: #3A3A3A;
+    color: black;
+  }
+  .name {
+    color: lightgrey;
+  }
+  .num {
+    font-size: 30pt;
+    color: grey;
+  }
+  .star-related {
+    width: 60px;
+    align-content: center;
+    margin-left: 0px;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  .related-title {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: left;
+
+    background-color:#eaeaea;
+  }
+  .name-color {
+    color:#9E9E9E;
   }
 </style>
-  <md-content flex ui-view>
+<md-content flex ui-view>
 
-    <section class="main" style="background-image: {{}}">
-      <h1>파우치체커</h1>
-      <p class="lead">
-        <img class="profile" src="{{main.host}}{{main.userImage}}"><br>
-        {{main.username}}
-      </p>
-      <md-button class="md-raised animated infinite" ng-class="main.classAnimation" ng-click="main.showToastr()">Splendid Toastr</md-button>
-      <p>
-        With ♥ thanks to the contributions of<acme-malarkey extra-values="['Yeoman', 'Gulp', 'Angular']"></acme-malarkey>
-      </p>
-    </section>
+  <section class="main">
 
-    <div class="techs" layout-align="center">
-      <md-card ng-repeat="awesomeThing in main.awesomeThings | orderBy:'rank'">
-        <md-card-content>
-          <img class="pull-right" ng-src="assets/images/{{ awesomeThing.logo }}" alt="{{ awesomeThing.title }}">
-          <h3 class="md-title">{{ awesomeThing.title }}</h3>
-          <p>{{ awesomeThing.description }}</p>
-        </md-card-content>
-        <div class="md-action-buttons">
-          <md-button ng-href="{{ awesomeThing.url }}">Website</md-button>
-        </div>
-      </md-card>
+    <h1><span class="name-color">{{main.username}}</span>님의 파우치체커<img src="assets/images/check.svg"></h1>
+    <p>
+    <div layout="row">
+      <div class="mycos"><br>내 화장품<br><h1>{{main.countReview}}</h1></div>
+
+      <div class="mylist"><br>관심리스트<br><h1>{{main.countInterest}}</h1></div>
+
+    <div class="mylist" ng-click="main.openExpire()">임박 <br>유통기한<h1>D-{{main.cosExpireList[main.latestExpire].newList}}</h1></div>
     </div>
-  </md-content>
+    <br>파우치체커가 제공하는 화장품 ♥ <acme-malarkey
+    extra-values="['더페이스샵', '로레알', '메이블린', '미샤', '스킨푸드', '아리따움', '에뛰드하우스', '이니스프리', '크리니크', '토니모리']"></acme-malarkey>    </p>
+
+  </section>
+  <div style="padding-bottom: 40px; ">
+    <div style="padding-top:20px; padding-bottom: 20px; padding-left: 10px; background-color:#FFEAEA;"><b>  {{main.cosType}}</b> 랭킹 TOP 3</div>
+    <br>
+    <div layout="row" >
+      &nbsp;&nbsp;<div class="rank"><img width ="30" height="30" ng-src="assets/images/goldmedal.svg" style="margin-right: 0"></div>
+      &nbsp;&nbsp;<div class="rank"><img width ="30" height="30" ng-src="assets/images/silvermedal.svg" style="margin-right: 0"></div>
+      &nbsp;&nbsp;&nbsp;<div class="rank"><img width ="30" height="30" ng-src="assets/images/coppermedal.svg" style="margin-right: 0"></div>
+
+    </div>  <br><br>
+    <md-grid-list
+      md-cols="3" md-cols-sm="3" md-cols-md="3" md-cols-gt-md="6"
+      md-row-height="170px">
+      <md-grid-tile ng-repeat="rank in main.cosTypeStarList" md-swipe-left="main.nextSlide()" md-swipe-right="main.prevSlide()"
+                    md-rowspan="1"
+                    md-colspan= "1"
+                    md-colspan-sm="1"
+                    md-colspan-xs="1">
+
+        <table style="">
+          <tr>
+            <td background="black" class="">
+              <md-list-item>
+                <img width ="100" height="100" ng-src="{{rank.cos_pic}}" style="margin-right: 0">
+
+              </md-list-item>
+            </td></tr>
+          <tr><td>{{rank.cos_name}}</td>
+          </tr>
+
+          <tr><td height="20">
+            <div ng-if="rank.cos_starrateAvg == 0"><img class="star-related" ng-src="assets/images/rating-star0.svg"></div>
+            <div ng-if="rank.cos_starrateAvg == 1"><img class="star-related" ng-src="assets/images/rating-star1.svg"></div>
+            <div ng-if="rank.cos_starrateAvg == 2"><img class="star-related" ng-src="assets/images/rating-star2.svg"></div>
+            <div ng-if="rank.cos_starrateAvg == 3"><img class="star-related" ng-src="assets/images/rating-star3.svg"></div>
+            <div ng-if="rank.cos_starrateAvg == 4"><img class="star-related" ng-src="assets/images/rating-star4.svg"></div>
+            <div ng-if="rank.cos_starrateAvg == 5"><img class="star-related" ng-src="assets/images/rating-star5.svg"></div>
+          </td>
+          </tr>
+        </table>
+
+
+
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+
+
+  <div class="related-title">&nbsp;&nbsp;최근 추가된 이웃의 관심리스트<img width="16" height="16" src="assets/images/main_heart.svg"></div>
+
+  <div class="grid" flex ng-cloak>
+    <md-grid-list
+      md-cols="3" md-cols-sm="3" md-cols-md="3" md-cols-gt-md="6"
+      md-row-height-gt-md="1:1" md-row-height="199"
+      md-gutter="10px" md-gutter-gt-sm="4px">
+      <md-grid-tile ng-repeat="tile in main.tiles"
+                    md-rowspan="{{tile.span.row}}"
+                    md-colspan="{{tile.span.col}}"
+                    md-colspan-sm="1"
+                    md-colspan-xs="1"
+                    ng-class="tile.background" ng-click="tile.show = !tile.show">
+
+        <md-card width="100%">
+          <md-card-title>
+            <div layout="column" >
+              <md-card-title-media>
+                <div class="md-media-sm card-media" ><img ng-src={{tile.cos_pic}} ></div>
+              </md-card-title-media>
+
+              <div>
+                <md-card-title-text align="center">
+                  <font color="black" size="2" style="padding-top: 10px">{{ tile.cos_brand}}</font>
+                </md-card-title-text>
+              </div>
+              <div ng-if="tile.cos_starrateAvg == 0"><img class="star-related" ng-src="assets/images/rating-star0.svg"></div>
+              <div ng-if="tile.cos_starrateAvg == 1"><img class="star-related" ng-src="assets/images/rating-star1.svg"></div>
+              <div ng-if="tile.cos_starrateAvg == 2"><img class="star-related" ng-src="assets/images/rating-star2.svg"></div>
+              <div ng-if="tile.cos_starrateAvg == 3"><img class="star-related" ng-src="assets/images/rating-star3.svg"></div>
+              <div ng-if="tile.cos_starrateAvg == 4"><img class="star-related" ng-src="assets/images/rating-star4.svg"></div>
+              <div ng-if="tile.cos_starrateAvg == 5"><img class="star-related" ng-src="assets/images/rating-star5.svg"></div>
+            </div>
+
+          </md-card-title>
+
+        </md-card>
+
+        <div ng-init="tile.show = false" ng-show="tile.show">
+          <md-grid-tile-header style="height: 100%; width= 122; font-size: 90%; padding: 0; background-color : rgba(0,0,0,0.5);">
+            <table style="width: 100%;">
+              <tr>
+                <td>{{tile.cos_name}}
+
+                </td>
+
+              </tr>
+            </table>
+          </md-grid-tile-header>
+        </div>
+
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+
+</md-content>

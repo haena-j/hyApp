@@ -14,4 +14,5 @@ public class CosmeticsVO {
     private String cos_pic;
     private String cos_type;
     private int cos_starrateAvg;
+
 }

@@ -15,7 +15,7 @@
   }
 
   .row-related {
-    background: rgba(135, 156, 191, 0.18);
+    background-color: whitesmoke;
     width: 100%;
   }
 
@@ -37,7 +37,8 @@
 
   .container.review-img {
     position: relative;
-    height: 55%;
+    height: 70%;
+    overflow: hidden;
   }
 
   .related-review-img {
@@ -47,17 +48,17 @@
   .test {
     position: absolute;
     left: 0;
-    top: 75%;
+    top: 80%;
     width: 100%;
     text-align: center;
   }
 
   md-card {
-    height: 300px;
+    height: 310px;
   }
 
   .md-headline {
-    font-size: 12px;
+    font-size: 10px;
   }
 
   md-content {
@@ -108,20 +109,23 @@
     -moz-transform: scale(1.5);
     transform: scale(1.5);
   }
+
 </style>
 <md-content flex ui-view>
   <div class="row header row-related">
     <p class="related-title">나와 취향이 비슷한 이웃님의 화장대를 확인해 보세요
       <md-icon md-svg-src="assets/images/correct.svg"></md-icon>
     </p>
+
     <br>
     <div class="md-padding" layout-xs="column" layout="row">
       <div flex-xs flex-gt-xs="100" layout="column">
-        <md-card ng-repeat="result in userSharedPage.RelationList" ng-hide="!userSharedPage.isCurrentSlideIndex($index)"
+
+        <md-card class="slide" ng-repeat="result in userSharedPage.RelationList" ng-hide="!userSharedPage.isCurrentSlideIndex($index)"
                  md-swipe-left="userSharedPage.nextSlide()" md-swipe-right="userSharedPage.prevSlide()">
-          <md-card-header>
+          <md-card-header style="height: 30px; padding: 0 0 5px 0; margin: 10px; ">
             <md-card-avatar>
-              <img class="md-user-avatar" ng-src="{{userSharedPage.host}}{{result.image}}"/>
+              <img class="md-user-avatar" ng-src="{{userSharedPage.host}}{{result.image}}" style="height: inherit;"/>
             </md-card-avatar>
             <md-card-header-text>
               <span class="md-title">{{result.id}}</span>
@@ -136,6 +140,7 @@
               </md-button>
 
           </md-card-header>
+
           <div class="container review-img">
             <img class="related-review-img" ng-src="{{userSharedPage.host}}{{result.recent_review_img}}"
                  ng-click="userSharedPage.goToDetail(result)">
@@ -148,15 +153,14 @@
                     <md-icon md-svg-src="assets/images/front.svg" ng-click="userSharedPage.prevSlide()"></md-icon>
                 </td></tr></table>
 
-
             </div>
-
           </div>
           <md-card-title>
             <md-card-title-text>
               <span class="md-headline">최근리뷰) {{result.recent_review_name}}</span>
             </md-card-title-text>
           </md-card-title>
+
         </md-card>
       </div>
     </div>

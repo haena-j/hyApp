@@ -8,7 +8,7 @@
     .module('gulpAngular')
     .controller('LoginController',LoginController)
     .controller('JoinController', JoinController);
-  function LoginController($location, AuthService) {
+  function LoginController($location, AuthService, $mdDialog) {
     var vm = this;
     vm.data = {};
     if(AuthService.isAuthenticated() == true){
@@ -17,9 +17,7 @@
     vm.login = function(data) {
       AuthService.login(data.id, data.password).then(function() {
         $location.path('/main');
-
         vm.setCurrentUserId(data.id);
-
       });
     };
     vm.signIn = function(){
@@ -42,7 +40,7 @@
         }
       }).then(function () {
         $timeout(function () {
-        alert("다시로그인해주세요");
+        alert("로그인해주세요");
         });
       }, function (response) {
         if (response.status > 0)
