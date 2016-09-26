@@ -1,0 +1,74 @@
+<!doctype html>
+<html ng-app="gulpAngular">
+<head>
+  <meta charset="utf-8">
+  <title>gulpAngular</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+  <!-- bower:css -->
+  <!-- run `gulp inject` to automatically populate bower styles dependencies -->
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:css({.tmp/serve,src}) styles/app.css -->
+  <!-- inject:css -->
+  <!-- css files will be automatically insert here -->
+  <!-- endinject -->
+  <!-- endbuild -->
+  <script language = "JavaScript">
+    function userIndex(arg) {
+      window.android.userIndex(AuthService.index());
+    }
+  </script>
+</head>
+<body ng-controller="NavigationController as navigation">
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+  your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<header flex>
+  <div class="navbar navbar-default" role="navigation">
+    <div class="container" style="text-align: center;width: 100%;display:table; max-width: none;">
+      <div class="navbar-header">
+        <div layout="column" ng-cloak>
+          <md-content>
+            <div layout-padding layout="row">
+              <md-button class="md-icon-button" ng-click="navigation.goToMain()" style="margin : 0 5px 0 0; padding : 0">
+                <md-icon md-svg-icon="assets/images/logo.svg" style="width: 100%; margin: 0; padding:0;"></md-icon>
+              </md-button>
+              <input type="text" id="searchBox" placeholder="제품명 / 브랜드를 입력해주세요." name="cos_name" ng-model="cos_name" style="width: 100%; font-size: 11px; text-align: center">
+              <md-button class="md-icon-button" ng-click="navigation.searchCosmetics(cos_name)">
+                <md-icon md-svg-icon="assets/images/searchIcon.svg"></md-icon>
+              </md-button>
+            </div>
+          </md-content>
+        </div>
+        <acme-navbar></acme-navbar>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div flex ui-view></div>
+<!-- build:js(src) scripts/vendor.js -->
+<!-- bower:js -->
+<!-- run `gulp inject` to automatically populate bower script dependencies -->
+<!-- endbower -->
+<!-- endbuild -->
+<script src="cordova.js"></script>
+<!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+<!-- inject:js -->
+<!-- js files will be automatically insert here -->
+<!-- endinject -->
+
+<!-- inject:partials -->
+<!-- angular templates will be automatically converted in js and inserted here -->
+<!-- endinject -->
+<!-- endbuild -->
+
+</body>
+</html>

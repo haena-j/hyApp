@@ -1,7 +1,29 @@
 <style>
+  b {
+    font-size: 15px;
+    color: darkgray;
+  }
+
+  h4 {
+    font-size: 11px;
+    color: darkgray;
+  }
+  .pouch-color {
+    color: #FFEAEA;
+  }
+
+  .class1 {
+    font-size: 13px;
+  }
+  .class2 {
+    font-size: 20px;
+    color:#FFEAEA;
+  }
+
+
   .main{
-    margin-bottom: 10px;
-    padding: 1px 10px;
+    height: 250px;
+    background-color: rgba(0, 0, 0, 0.4);
     background-image: url("assets/images/image.jpg");
     background-size: 250%;
     text-align: center;
@@ -17,16 +39,17 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-image: url("assets/images/circle.svg");
-    color: black;
+    background: rgba(0,0,0,0.3);
+    color: white;
   }
   .mycos {
     max-width: 100%;
+
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-image: url("assets/images/circle.svg");
-    color: black;
+    background: rgba(0,0,0,0.3);
+    color: white;
     margin-right:20px;
     margin-left: auto;
   }
@@ -35,10 +58,11 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-image: url("assets/images/circle.svg");
-    color: black;
+    background: rgba(0,0,0,0.3);
+    color: white;
     margin-left:20px;
     margin-right: auto;
+
   }
   .rank {
     max-width: 100%;
@@ -56,7 +80,7 @@
     font-size: 90%;
   }
   h1 {
-    color: black;
+    color: whitesmoke;
   }
   .name {
     color: lightgrey;
@@ -78,38 +102,44 @@
     padding-bottom: 20px;
     text-align: left;
 
-    background-color:#eaeaea;
+    background-color:#FFEAEA;
   }
   .name-color {
-    color:#9E9E9E;
+    color: #FFEAEA;
+    text-align: center;
   }
 </style>
 <md-content flex ui-view>
-
   <section class="main">
-
-    <h1><span class="name-color">{{main.username}}</span>님의 파우치체커<img src="assets/images/check.svg"></h1>
+    <div style="background: rgba(0,0,0,0.5); height: 250px;">
+      <br>
+    <h1><span class="name-color">{{main.username}}'s POUCH</span></h1>
     <p>
-    <div layout="row">
-      <div class="mycos"><br>내 화장품<br><h1>{{main.countReview}}</h1></div>
+    <div layout="row" align="center">
+      <div class="mylist"><br>내 화장품<br><h1>{{main.countReview}}</h1></div>
 
       <div class="mylist"><br>관심리스트<br><h1>{{main.countInterest}}</h1></div>
 
-    <div class="mylist" ng-click="main.openExpire()">임박 <br>유통기한<h1>D-{{main.cosExpireList[main.latestExpire].newList}}</h1></div>
+      <div class="mylist" ng-click="main.openExpire()"><br>유통기한<h1>D-{{main.cosExpireList[main.latestExpire].newList}}</h1></div>
     </div>
-    <br>파우치체커가 제공하는 화장품 ♥ <acme-malarkey
-    extra-values="['더페이스샵', '로레알', '메이블린', '미샤', '스킨푸드', '아리따움', '에뛰드하우스', '이니스프리', '크리니크', '토니모리']"></acme-malarkey>    </p>
 
+    <br><br>
+    <span class="class1">POUCH CHECKER 가 제공하는 화장품</span> <span class="class2"> ♥ </span><acme-malarkey
+    extra-values="['더페이스샵', '로레알', '메이블린', '미샤', '스킨푸드', '아리따움', '에뛰드하우스', '이니스프리', '크리니크', '토니모리']"></acme-malarkey>
+      </p>
+    </div>
   </section>
-  <div style="padding-bottom: 40px; ">
-    <div style="padding-top:20px; padding-bottom: 20px; padding-left: 10px; background-color:#FFEAEA;"><b>  {{main.cosType}}</b> 랭킹 TOP 3</div>
+
+  <div style="padding-bottom: 40px;">
+    <div style="padding-top:20px; padding-bottom: 20px; padding-left: 10px; background-color:#FFEAEA;"><b>  {{main.cosType}} 랭킹 TOP 3</b></div>
     <br>
     <div layout="row" >
-      &nbsp;&nbsp;<div class="rank"><img width ="30" height="30" ng-src="assets/images/goldmedal.svg" style="margin-right: 0"></div>
-      &nbsp;&nbsp;<div class="rank"><img width ="30" height="30" ng-src="assets/images/silvermedal.svg" style="margin-right: 0"></div>
-      &nbsp;&nbsp;&nbsp;<div class="rank"><img width ="30" height="30" ng-src="assets/images/coppermedal.svg" style="margin-right: 0"></div>
-
-    </div>  <br><br>
+      &nbsp;&nbsp;<div class="rank"><img width ="30" height="30" ng-src="assets/images/gold-medal.svg" style="margin-right: 0"></div>
+      &nbsp;&nbsp;<div class="rank"><img width ="30" height="30" ng-src="assets/images/second.svg" style="margin-right: 0"></div>
+      &nbsp;&nbsp;&nbsp;<div class="rank"><img width ="30" height="30" ng-src="assets/images/third.svg" style="margin-right: 0"></div>
+      <br><br>
+    </div>
+    <br><br>
     <md-grid-list
       md-cols="3" md-cols-sm="3" md-cols-md="3" md-cols-gt-md="6"
       md-row-height="170px">
@@ -121,17 +151,17 @@
 
         <table style="">
           <tr>
-            <td background="black" class="">
+            <td align="center" >
               <md-list-item>
-                <img width ="100" height="100" ng-src="{{rank.cos_pic}}" style="margin-right: 0">
+                <img  width ="100" height="100" ng-src="{{rank.cos_pic}}" style="margin-right: 0">
 
               </md-list-item>
             </td></tr>
-          <tr><td>{{rank.cos_name}}</td>
+          <tr><td><h4>{{rank.cos_name}}</h4></td>
           </tr>
 
-          <tr><td height="20">
-            <div ng-if="rank.cos_starrateAvg == 0"><img class="star-related" ng-src="assets/images/rating-star0.svg"></div>
+          <tr><td height="20" align="center">
+            <div layout-align="center" style="align-content: center" ng-if="rank.cos_starrateAvg == 0"><img class="star-related" ng-src="assets/images/rating-star0.svg"></div>
             <div ng-if="rank.cos_starrateAvg == 1"><img class="star-related" ng-src="assets/images/rating-star1.svg"></div>
             <div ng-if="rank.cos_starrateAvg == 2"><img class="star-related" ng-src="assets/images/rating-star2.svg"></div>
             <div ng-if="rank.cos_starrateAvg == 3"><img class="star-related" ng-src="assets/images/rating-star3.svg"></div>
@@ -148,7 +178,7 @@
   </div>
 
 
-  <div class="related-title">&nbsp;&nbsp;최근 추가된 이웃의 관심리스트<img width="16" height="16" src="assets/images/main_heart.svg"></div>
+  <div class="related-title">&nbsp;&nbsp;<b>최근 추가된 이웃의 관심리스트 </b><img width="16" height="16" src="assets/images/heart.svg"></div>
 
   <div class="grid" flex ng-cloak>
     <md-grid-list
@@ -171,7 +201,7 @@
 
               <div>
                 <md-card-title-text align="center">
-                  <font color="black" size="2" style="padding-top: 10px">{{ tile.cos_brand}}</font>
+                  <font color="#a9a9a9" size="2" style="padding-top: 10px">{{ tile.cos_brand}}</font>
                 </md-card-title-text>
               </div>
               <div ng-if="tile.cos_starrateAvg == 0"><img class="star-related" ng-src="assets/images/rating-star0.svg"></div>

@@ -32,7 +32,7 @@ public interface CosmeticsMapper {
 
     @Select("SELECT cos_index, cos_name, cos_brand, cos_price, cos_pic, cos_type, cos_starrateAvg FROM COSMETICS WHERE cos_type = #{cos_type} AND cos_brand = #{cos_brand}")
     List<CosmeticsVO> getCosByBrandAndType(@Param("cos_type") String cos_type, @Param("cos_brand") String cos_brand);
-    
+
     @Select("select distinct COS_BRAND FROM COSMETICS ")
     List<String> getCosBrandName();
 
